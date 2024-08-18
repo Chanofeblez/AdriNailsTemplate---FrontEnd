@@ -1,0 +1,50 @@
+<!--
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Salon Locks & Lashes This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ion-header class="ion-no-border">
+  <ion-toolbar color="primary" mode="md">
+    <ion-buttons slot="start">
+      <ion-button (click)="onBack()" color="light">
+        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>{{name}}</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="service-details-screen">
+    <ion-card mode="ios" *ngFor="let item of mostrar.extrasList;let i = index" class="service-details-list">
+      <ion-item lines="none" class="item-content">
+        <ion-thumbnail slot="start">
+          <img [src]="item.cover" />
+        </ion-thumbnail>
+        <ion-label class="lbl">
+          <p class="title">{{item.name}}</p>
+          <p class="price">{{item.price}}</p>
+        </ion-label>
+        <ion-checkbox slot="end" mode="md" (ionChange)="onCheckboxChange($event, item)"></ion-checkbox>
+      </ion-item>
+    </ion-card>
+  </div>
+</ion-content>
+<ion-footer>
+  <ion-toolbar>
+    <p class="price1">Total Estimaded - ${{total}}.00</p>
+    <!--<ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary">-->
+    <ion-button color="primary" expand="block" fill="solid" shape="round" (click)="presentModal()">
+      Apply
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>
+
+

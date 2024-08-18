@@ -1,0 +1,96 @@
+<!--
+  Authors : initappz (Rahul Jograna)
+  Website : https://initappz.com/
+  App Name : Salon Locks & Lashes This App Template Source code is licensed as per the
+  terms found in the Website https://initappz.com/license
+  Copyright and Good Faith Purchasers © 2023-present initappz.
+-->
+<ion-content class="ion-padding">
+  <div class="welcome-screen">
+    <div class="progress">
+      <div [ngClass]="activeIndex == item ? 'active-dots':'dots'" *ngFor="let item of [0,1,2,3,4,5,6,7]"></div>
+    </div>
+    <swiper-container #swiper (slidechange)="changed()" slides-per-view="1" autoplay="true">
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/1.png)'}"></div>
+          <ion-label class="title">Find Barbers and Salons Easily in Your Hands</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/2.png)'}"></div>
+          <ion-label class="title">Book Your Favourite Barber and Salon Quickly</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/3.png)'}"></div>
+          <ion-label class="title"> Reschedule or cancel them, and even pay for your services through the
+            app</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/4.png)'}"></div>
+          <ion-label class="title"> Transform your look, transform your life</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/5.png)'}"></div>
+          <ion-label class="title"> Where beauty meets convenience</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/6.png)'}"></div>
+          <ion-label class="title"> Elevate your style, elevate your mood</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/7.png)'}"></div>
+          <ion-label class="title"> Experience luxury at your fingertips</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Next
+          </ion-button>
+        </div>
+      </swiper-slide>
+
+      <swiper-slide>
+        <div class="slider-screen">
+          <div class="bg-cover slider-image" [ngStyle]="{'background-image': 'url(assets/images/salon/8.png)'}"></div>
+          <ion-label class="title">Thanks for choosing our salon, and we look forward to serving you.</ion-label>
+          <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
+            Get Started
+          </ion-button>
+        </div>
+      </swiper-slide>
+    </swiper-container>
+  </div>
+</ion-content>
