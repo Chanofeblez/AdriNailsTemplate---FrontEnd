@@ -6,5 +6,6 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 export const environment = {
-  production: true
+  production: true,
+  base_url: 'http://localhost:8081'
 };

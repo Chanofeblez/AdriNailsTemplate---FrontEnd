@@ -6,8 +6,9 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
-import { ManicureInterface } from 'src/app/model/manicure-service.interface';
+import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { Servicio } from 'src/app/model/manicure-service.interface';
+import { ServicioService } from 'src/app/services/servicio.service';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -18,34 +19,77 @@ import { UtilService } from 'src/app/services/util.service';
 export class ServicesListPage implements OnInit {
 
   segment: any = 'manicure';
+  selectedDate: string;
+  selectedTime: string;
 
-  carga: ManicureInterface[];
+  servicios: Servicio[] = [];
+  manicureList: Servicio[] = [];
+  pedicureList: Servicio[] = [];
 
-  public util= inject(UtilService);
+  public servicioService   = inject(ServicioService);
+  private route = inject(ActivatedRoute);
+  private util = inject(UtilService);
 
   constructor(
 
   ) { }
 
   ngOnInit() {
-    this.carga = this.util.getManicureList();
+    this.loadServicios();
+
+    this.route.queryParams.subscribe(params => {
+      this.selectedDate = params['date'];
+      this.selectedTime = params['time'];
+      console.log('Selected Date:', this.selectedDate);
+      console.log('Selected Time:', this.selectedTime);
+    });
+
+  }
+
+  loadServicios(): void {
+    this.servicioService.getAllServicios().subscribe(
+      (data: Servicio[]) => {
+        console.log(data);
+        this.servicios = data;
+        this.separateServicios(this.servicios);
+      },
+      (error) => {
+        console.error('Error al cargar los servicios', error);
+      }
+    );
+
+  }
+
+  separateServicios(servicios: Servicio[]) {
+    for (let i = 0; i < servicios.length; i++) {
+      if (servicios[i] && servicios[i].type) {
+        if (servicios[i].type === 'MANICURE') {
+          this.manicureList.push(servicios[i]);
+        } else {
+          this.pedicureList.push(servicios[i]);
+        }
+      }
+    }
   }
 
   onBack() {
-    this.util.onBack();
+    //this.util.onBack();
   }
 
-  onServiceDetails(name: ManicureInterface) {
+  onServiceDetails(name: Servicio) {
     const param: NavigationExtras = {
       queryParams: {
-        name: name.name
+        name: name.name,
+        price: name.price,
+        date: this.selectedDate,
+        time: this.selectedTime
       }
     };
     this.util.navigateToPage('service-details', param);
   }
 
   onPayment() {
-    this.util.navigateToPage('select-slot');
+   // this.util.navigateToPage('select-slot');
   }
 
   segmentChanged() {
@@ -53,7 +97,7 @@ export class ServicesListPage implements OnInit {
   }
 
   onReceipt() {
-    this.util.navigateToPage('e-receipt');
+   // this.util.navigateToPage('e-receipt');
   }
 
 }

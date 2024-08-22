@@ -23,10 +23,10 @@
 
 <ion-content>
   <div class="service-details-screen">
-    <ion-card mode="ios" *ngFor="let item of mostrar.extrasList;let i = index" class="service-details-list">
+   <ion-card mode="ios" *ngFor="let item of varianteServicio;let i = index" class="service-details-list">
       <ion-item lines="none" class="item-content">
         <ion-thumbnail slot="start">
-          <img [src]="item.cover" />
+          <img [src]="item.description" />
         </ion-thumbnail>
         <ion-label class="lbl">
           <p class="title">{{item.name}}</p>
@@ -41,7 +41,7 @@
   <ion-toolbar>
     <p class="price1">Total Estimaded - ${{total}}.00</p>
     <!--<ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary">-->
-    <ion-button color="primary" expand="block" fill="solid" shape="round" (click)="presentModal()">
+    <ion-button color="primary" expand="block" fill="solid" shape="round" (click)="onApply()">
       Apply
     </ion-button>
   </ion-toolbar>

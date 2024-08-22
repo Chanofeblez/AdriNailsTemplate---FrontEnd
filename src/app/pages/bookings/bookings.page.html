@@ -33,12 +33,12 @@
     <div class="booking-list" *ngIf="segment =='book'">
        <div class="slot-screen">
           <ion-label class="title">Select Date</ion-label>
-          <ion-datetime presentation="date" style="max-width: 100%;"> </ion-datetime>
+          <ion-datetime presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)"> </ion-datetime>
           <ion-label class="title">Select Hours</ion-label>
           <ion-row class="slots">
-            <ion-col size="3" *ngFor="let item of slotList" (click)="save(item)">
-              <div class="slot-name" [ngStyle]="{'background-color':selected == item ? '#F89C02': '#fff'}">
-                <ion-label class="name" [ngStyle]="{'color':selected == item ? '#fff': '#F89C02'}">{{item}}</ion-label>
+            <ion-col size="3" *ngFor="let item of slotList">
+              <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
+                <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}</ion-label>
               </div>
             </ion-col>
           </ion-row>
@@ -57,7 +57,7 @@
           </div> -->
         </div>
       <ion-footer>
-        <ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary">
+        <ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary" [disabled]="!isFormValid()">
           Continue
         </ion-button>
       </ion-footer>

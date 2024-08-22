@@ -5,11 +5,12 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { Component, inject, OnInit } from '@angular/core';
+import { ModalController, NavController } from '@ionic/angular';
 import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
 import { register } from 'swiper/element';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-bookings',
@@ -18,6 +19,9 @@ import { register } from 'swiper/element';
 })
 export class BookingsPage implements OnInit {
   segment: any = 'book';
+  minDate: string;
+  selectedDate: string | null = null;
+  selectedSlot: string | null = null;
 
   slotList: any[] = [
     "10:00am",
@@ -29,16 +33,40 @@ export class BookingsPage implements OnInit {
     initialSlide: 0,
     slidesPerView: 4.1,
   };
-  selected: any = '';
 
   selectedSpecialist: any = '';
 
-  constructor(
-    public util: UtilService,
-    private modalController: ModalController
-  ) { }
+  public util = inject(UtilService);
+  private modalController = inject(ModalController);
+  private navCtrl = inject(NavController);
+  private router = inject(Router);
+
+  constructor() {
+    const today = new Date();
+    const day = ('0' + today.getDate()).slice(-2);
+    const month = ('0' + (today.getMonth() + 1)).slice(-2);
+    const year = today.getFullYear();
+
+    this.minDate = `${year}-${month}-${day}`;
+  }
 
   ngOnInit() {
+  }
+
+  onDateChange(event: any) {
+    this.selectedDate = event.detail.value.split('T')[0];
+   // const selectedDate = event.detail.value.split('T')[0]; // Solo obtener la fecha
+   // console.log(selectedDate); // Esto imprimirá solo la fecha en formato "YYYY-MM-DD"
+  }
+
+  save(save: any) {
+    console.log(this.selectedDate + " " + this.selectedSlot);
+    this.selectedSlot = save;
+  }
+
+  isFormValid(): boolean {
+
+    return this.selectedDate !== null && this.selectedSlot !== null;
   }
 
   segmentChanged() {
@@ -67,16 +95,22 @@ export class BookingsPage implements OnInit {
     this.util.onBack();
   }
 
-  save(save: any) {
-    this.selected = save;
-  }
+
 
   saveSpecialist(name: string) {
     this.selectedSpecialist = name;
   }
 
   onPayment() {
-    this.util.navigateToPage('services-list');
+    this.router.navigate(['/services-list'], {
+      queryParams: {
+        date: this.selectedDate,
+        time: this.selectedSlot
+      }
+    });
+    //this.util.navigateToPage('services-list');
   }
+
+
 
 }

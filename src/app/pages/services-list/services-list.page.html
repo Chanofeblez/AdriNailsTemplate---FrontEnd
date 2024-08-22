@@ -34,7 +34,7 @@
 <ion-content>
   <div class="booking-screen">
     <div class="booking-list" *ngIf="segment =='manicure'">
-      <ion-card mode="ios" class="cart-content" *ngFor="let item of carga;let i = index"
+      <ion-card mode="ios" class="cart-content" *ngFor="let item of manicureList;let i = index"
         (click)="onServiceDetails(item)">
         <!--  <div class="top-content">
           <ion-label class="date">July 15, 2023 - 09:30 AM</ion-label>
@@ -45,7 +45,7 @@
          </div> -->
          <ion-row class="salon-info-list">
            <ion-col size="4">
-             <div class="cover" [ngStyle]="{'background-image': 'url('+item.cover+')'}"></div>
+             <div class="cover" [ngStyle]="{'background-image': 'url('+ item.imagePath +')'}"></div>
            </ion-col>
            <ion-col size="8">
              <div class="name-content">
@@ -80,7 +80,7 @@
       <ion-label class="warning-label">*Important Note: Please ensure your toenails are in good condition, free of fungus or infections.
         If there are issues, the service cannot be performed, and the full charge will apply. To avoid any inconvenience, please send a photo and contact me before booking. Thank you!
       </ion-label>
-      <ion-card mode="ios" class="cart-content" *ngFor="let item of util.pedicureList;let i = index"
+      <ion-card mode="ios" class="cart-content" *ngFor="let item of pedicureList ;let i = index"
         (click)="onServiceDetails(item)">
         <!--  <div class="top-content">
           <ion-label class="date">July 15, 2023 - 09:30 AM</ion-label>
@@ -91,7 +91,7 @@
          </div> -->
          <ion-row class="salon-info-list">
            <ion-col size="4">
-             <div class="cover" [ngStyle]="{'background-image': 'url('+item.cover+')'}"></div>
+             <div class="cover" [ngStyle]="{'background-image': 'url('+ item.imagePath +')'}"></div>
            </ion-col>
            <ion-col size="8">
              <div class="name-content">

@@ -9,7 +9,8 @@ import { Injectable, NgZone } from '@angular/core';
 import { LoadingController, AlertController, ToastController, NavController, MenuController } from '@ionic/angular';
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { NavigationExtras, Router } from '@angular/router';
-import { ManicureInterface } from '../model/manicure-service.interface';
+import { Servicio } from '../model/manicure-service.interface';
+
 
 @Injectable({
   providedIn: 'root'
@@ -138,707 +139,707 @@ export class UtilService {
     },
   ];
 
-  manicureList: ManicureInterface[] = [
-    {
-      "name": "SHORT NAIL REAPPLICATION",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 110.00,
-      "note" : "",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "MEDIUM NAIL REAPPLICATION",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 120.00,
-      "note" : "",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "LONG NAIL REAPPLICATION",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 170.00,
-      "note" : "",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "SHORT/MEDIUM NAIL | SOFT GEL(RUBBER BASE)",
-      "description": "No Design | Base Color",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 100.00,
-      "note" : "*Recommended for strong and normal nails",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "SHORT NAIL | FULL SET",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 140.00,
-      "note" : "*Add design service(additional price)",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "MEDIUM NAIL | FULL SET",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 150.00,
-      "note" : "*Add design service(additional price)",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-    {
-      "name": "LONG NAIL | FULL SET",
-      "description": "No Design | Base Color | Hard Gel/PolyGel",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": 200.00,
-      "note" : "*Add design service(additional price)",
-      extrasList: [
-        {
-          "name": "An Extra Color",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 15.00,
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Change in the Shape of Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 30.00,
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 50.00,
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 20.00,
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 10.00,
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 40.00,
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": 25.00,
-        },
-      ]
-    },
-  ];
-
-  pedicureList: any[] = [
-    {
-      "name": "POLISH E-FILE",
-      "description": "Dry Pedicure | Gel Color",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": "$100.00",
-      "note" : "",
-      extrasList: [
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$15.00",
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$30.00",
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$50.00",
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$25.00",
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$40.00",
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$25.00",
-        },
-      ]
-    },
-    {
-      "name": "FRENCH E-FILE",
-      "description": "Dry Pedicure | Gel Color",
-      "cover": "assets/images/salon-cover/1.png",
-      "price": "$115.00",
-      "note" : "",
-      extrasList: [
-        {
-          "name": "French Tip Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$15.00",
-        },
-        {
-          "name": "Double French Tip",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Repair( 1 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Repair( 2 Nail )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Nail Art Design, Easy Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$30.00",
-        },
-        {
-          "name": "Nail Art Design, Complicated Pattern on Each Nail",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$50.00",
-        },
-        {
-          "name": "Simple Design( 1 Nail Designed )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Chrome",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$20.00",
-        },
-        {
-          "name": "Ombré Design",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$25.00",
-        },
-        {
-          "name": "Cat Eye( Magnet Gel )",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$10.00",
-        },
-        {
-          "name": "Acrylic Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$40.00",
-        },
-        {
-          "name": "Gel Removal",
-          "cover": "assets/images/salon-cover/1.png",
-          "price": "$25.00",
-        },
-      ]
-    },
-  ];
+ // manicureList: Servicio[] = [
+ //   {
+ //     "name": "SHORT NAIL REAPPLICATION",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 110.00,
+ //     "note" : "",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "MEDIUM NAIL REAPPLICATION",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 120.00,
+ //     "note" : "",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "LONG NAIL REAPPLICATION",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 170.00,
+ //     "note" : "",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "SHORT/MEDIUM NAIL | SOFT GEL(RUBBER BASE)",
+ //     "description": "No Design | Base Color",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 100.00,
+ //     "note" : "*Recommended for strong and normal nails",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "SHORT NAIL | FULL SET",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 140.00,
+ //     "note" : "*Add design service(additional price)",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "MEDIUM NAIL | FULL SET",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 150.00,
+ //     "note" : "*Add design service(additional price)",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "LONG NAIL | FULL SET",
+ //     "description": "No Design | Base Color | Hard Gel/PolyGel",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": 200.00,
+ //     "note" : "*Add design service(additional price)",
+ //     extrasList: [
+ //       {
+ //         "name": "An Extra Color",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 15.00,
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Change in the Shape of Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 30.00,
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 50.00,
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 20.00,
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 10.00,
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 40.00,
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": 25.00,
+ //       },
+ //     ]
+ //   },
+ // ];
+//
+ // pedicureList: Servicio[] = [
+ //   {
+ //     "name": "POLISH E-FILE",
+ //     "description": "Dry Pedicure | Gel Color",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": "$100.00",
+ //     "note" : "",
+ //     extrasList: [
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$15.00",
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$30.00",
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$50.00",
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$25.00",
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$40.00",
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$25.00",
+ //       },
+ //     ]
+ //   },
+ //   {
+ //     "name": "FRENCH E-FILE",
+ //     "description": "Dry Pedicure | Gel Color",
+ //     "cover": "assets/images/salon-cover/1.png",
+ //     "price": "$115.00",
+ //     "note" : "",
+ //     extrasList: [
+ //       {
+ //         "name": "French Tip Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$15.00",
+ //       },
+ //       {
+ //         "name": "Double French Tip",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Repair( 1 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Repair( 2 Nail )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Easy Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$30.00",
+ //       },
+ //       {
+ //         "name": "Nail Art Design, Complicated Pattern on Each Nail",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$50.00",
+ //       },
+ //       {
+ //         "name": "Simple Design( 1 Nail Designed )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Chrome",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$20.00",
+ //       },
+ //       {
+ //         "name": "Ombré Design",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$25.00",
+ //       },
+ //       {
+ //         "name": "Cat Eye( Magnet Gel )",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$10.00",
+ //       },
+ //       {
+ //         "name": "Acrylic Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$40.00",
+ //       },
+ //       {
+ //         "name": "Gel Removal",
+ //         "cover": "assets/images/salon-cover/1.png",
+ //         "price": "$25.00",
+ //       },
+ //     ]
+ //   },
+ // ];
 
 
   userList: any[] = [
@@ -1004,13 +1005,13 @@ export class UtilService {
     private zone: NgZone,
   ) { }
 
-  getManicureList(){
-    return this.manicureList;
-  }
-
-  getPedicureList(){
-    return this.pedicureList;
-  }
+//  getManicureList(){
+//    return this.manicureList;
+//  }
+//
+//  getPedicureList(){
+//    return this.pedicureList;
+//  }
 
   navigateToPage(routes: any, param?: NavigationExtras | undefined) {
     this.zone.run(() => {
