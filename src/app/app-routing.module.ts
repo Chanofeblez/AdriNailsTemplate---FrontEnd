@@ -7,7 +7,7 @@
 */
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import { TabsPageModule } from './pages/tabs/tabs.module';
+import { AuthguardsGuard } from './guard/authguards.guard';  // Ajusta la ruta según la ubicación de tu AuthGuard
 
 const routes: Routes = [
   {
@@ -58,13 +58,6 @@ const routes: Routes = [
     path: 'inbox',
     loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
   },
-
-
-  {
-    path: 'login',
-    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
-  },
-
   {
     path: 'notifications',
     loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
@@ -77,14 +70,15 @@ const routes: Routes = [
     path: 'packages-list',
     loadChildren: () => import('./pages/packages-list/packages-list.module').then(m => m.PackagesListPageModule)
   },
-
   {
-    path: 'profile',
-    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
+    path: 'login',
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
+   // canActivate: [AuthguardsGuard]  // Proteges la ruta de login
   },
   {
     path: 'register',
-    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule)
+    loadChildren: () => import('./pages/register/register.module').then(m => m.RegisterPageModule),
+   // canActivate: [AuthguardsGuard]  // Proteges la ruta de login
   },
   {
     path: 'remove-bookmark',

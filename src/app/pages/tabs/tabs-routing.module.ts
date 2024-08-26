@@ -8,6 +8,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
+import { AuthguardsGuard } from 'src/app/guard/authguards.guard';
 
 const routes: Routes = [
   {
@@ -99,6 +100,12 @@ const routes: Routes = [
         path: 'payment-modal',
         loadChildren: () => import('../payment-modal/payment-modal.module').then( m => m.PaymentModalPageModule)
       },
+
+      {
+        path: 'profile',
+        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
+      },
+
       {
         path: '',
         redirectTo: '/tabs/home',

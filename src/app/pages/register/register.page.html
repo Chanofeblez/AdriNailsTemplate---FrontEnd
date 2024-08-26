@@ -8,8 +8,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button (click)="onBack()" color="dark">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      <ion-button (click)="onHome()" color="dark">
+        <ion-icon slot="icon-only" name="home-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -17,31 +17,72 @@
 
 <ion-content class="ion-padding">
   <div class="login-screen">
-    <div class="logo-content">
-      <img src="assets/images/auth.png" alt="" class="img">
-    </div>
-    <ion-label class="title">Create Your Account</ion-label>
 
-    <ion-item lines="none" class="input-item">
-      <ion-icon slot="start" name="mail-outline" color="medium"></ion-icon>
-      <ion-input placeholder="Email" type="email"></ion-input>
-    </ion-item>
 
-    <ion-item lines="none" class="input-item">
-      <ion-icon slot="start" name="lock-closed-outline" color="medium"></ion-icon>
-      <ion-input placeholder="Password" type="password"></ion-input>
-    </ion-item>
 
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+      <div class="logo-content">
+        <img src="assets/images/auth.png" alt="" class="img">
+      </div>
+      <ion-label class="title">Create Your Account</ion-label>
+      <ion-item>
+        <ion-label position="floating">Full Name</ion-label>
+        <ion-input type="text" class="form-control" formControlName="name" ></ion-input>
+        <span class="warni" *ngIf="isValidField('name')">
+          *You must enter your full name.
+        </span>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="email" class="form-control" formControlName="email"></ion-input>
+        <span class="warni" *ngIf="isValidField('email')">
+          *The email is mandatory and must be valid.
+        </span>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" class="form-control" formControlName="password"></ion-input>
+        <span class="warni" *ngIf="isValidField('password')">
+          *You must enter your password.
+        </span>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Phone Number</ion-label>
+        <ion-input  type="text" class="form-control" formControlName="phoneNumber"></ion-input>
+        <span class="warni" *ngIf="isValidField('phoneNumber')">
+          *You must enter your phone number.
+        </span>
+      </ion-item>
+
+    <!--  <ion-item lines="none" class="check-item">
+        <ion-label>Remember me</ion-label>
+        <ion-checkbox slot="start" mode="md"></ion-checkbox>
+      </ion-item> -->
+
+      <ion-button shape="round" expand="block" type="submit" color="primary" [disabled]="!registerForm.valid">
+        Sign Up
+      </ion-button>
+    </form>
+
+    <!-- Casilla de verificación para agregar tarjeta de banco
     <ion-item lines="none" class="check-item">
-      <ion-label>Remember me</ion-label>
-      <ion-checkbox slot="start" mode="md"></ion-checkbox>
-    </ion-item>
+      <ion-label>Add Bank Card</ion-label>
+      <ion-checkbox slot="start" mode="md" [(ngModel)]="addBankCard"></ion-checkbox>
+    </ion-item> -->
 
-    <ion-button expand="block" shape="round" color="primary" (click)="onNext()">
-      Sign Up
-    </ion-button>
+    <!-- Square Payment Form, mostrado si el checkbox está marcado
+    <div *ngIf="addBankCard">
+      <div id="card-container"></div>
+      <button id="card-button" ion-button expand="block" type="button">
+        Add Card
+      </button>
+    </div> -->
 
-    <ion-row class="or-content">
+     <ion-row class="or-content">
       <ion-col size="4">
         <div class="line"></div>
       </ion-col>
@@ -53,7 +94,7 @@
       </ion-col>
     </ion-row>
 
-    <div class="social-login">
+  <!-- <div class="social-login">
       <ion-button fill="outline" color="medium" (click)="onNext()">
         <ion-icon slot="icon-only" name="logo-facebook" color="secondary"></ion-icon>
       </ion-button>
@@ -63,7 +104,7 @@
       <ion-button fill="outline" color="medium" (click)="onNext()">
         <ion-icon slot="icon-only" name="logo-apple" color="dark"></ion-icon>
       </ion-button>
-    </div>
+    </div> -->
 
     <ion-button expand="block" fill="clear" shape="round" color="medium" (click)="onBack()">
       <span class="register-lbl-gray">Already have an account ?</span> &nbsp; <span class="register-lbl-bold">Sign

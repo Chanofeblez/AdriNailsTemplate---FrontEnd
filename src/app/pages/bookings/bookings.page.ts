@@ -11,6 +11,10 @@ import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
 import { register } from 'swiper/element';
 import { Router } from '@angular/router';
+import { Appointment, AppointmentStatus } from 'src/app/model/appointment.interface';
+import { AppointmentService } from 'src/app/services/appointment.service';
+import * as jwt_decode from 'jwt-decode';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-bookings',
@@ -18,10 +22,16 @@ import { Router } from '@angular/router';
   styleUrls: ['./bookings.page.scss'],
 })
 export class BookingsPage implements OnInit {
+
   segment: any = 'book';
   minDate: string;
+  userId: string;
   selectedDate: string | null = null;
   selectedSlot: string | null = null;
+
+  upcomingAppointments  : Appointment[] = [];
+  completedAppointments : Appointment[] = [];
+  cancelledAppointments : Appointment[] = [];
 
   slotList: any[] = [
     "10:00am",
@@ -36,10 +46,12 @@ export class BookingsPage implements OnInit {
 
   selectedSpecialist: any = '';
 
-  public util = inject(UtilService);
-  private modalController = inject(ModalController);
-  private navCtrl = inject(NavController);
-  private router = inject(Router);
+  public util                = inject(UtilService);
+  private modalController    = inject(ModalController);
+  private navCtrl            = inject(NavController);
+  private router             = inject(Router);
+  private appointmentService = inject(AppointmentService);
+  private authService        = inject(AuthService);
 
   constructor() {
     const today = new Date();
@@ -51,7 +63,51 @@ export class BookingsPage implements OnInit {
   }
 
   ngOnInit() {
+    this.getToken();
   }
+
+  getToken() {
+    const token = localStorage.getItem('authToken');
+    if (token) {
+      this.authService.getUserByToken(token).subscribe(
+        (response: any) => {
+          console.log('Username:', response);
+          // Aquí puedes manejar el username, por ejemplo, almacenarlo en una variable o en el estado del componente
+          this.getUser(response.username);
+        },
+        (error) => {
+          console.error('Error al obtener el username:', error);
+          // Verifica el contenido del error
+          console.log('Error completo:', error);
+        }
+      );
+    } else {
+      console.error('Token not found');
+    }
+  }
+
+  getUser(userId:string){
+    this.appointmentService.getUserAppointments(this.userId).subscribe((appointments: Appointment[]) => {
+      const now = new Date();
+
+      appointments.forEach(appointment => {
+        if (appointment.status === 'CANCELLED') {
+          this.cancelledAppointments.push(appointment);
+        } else if (appointment.status === 'CONFIRMED' && new Date(appointment.date) > now) {
+          this.upcomingAppointments.push(appointment);
+        } else if (appointment.status === 'CONFIRMED' && new Date(appointment.date) <= now) {
+          appointment.status = AppointmentStatus.COMPLETED; // Cambiar el estado a COMPLETED
+          this.appointmentService.updateAppointmentStatus(appointment.id, AppointmentStatus.COMPLETED).subscribe(response => {
+            console.log('Appointment status updated to COMPLETED');
+          }, error => {
+            console.error('Error updating appointment status', error);
+          });
+          this.completedAppointments.push(appointment);
+        }
+      });
+    });
+  }
+
 
   onDateChange(event: any) {
     this.selectedDate = event.detail.value.split('T')[0];

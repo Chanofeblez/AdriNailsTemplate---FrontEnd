@@ -15,6 +15,8 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./inbox.page.scss'],
 })
 export class InboxPage implements OnInit {
+
+
   segment: any = 'chats';
   constructor(
     public util: UtilService

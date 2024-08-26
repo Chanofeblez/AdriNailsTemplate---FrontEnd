@@ -29,7 +29,7 @@ export class HomePage implements OnInit {
   }
 
   onNotification() {
-    this.util.navigateToPage('notifications');
+    this.util.navigateToPage('login');
   }
 
   onBookmarks() {

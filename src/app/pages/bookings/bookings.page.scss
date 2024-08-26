@@ -8,3 +8,14 @@
 ion-footer {
   margin-top: auto; /* Empuja el botón hacia abajo */
 }
+
+.no-appointments-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px; /* Ajusta la altura según lo necesites */
+  font-size: 18px;
+  color: #999; /* Color de texto, puedes cambiarlo */
+  text-align: center;
+  padding: 20px;
+}

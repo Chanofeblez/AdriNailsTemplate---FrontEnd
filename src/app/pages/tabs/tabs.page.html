@@ -5,6 +5,22 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 -->
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md" color="primary">
+    <ion-title>AdriNailsDesign</ion-title>
+   <!-- <ion-buttons slot="end">
+      <ion-button (click)="onNotification()">
+        <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="onBookmarks()">
+        <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons> -->
+  </ion-toolbar>
+<!--  <ion-toolbar class="ion-no-border">
+    <ion-searchbar placeholder="Search" inputmode="text" type="text" mode="ios"></ion-searchbar>
+  </ion-toolbar> -->
+</ion-header>
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
@@ -23,13 +39,18 @@
     </ion-tab-button>
 
     <ion-tab-button tab="inbox">
-      <ion-icon aria-hidden="true" name="chatbox-ellipses-outline"></ion-icon>
-      <ion-label>Inbox</ion-label>
+      <ion-icon aria-hidden="true" name="images-outline"></ion-icon>
+      <ion-label>Pictures</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="profile">
+    <ion-tab-button tab="profile" *ngIf="authService.isLoggedIn()">
       <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
       <ion-label>Profile</ion-label>
+    </ion-tab-button>
+
+    <ion-tab-button (click)="onNotification()" *ngIf="!authService.isLoggedIn()">
+      <ion-icon aria-hidden="true" name="log-in-outline"></ion-icon>
+      <ion-label>Login</ion-label>
     </ion-tab-button>
   </ion-tab-bar>
 </ion-tabs>
