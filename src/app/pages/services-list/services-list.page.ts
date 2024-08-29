@@ -19,6 +19,7 @@ import { UtilService } from 'src/app/services/util.service';
 export class ServicesListPage implements OnInit {
 
   segment: any = 'manicure';
+  userId:string;
   selectedDate: string;
   selectedTime: string;
 
@@ -38,8 +39,10 @@ export class ServicesListPage implements OnInit {
     this.loadServicios();
 
     this.route.queryParams.subscribe(params => {
+      this.userId= params['user'];
       this.selectedDate = params['date'];
       this.selectedTime = params['time'];
+      console.log('User:', this.userId);
       console.log('Selected Date:', this.selectedDate);
       console.log('Selected Time:', this.selectedTime);
     });
@@ -79,6 +82,7 @@ export class ServicesListPage implements OnInit {
   onServiceDetails(name: Servicio) {
     const param: NavigationExtras = {
       queryParams: {
+        user: this.userId,
         name: name.name,
         price: name.price,
         date: this.selectedDate,

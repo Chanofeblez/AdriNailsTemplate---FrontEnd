@@ -27,4 +27,8 @@ export class ServicioService {
   getServicioById(id: string): Observable<Servicio> {
     return this.http.get<Servicio>(`${this.apiUrl}/${id}`);
   }
+
+  getServicioByName(name: string): Observable<Servicio> {
+    return this.http.get<Servicio>(`${this.apiUrl}/by-name`, { params: { name } });
+  }
 }

@@ -48,5 +48,9 @@ export class AuthService {
     return this.http.post<string>(`${this.apiUrl}/extract-username`, { token });
   }
 
+  getCustomerByEmail(email: string): Observable<Customer> {
+    return this.http.get<Customer>(`${this.apiUrl}/by-email`, { params: { email } });
+  }
+
 }
 

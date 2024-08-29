@@ -1,5 +1,5 @@
 export interface Customer {
-  id?: string; // Este campo es opcional ya que se genera en el backend.
+  id: string; // Este campo es opcional ya que se genera en el backend.
   name: string;
   email: string;
   password: string;

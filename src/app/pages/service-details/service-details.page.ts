@@ -13,8 +13,9 @@ import { ModalController, NavController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
-import { Appointment } from 'src/app/model/appointment.interface';
+import { Appointment, AppointmentStatus } from 'src/app/model/appointment.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { Customer } from 'src/app/model/customer.interface';
 
 @Component({
   selector: 'app-service-details',
@@ -23,7 +24,8 @@ import { ServicioService } from 'src/app/services/servicio.service';
 })
 export class ServiceDetailsPage implements OnInit {
 
-  name: String = '';
+  userId: string;
+  name: string = '';
   selectedDate: string;
   selectedTime: string;
 
@@ -46,19 +48,26 @@ export class ServiceDetailsPage implements OnInit {
   private servicioService = inject(ServicioService);
 
   constructor() {
-    this.route.queryParams.subscribe((data: any) => {
-      console.log(data);
-      this.name = data.name;
-      this.selectedDate = data.date;
-      this.selectedTime = data.time;
-      console.log(this.name);
-      console.log(this.selectedDate);
-      console.log(this.selectedTime);
-    });
+
   }
 
   ngOnInit() {
     this.loadServicios();
+
+    this.route.queryParams.subscribe(params => {
+      this.userId= params['user'];
+      this.selectedDate = params['date'];
+      this.selectedTime = params['time'];
+      this.name = params['name'];
+      this.total = params['price'];
+
+
+      console.log(this.userId);
+      console.log(this.name);
+      console.log(this.selectedDate);
+      console.log(this.selectedTime);
+      console.log(this.total);
+    });
   }
 
   loadServicios(): void {
@@ -138,24 +147,33 @@ export class ServiceDetailsPage implements OnInit {
   }
 
   createAppointment() {
-  // const appointment: Appointment = {
-  //    date: this.selectedDate,
-  //    time: this.selectedTime,
-  //    serviceName: this.mostrarServicio.name, // Asegúrate de tener este arreglo de servicios
-      // Agrega aquí cualquier otro dato necesario
-   // };
-    // Aquí llamas a tu servicio para crear el appointment
-  //  this.appointmentService.createAppointment(appointment).subscribe(
-  //    (response: Appointment) => { // Especifica el tipo de `response` si lo conoces
-  //      // Manejar la respuesta del servidor
-  //      this.navCtrl.navigateForward('/confirmation'); // Navegar a la página de confirmación
-  //    },
-  //    (error: any) => { // Especifica `any` o un tipo más específico si sabes cuál es
-  //      // Manejar el error
-  //      console.error('Error creating appointment:', error);
-  //    }
-  //  );
+
+            const appointmentRequestDTO : Appointment = {
+              customerEmail: this.userId, // Usar el email del Customer
+              serviceName: this.name, // Usar el ID del Servicio
+              serviceVariantIds: this.varianteAppointment.map(variant => variant.id), // Mapeamos las variantes a sus IDs
+              appointmentDate: this.selectedDate,
+              appointmentTime: this.selectedTime,
+              totalCost: this.total, // Asumiendo que tienes el total calculado
+              status: AppointmentStatus.PENDING // Estado por defecto
+            };
+            console.log("Created Appointment DTO", appointmentRequestDTO);
+
+            // Llamar al servicio para crear el appointment
+            this.appointmentService.createAppointment(appointmentRequestDTO).subscribe(
+              (response: Appointment) => {
+                // Manejar la respuesta del servidor
+                console.log("Create Appointment",response);
+                this.navCtrl.navigateForward('/'); // Navegar a la página de confirmación
+              },
+              (error: any) => {
+                // Manejar el error
+                console.error('Error creating appointment:', error);
+              }
+            );
   }
+
+
 
   showLoginPrompt() {
     const navigationExtras = {

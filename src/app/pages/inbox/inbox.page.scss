@@ -5,3 +5,38 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
+
+.no-appointments-message {
+  text-align: center;
+  margin-top: 50%;
+  font-size: 40px;
+  color: gray;
+}
+
+.cart-content {
+  margin: 10px;
+  height: 170px; /* Puedes ajustar esta altura según lo que necesites */
+}
+
+.cover {
+  height: 170px; /* Ajusta esta altura según lo que necesites */
+  background-size: cover; /* Asegura que la imagen cubra completamente el div */
+  background-position: center;
+  border-radius: 10px;
+}
+
+.top-content1 {
+  display: flex;
+  flex-direction: row;
+  justify-content:stretch;
+  align-items: center;
+  //border-bottom: 1px solid lightgray;
+  padding-bottom: 1px;
+}
+
+.booking-screen{
+
+  padding-top: 20%;
+
+}
+

@@ -42,21 +42,9 @@ const routes: Routes = [
     path: 'chats',
     loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsPageModule)
   },
-
-
   {
     path: 'explore',
     loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExplorePageModule)
-  },
-
-
-  {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
-  },
-  {
-    path: 'inbox',
-    loadChildren: () => import('./pages/inbox/inbox.module').then(m => m.InboxPageModule)
   },
   {
     path: 'notifications',

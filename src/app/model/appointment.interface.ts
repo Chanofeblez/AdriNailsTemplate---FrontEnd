@@ -2,14 +2,14 @@ import { Customer } from "./customer.interface";
 import { Servicio, ServicioVariant } from "./manicure-service.interface";
 
 export interface Appointment {
-  id: string;
-  user: Customer; // Tipo según tu modelo de usuario
-  date: string;
-  time: string;
-  serviceName: Servicio;
-  variantes: ServicioVariant[]; // Tipo según tus variantes
-  totalCost: number;
-  status: AppointmentStatus;
+  id?: string;
+  customerEmail: string; // El email del cliente, en lugar del objeto Customer
+  serviceName: string; // ID del servicio, en lugar del objeto Servicio
+  serviceVariantIds: string[]; // Lista de IDs de las variantes de servicio, en lugar de objetos ServicioVariant
+  appointmentDate: string; // Fecha de la cita en formato 'yyyy-MM-dd'
+  appointmentTime: string; // Hora de la cita en formato 'HH:mm:ss'
+  totalCost: number; // Costo total de la cita
+  status: AppointmentStatus; // Estado de la cita
 }
 
 export enum AppointmentStatus {
@@ -19,3 +19,4 @@ export enum AppointmentStatus {
   CONFIRMED = 'CONFIRMED',
   COMPLETED = 'COMPLETED'
 }
+

@@ -34,14 +34,21 @@
        <div class="slot-screen">
           <ion-label class="title">Select Date</ion-label>
           <ion-datetime presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)"> </ion-datetime>
-          <ion-label class="title">Select Hours</ion-label>
-          <ion-row class="slots">
-            <ion-col size="3" *ngFor="let item of slotList">
-              <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
-                <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}</ion-label>
-              </div>
-            </ion-col>
-          </ion-row>
+          <ion-label class="title" *ngIf="selectedDate!==null">Select Hours</ion-label>
+          <div class="slots-section">
+            <ion-row class="slots">
+              <ion-col size="3" *ngFor="let item of availableMorningSlots">
+                <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
+                  <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00AM</ion-label>
+                </div>
+              </ion-col>
+              <ion-col size="3" *ngFor="let item of availableAfternoonSlots">
+                <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
+                  <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00PM</ion-label>
+                </div>
+              </ion-col>
+            </ion-row>
+        </div>
     <!-- <ion-label class="title">Select Specialist</ion-label>
           <div class="stories-chat-list">
             <swiper-container #swiper slides-per-view="4.2" autoplay="true">
@@ -66,39 +73,40 @@
     <div class="booking-list" *ngIf="segment =='upcoming'">
       <ion-card mode="ios" class="cart-content" *ngFor="let item of upcomingAppointments;let i = index;">
         <div class="top-content">
-          <ion-label class="date">{{item.date}} {{item.time}}</ion-label>
+          <ion-label class="date1">Date: {{item.appointmentDate}} </ion-label>
           <div class="end-item">
-            <ion-label class="remind">Remind me</ion-label>
-            <ion-toggle class="toggle" mode="md" [checked]="i % 2 == 0 ? true: false"></ion-toggle>
+            <ion-label class="date1">Time: {{item.appointmentTime}}</ion-label>
+            <!-- <ion-label class="remind">Remind me</ion-label>
+                 <ion-toggle class="toggle" mode="md" [checked]="i % 2 == 0 ? true: false"></ion-toggle> -->
           </div>
         </div>
         <ion-row class="salon-info-list">
           <ion-col size="4">
-            <div class="cover" [ngStyle]="{'background-image': 'url('+ item.serviceName.imagePath +')'}"></div>
+            <div class="cover" [ngStyle]="{'background-image': 'url('+  +')'}"></div>
           </ion-col>
           <ion-col size="8">
             <div class="name-content">
-              <ion-label class="title">{{item.serviceName.name}}</ion-label>
-              <ion-label class="address">{{item.totalCost}}</ion-label>
-              <ion-label class="service-title">Services:</ion-label>
-              <ion-label class="service-name"> <span class="name"
+              <ion-label class="title">{{item.serviceName}}</ion-label>
+              <ion-label class="service-title">Cost: ${{item.totalCost}}</ion-label>
+              <ion-label class="address">Services Extras: {{upcomingAppointments.length}}</ion-label>
+             <!-- <ion-label class="service-name"> <span class="name"
                   *ngFor="let sub of util.categories.slice(0,6);let i = index;"> {{sub.name}} <span *ngIf="i < 5"
-                    class="separate">,</span> </span> </ion-label>
+                    class="separate">,</span> </span> </ion-label> -->
             </div>
           </ion-col>
         </ion-row>
         <div class="bottom-content">
           <ion-row>
-            <ion-col size="6">
+            <ion-col size="12">
               <ion-button expand="block" fill="outline" shape="round" size="small" (click)="presentModal()">
                 Cancel Booking
               </ion-button>
             </ion-col>
-            <ion-col size="6">
+          <!--  <ion-col size="6">
               <ion-button expand="block" fill="solid" shape="round" size="small" (click)="onReceipt()">
                 View E-Receipt
               </ion-button>
-            </ion-col>
+            </ion-col> -->
           </ion-row>
         </div>
       </ion-card>
@@ -110,18 +118,18 @@
     <div class="booking-list" *ngIf="segment =='completed'">
       <ion-card mode="ios" class="cart-content" *ngFor="let item of completedAppointments;let i = index;">
         <div class="top-content">
-          <ion-label class="date">{{item.date}} {{item.time}}</ion-label>
+          <ion-label class="date">{{item.appointmentDate}} {{item.appointmentTime}}</ion-label>
           <div class="end-item">
             <ion-label class="completed">Completed</ion-label>
           </div>
         </div>
         <ion-row class="salon-info-list">
           <ion-col size="4">
-            <div class="cover" [ngStyle]="{'background-image': 'url('+ item.serviceName.imagePath +')'}"></div>
+            <div class="cover" [ngStyle]="{'background-image': 'url('+ +')'}"></div>
           </ion-col>
           <ion-col size="8">
             <div class="name-content">
-              <ion-label class="title">{{item.serviceName.name}}</ion-label>
+              <ion-label class="title">{{item.serviceName}}</ion-label>
               <ion-label class="address">{{item.totalCost}}</ion-label>
               <ion-label class="service-title">Services:</ion-label>
               <ion-label class="service-name"> <span class="name"
@@ -148,18 +156,18 @@
     <div class="booking-list" *ngIf="segment =='cancelled'">
       <ion-card mode="ios" class="cart-content" *ngFor="let item of cancelledAppointments;let i = index;">
         <div class="top-content">
-          <ion-label class="date">{{item.date}} {{item.time}}</ion-label>
+          <ion-label class="date">{{item.appointmentDate}} {{item.appointmentTime}}</ion-label>
           <div class="end-item">
             <ion-label class="cancelled">Cancelled</ion-label>
           </div>
         </div>
         <ion-row class="salon-info-list">
           <ion-col size="4">
-            <div class="cover" [ngStyle]="{'background-image': 'url('+ item.serviceName.imagePath +')'}"></div>
+            <div class="cover" [ngStyle]="{'background-image': 'url('+ +')'}"></div>
           </ion-col>
           <ion-col size="8">
             <div class="name-content">
-              <ion-label class="title">{{item.serviceName.name}}</ion-label>
+              <ion-label class="title">{{item.serviceName}}</ion-label>
               <ion-label class="address">{{item.totalCost}}</ion-label>
               <ion-label class="service-title">Services:</ion-label>
               <ion-label class="service-name"> <span class="name"
