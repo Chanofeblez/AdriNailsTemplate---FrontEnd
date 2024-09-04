@@ -10,6 +10,7 @@ export interface Appointment {
   appointmentTime: string; // Hora de la cita en formato 'HH:mm:ss'
   totalCost: number; // Costo total de la cita
   status: AppointmentStatus; // Estado de la cita
+  imagePath: string;
 }
 
 export enum AppointmentStatus {

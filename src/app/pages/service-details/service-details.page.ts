@@ -28,6 +28,7 @@ export class ServiceDetailsPage implements OnInit {
   name: string = '';
   selectedDate: string;
   selectedTime: string;
+  imagePath: string;
 
   servicios: Servicio[]=[];
   mostrarServicio : Servicio;
@@ -60,6 +61,7 @@ export class ServiceDetailsPage implements OnInit {
       this.selectedTime = params['time'];
       this.name = params['name'];
       this.total = params['price'];
+      this.imagePath = params['imagePath'];
 
 
       console.log(this.userId);
@@ -67,6 +69,7 @@ export class ServiceDetailsPage implements OnInit {
       console.log(this.selectedDate);
       console.log(this.selectedTime);
       console.log(this.total);
+      console.log(this.imagePath);
     });
   }
 
@@ -155,7 +158,8 @@ export class ServiceDetailsPage implements OnInit {
               appointmentDate: this.selectedDate,
               appointmentTime: this.selectedTime,
               totalCost: this.total, // Asumiendo que tienes el total calculado
-              status: AppointmentStatus.PENDING // Estado por defecto
+              status: AppointmentStatus.PENDING, // Estado por defecto
+              imagePath: this.imagePath
             };
             console.log("Created Appointment DTO", appointmentRequestDTO);
 

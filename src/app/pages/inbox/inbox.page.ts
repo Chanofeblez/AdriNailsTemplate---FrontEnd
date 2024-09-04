@@ -6,7 +6,7 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AlertController } from '@ionic/angular';
 import { Image } from 'src/app/model/image.interface';
 import { ImageService } from 'src/app/services/image.service';
@@ -20,42 +20,63 @@ import { UtilService } from 'src/app/services/util.service';
 export class InboxPage implements OnInit {
 
   //All Chat Page
-  segment: any = 'chats';
+  segment: any = 'manicure';
 
   //Load Image
   imageList: Image[] = [];
+  manicureImages: Image[] = [];
+  pedicureImages: Image[] = [];
 
   //Save Image
   selectedFile: File | null = null;
+  imageType: string = '';
   imageTitle: string = 'Default Title';
 
   public util             = inject(UtilService);
   private imageService    = inject(ImageService);
   private alertController = inject(AlertController);
+  private router          = inject(ActivatedRoute);
 
   constructor() { }
 
   ngOnInit() {
+    this.router.queryParams.subscribe(params => {
+      this.segment = params['type'];
+      console.log(this.segment);
+    });
     this.loadImages();
   }
 
   //Load Image
   loadImages() {
     this.imageService.getAllImages().subscribe(
-        (images: Image[]) => {
-            this.imageList = images;
-            this.imageList.forEach((image, index) => {
-                const base64Data = image.data; // El data ya está en Base64
-                const imageUrl = `data:${image.contentType};base64,${base64Data}`;
-                this.imageList[index].imageUrl = imageUrl;
-            });
-            console.info('Images', this.imageList);
-        },
-        (error) => {
-            console.error('Error loading images', error);
-        }
+      (images: Image[]) => {
+        // Vaciar las listas antes de llenarlas de nuevo
+        this.manicureImages = [];
+        this.pedicureImages = [];
+
+        this.imageList = images;
+        this.imageList.forEach((image, index) => {
+          const base64Data = image.data; // El data ya está en Base64
+          const imageUrl = `data:${image.contentType};base64,${base64Data}`;
+          this.imageList[index].imageUrl = imageUrl;
+
+          // Filtrar por tipo
+          if (image.type === 'Manicure') {
+            this.manicureImages.push(image);
+          } else if (image.type === 'Pedicure') {
+            this.pedicureImages.push(image);
+          }
+        });
+        console.info('Images', this.imageList);
+        console.info('Manicure Images', this.manicureImages);
+        console.info('Pedicure Images', this.pedicureImages);
+      },
+      (error) => {
+        console.error('Error loading images', error);
+      }
     );
-}
+  }
 
   //Save Image
   onFileSelected(event: any) {
@@ -65,13 +86,14 @@ export class InboxPage implements OnInit {
   onSubmit() {
     if (this.selectedFile) {
       console.log("Titulo", this.imageTitle);
+      console.log("Type", this.imageType);
       console.log("File", this.selectedFile);
-      this.uploadImage(this.imageTitle, this.selectedFile);
+      this.uploadImage(this.imageTitle, this.imageType, this.selectedFile);
     }
   }
 
-  private uploadImage(title: string, image: File) {
-    this.imageService.uploadImage(title, image).subscribe(
+  private uploadImage(title: string, type: string, image: File) {
+    this.imageService.uploadImage(title, type, image).subscribe(
       async (response:any) => {
         const alert = await this.alertController.create({
           header: 'Success',
@@ -79,6 +101,7 @@ export class InboxPage implements OnInit {
           buttons: ['OK']
         });
         await alert.present();
+        this.loadImages();
       },
       async (error) => {
         const alert = await this.alertController.create({

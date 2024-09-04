@@ -35,7 +35,7 @@ const routes: Routes = [
           import('../bookings/bookings.module').then((m) => m.BookingsPageModule),
       },
       {
-        path: 'inbox',
+        path: 'gallery',
         loadChildren: () =>
           import('../inbox/inbox.module').then((m) => m.InboxPageModule),
       },
@@ -105,7 +105,14 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
       },
-
+      {
+        path: 'package-details',
+        loadChildren: () => import('../package-details/package-details.module').then(m => m.PackageDetailsPageModule)
+      },
+      {
+        path: 'packages-list',
+        loadChildren: () => import('../packages-list/packages-list.module').then(m => m.PackagesListPageModule)
+      },
       {
         path: '',
         redirectTo: '/tabs/home',

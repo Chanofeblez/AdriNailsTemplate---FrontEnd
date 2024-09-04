@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Appointment } from '../model/appointment.interface';
+import { Appointment, AppointmentStatus } from '../model/appointment.interface';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { LocalTime } from '../model/localtime.interface';
@@ -39,8 +39,9 @@ export class AppointmentService {
     return this.http.put<Appointment>(`${this.apiUrl}/${id}`, appointment);
   }
 
-  updateAppointmentStatus(appointmentId: string, status: string): Observable<any> {
-    return this.http.put(`${this.apiUrl}/${appointmentId}/status`, { status: status });
+  updateAppointmentStatus(appointmentId: string, status: AppointmentStatus): Observable<any> {
+    console.log('Status:', status);
+    return this.http.put(`${this.apiUrl}/${appointmentId}`, { status: status });
 }
 
   deleteAppointment(id: string): Observable<void> {

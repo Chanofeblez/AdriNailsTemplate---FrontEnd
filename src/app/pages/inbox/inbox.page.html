@@ -67,11 +67,52 @@
   </div>
 </ion-content> -->
 
+<ion-header class="ion-no-border">
+  <ion-toolbar mode="md" color="primary">
+    <ion-title>My Bookings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button color="light">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+      <ion-button color="light">
+        <ion-icon slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <ion-toolbar mode="md">
+    <ion-segment [(ngModel)]="segment" (ionChange)="segmentChanged()" mode="md">
+      <ion-segment-button value="manicure">
+        <ion-label>Manicure</ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="pedicure">
+        <ion-label>Pedicure</ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
+
 <ion-content>
   <div class="booking-screen">
-    <div class="booking-list">
+    <div class="booking-list" *ngIf="segment =='manicure'">
       <ion-row class="salon-info-list">
-        <ion-col size="6" *ngFor="let item of imageList; let i = index">
+        <ion-col size="6" *ngFor="let item of manicureImages; let i = index">
+          <ion-card mode="ios" class="cart-content">
+            <div class="top-content1">
+              <ion-label >{{ item.title }}</ion-label>
+            </div>
+            <ion-row class="salon-info-list">
+              <ion-col size="12">
+                <div class="cover" [ngStyle]="{'background-image': 'url(' + item.imageUrl + ')'}"></div>
+              </ion-col>
+            </ion-row>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <div class="booking-list" *ngIf="segment =='pedicure'">
+      <ion-row class="salon-info-list">
+        <ion-col size="6" *ngFor="let item of pedicureImages; let i = index">
           <ion-card mode="ios" class="cart-content">
             <div class="top-content1">
               <ion-label >{{ item.title }}</ion-label>
@@ -91,6 +132,7 @@
     No images to display.
   </div>
 
+  <!-- Formulario para subir imagenes -->
   <div class="image-upload">
     <form (submit)="onSubmit()">
       <!-- Campo para ingresar el título de la imagen -->
@@ -99,13 +141,22 @@
         <ion-input [(ngModel)]="imageTitle" name="imageTitle" required></ion-input>
       </ion-item>
 
+      <!-- Campo para seleccionar el tipo de imagen -->
+    <ion-item>
+      <ion-label position="stacked">Image Type</ion-label>
+      <ion-select [(ngModel)]="imageType" name="imageType" required>
+        <ion-select-option value="Manicure">Manicure</ion-select-option>
+        <ion-select-option value="Pedicure">Pedicure</ion-select-option>
+      </ion-select>
+    </ion-item>
+
       <!-- Campo para seleccionar el archivo -->
       <ion-item>
         <ion-label position="stacked">Select Image</ion-label>
         <input type="file" (change)="onFileSelected($event)" accept="image/*">
       </ion-item>
 
-      <!-- Botón para subir la imagen -->
+      <!-- Botón para subir la imagen-->
       <ion-button expand="block" type="submit" [disabled]="!selectedFile">Upload Image</ion-button>
     </form>
   </div>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Servicio } from '../model/manicure-service.interface';
 
@@ -30,5 +30,12 @@ export class ServicioService {
 
   getServicioByName(name: string): Observable<Servicio> {
     return this.http.get<Servicio>(`${this.apiUrl}/by-name`, { params: { name } });
+  }
+
+  // Método para obtener la URL de la imagen basado en el nombre del servicio
+  getServiceImageUrl(serviceName: string): Observable<string> {
+    return this.getServicioByName(serviceName).pipe(
+      map(servicio => servicio.imagePath)  // Suponiendo que el DTO tiene una propiedad imageUrl
+    );
   }
 }

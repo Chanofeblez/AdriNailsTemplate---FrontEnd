@@ -6,21 +6,23 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 -->
 <ion-header class="ion-no-border">
-  <ion-toolbar mode="md" color="primary">
-    <ion-title>AdriNailsDesign</ion-title>
-   <!-- <ion-buttons slot="end">
-      <ion-button (click)="onNotification()">
-        <ion-icon slot="icon-only" name="log-in-outline"></ion-icon>
-      </ion-button>
-      <ion-button (click)="onBookmarks()">
-        <ion-icon slot="icon-only" name="bookmark-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons> -->
+  <ion-toolbar mode="md" color="primary" style="--background: var(--ion-color-primary);">
+    <ion-title style="font-weight: bold; font-size: 1.2rem; color: var(--ion-color-dark);">
+      <!-- Logo opcional -->
+      <!-- <ion-avatar slot="start">
+        <img src="path-to-logo.png">
+      </ion-avatar> -->
+      AdriNailsDesign
+    </ion-title>
+    <!-- <ion-buttons slot="end"> -->
+      <!-- Botones de notificación y marcadores -->
+    <!-- </ion-buttons> -->
   </ion-toolbar>
-<!--  <ion-toolbar class="ion-no-border">
-    <ion-searchbar placeholder="Search" inputmode="text" type="text" mode="ios"></ion-searchbar>
-  </ion-toolbar> -->
+  <!-- <ion-toolbar class="ion-no-border" style="--background: var(--ion-color-light);"> -->
+    <!-- Barra de búsqueda -->
+  <!-- </ion-toolbar> -->
 </ion-header>
+
 <ion-tabs>
   <ion-tab-bar slot="bottom">
     <ion-tab-button tab="home">
@@ -28,7 +30,7 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="courses">
+    <ion-tab-button tab="packages-list">
       <ion-icon aria-hidden="true" name="play-circle-outline"></ion-icon>
       <ion-label>Courses</ion-label>
     </ion-tab-button>
@@ -38,7 +40,7 @@
       <ion-label>Bookings</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="inbox">
+    <ion-tab-button tab="gallery">
       <ion-icon aria-hidden="true" name="images-outline"></ion-icon>
       <ion-label>Pictures</ion-label>
     </ion-tab-button>

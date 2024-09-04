@@ -51,14 +51,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
   },
   {
-    path: 'package-details',
-    loadChildren: () => import('./pages/package-details/package-details.module').then(m => m.PackageDetailsPageModule)
-  },
-  {
-    path: 'packages-list',
-    loadChildren: () => import('./pages/packages-list/packages-list.module').then(m => m.PackagesListPageModule)
-  },
-  {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
    // canActivate: [AuthguardsGuard]  // Proteges la ruta de login

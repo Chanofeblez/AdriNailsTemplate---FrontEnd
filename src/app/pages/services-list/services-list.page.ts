@@ -82,11 +82,12 @@ export class ServicesListPage implements OnInit {
   onServiceDetails(name: Servicio) {
     const param: NavigationExtras = {
       queryParams: {
-        user: this.userId,
-        name: name.name,
-        price: name.price,
-        date: this.selectedDate,
-        time: this.selectedTime
+        user:      this.userId,
+        name:      name.name,
+        price:     name.price,
+        imagePath: name.imagePath,
+        date:      this.selectedDate,
+        time:      this.selectedTime
       }
     };
     this.util.navigateToPage('service-details', param);

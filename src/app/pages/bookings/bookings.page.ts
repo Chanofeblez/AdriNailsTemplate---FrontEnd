@@ -17,6 +17,7 @@ import * as jwt_decode from 'jwt-decode';
 import { AuthService } from 'src/app/services/auth.service';
 import { LocalTime } from 'src/app/model/localtime.interface';
 import { Customer } from 'src/app/model/customer.interface';
+import { ServicioService } from 'src/app/services/servicio.service';
 
 @Component({
   selector: 'app-bookings',
@@ -29,6 +30,7 @@ export class BookingsPage implements OnInit {
   minDate: string;
   userId: string;
   user:Customer;
+  serviceImageUrl: string;
   selectedDate: string | null = null;
   selectedSlot: number | null = null;
   availableMorningSlots: number[] = []; // Horarios disponibles después de filtrar
@@ -59,6 +61,8 @@ export class BookingsPage implements OnInit {
   private router             = inject(Router);
   private appointmentService = inject(AppointmentService);
   private authService        = inject(AuthService);
+  private servicioService    = inject(ServicioService);
+
 
   constructor() {
     const today = new Date();
@@ -71,6 +75,7 @@ export class BookingsPage implements OnInit {
 
   ngOnInit() {
     this.getToken();
+
   }
 
   loadAvailableSlots(selectedDate: string) {
@@ -133,38 +138,54 @@ export class BookingsPage implements OnInit {
     }
   }
 
-  getUser(userId: string) {
-    this.appointmentService.getUserAppointments(userId).subscribe((appointments: Appointment[]) => {
+  async getUser(userId: string) {
+    try {
+      const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
+
+      if (!appointments || appointments.length === 0) {
+        console.error("No appointments found or appointments is undefined");
+        return; // Salir de la función si no hay citas
+      }
+
       const now = new Date(); // Obtener la fecha y hora actual
       console.log("Appointments", appointments)
-      appointments.forEach( (appointment:Appointment )=> {
+
+      for (const appointment of appointments) {
         // Combinar la fecha y hora del appointment en un solo objeto Date
         const appointmentDateTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
-        console.log("Fecha", appointmentDateTime);
-        console.log("Days", appointment.appointmentTime+ " " + now);
+        console.log("FechaAppointment", appointmentDateTime);
+        console.log("FechaHoy", now);
+
         if (appointment.status === 'CANCELLED') {
           this.cancelledAppointments.push(appointment);
-      } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING') && appointmentDateTime > now) {
+        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING') && appointmentDateTime > now) {
           this.upcomingAppointments.push(appointment);
-      } else if (appointment.status === 'CONFIRMED' && appointmentDateTime <= now) {
+        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'COMPLETED') && appointmentDateTime <= now) {
           if (appointment.id) {
-              appointment.status = AppointmentStatus.COMPLETED; // Cambiar el estado a COMPLETED
-              this.appointmentService.updateAppointmentStatus(appointment.id, AppointmentStatus.COMPLETED).subscribe(
-                  response => {
-                      console.log('Appointment status updated to COMPLETED');
-                  },
-                  error => {
-                      console.error('Error updating appointment status', error);
-                  }
-              );
+            appointment.status = AppointmentStatus.COMPLETED; // Cambiar el estado a COMPLETED
+            try {
+              await this.appointmentService.updateAppointmentStatus(appointment.id, AppointmentStatus.COMPLETED).toPromise();
+              console.log('Appointment status updated to COMPLETED');
+              this.completedAppointments.push(appointment);
+            } catch (error) {
+              console.error('Error updating appointment status', error);
+            }
           } else {
-              console.error('Appointment ID is undefined');
+            console.error('Appointment ID is undefined');
           }
-          this.completedAppointments.push(appointment);
         }
-      });
+      }
+      console.log("LISTASUPP", this.upcomingAppointments);
+      console.log("LISTASCOMP", this.completedAppointments);
+    } catch (error) {
+      console.error('Error fetching appointments', error);
+    }
+  }
+
+  getServiceImageUrl(serviceName: string){
+    this.servicioService.getServiceImageUrl(serviceName).subscribe(imageUrl => {
+      this.serviceImageUrl = imageUrl;
     });
-    console.log("LISTAS", this.upcomingAppointments);
   }
 
   save(save: any) {

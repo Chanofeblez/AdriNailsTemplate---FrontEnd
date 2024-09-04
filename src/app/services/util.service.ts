@@ -10,13 +10,34 @@ import { LoadingController, AlertController, ToastController, NavController, Men
 import { Haptics, ImpactStyle } from '@capacitor/haptics';
 import { NavigationExtras, Router } from '@angular/router';
 import { Servicio } from '../model/manicure-service.interface';
+import { Post } from '../model/post.interface';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class UtilService {
+
   isLoading = false;
+
+  posts: Post[] = [
+    {
+      imagePath: 'assets/images/extras/complicatedDEN.jpg',
+      serviceName: 'Manicure Deluxe',
+      description: 'A luxurious manicure experience with the best products.'
+    },
+    {
+      imagePath: 'assets/images/extras/simpleDEN.jpg',
+      serviceName: 'Pedicure Spa',
+      description: 'Relaxing pedicure with foot massage and exfoliation.'
+    },
+    {
+      imagePath: 'assets/images/extras/cateye.jpeg',
+      serviceName: 'Gel Polish',
+      description: 'Long-lasting gel polish with a shiny finish.'
+    },
+  ];
+
   offers: any[] = [
     {
       "title": "First-time client special",
