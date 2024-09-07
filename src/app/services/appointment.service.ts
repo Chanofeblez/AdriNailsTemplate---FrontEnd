@@ -48,8 +48,8 @@ export class AppointmentService {
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
-  loadAvailableSlots(selectedDate: string): Observable<number[]> { // Asegúrate de que LocalTime[] sea el tipo correcto
-    return this.http.get<number[]>(`${this.apiUrlSlot}/available`, {
+  loadAvailableSlots(selectedDate: string): Observable<string[]> { // Asegúrate de que LocalTime[] sea el tipo correcto
+    return this.http.get<string[]>(`${this.apiUrlSlot}/available`, {
       params: { date: selectedDate },
     });
   }
@@ -59,6 +59,9 @@ export class AppointmentService {
     return this.http.post(`${this.apiUrlSlot}/reserve`, slot);
   }
 
-
+  // Método para enviar la reseña al backend
+  addReview(appointmentId: string, formData: FormData) {
+    return this.http.post(`${this.apiUrl}/${appointmentId}/review`, formData);
+  }
 
 }

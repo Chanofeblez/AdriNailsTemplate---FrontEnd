@@ -5,7 +5,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { ModalController, NavController } from '@ionic/angular';
 import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
@@ -33,9 +33,9 @@ export class BookingsPage implements OnInit {
   serviceImageUrl: string;
   selectedDate: string | null = null;
   selectedSlot: number | null = null;
-  availableMorningSlots: number[] = []; // Horarios disponibles después de filtrar
-  availableAfternoonSlots: number[] = []; // Horarios disponibles después de filtrar
-  availableSlots: number[] = []; // Horarios disponibles después de filtrar
+  availableMorningSlots: { time: string, isAvailable: boolean }[] = []; // Horarios disponibles después de filtrar
+  availableAfternoonSlots: { time: string, isAvailable: boolean }[] = []; // Horarios disponibles después de filtrar
+  availableSlots: string[] = []; // Horarios disponibles después de filtrar
 
 
   upcomingAppointments  : Appointment[] = [];
@@ -62,6 +62,7 @@ export class BookingsPage implements OnInit {
   private appointmentService = inject(AppointmentService);
   private authService        = inject(AuthService);
   private servicioService    = inject(ServicioService);
+  private cdr                = inject(ChangeDetectorRef);
 
 
   constructor() {
@@ -75,28 +76,61 @@ export class BookingsPage implements OnInit {
 
   ngOnInit() {
     this.getToken();
+    console.log("Oninit");
+  }
 
+  // Este método se ejecuta cada vez que se entra en la vista
+  ionViewWillEnter() {
+    this.resetDate();
+    this.cdr.detectChanges(); // Forzar la detección de cambios
+    console.log("ionViewWillEnter");
+  }
+
+  // Método para resetear la fecha seleccionada
+  resetDate() {
+    this.selectedDate = null; // Reinicia el valor de la fecha seleccionada
+    this.selectedSlot = null;
+    console.log("this.selectedDate", this.selectedDate);
+    console.log("this.selectedSlot", this.selectedSlot);
   }
 
   loadAvailableSlots(selectedDate: string) {
     this.availableMorningSlots = []; // Reinicia la lista de slots AM
     this.availableAfternoonSlots = []; // Reinicia la lista de slots PM
 
-    this.appointmentService.loadAvailableSlots(selectedDate).subscribe((slots: number[]) => {
+    this.appointmentService.loadAvailableSlots(selectedDate).subscribe((slots: string[]) => {
       this.availableSlots = slots;
       console.log("Available",this.availableSlots);
 
-      // Divide los Slots en AM y PM
-      this.availableSlots.forEach(slot => {
+      // Lista de todos los slots
+      const allSlots = ['10:00:00', '13:00:00','15:00:00', '17:00:00'];
 
-        const hour = slot.toString().split(':').map(digital => Number(digital)); // `slot` ya es de tipo `number`, por lo que contiene la hora
+      // Compara todos los slots con los disponibles
+    allSlots.forEach(slot => {
+      const isAvailable = this.availableSlots.includes(slot); // Comparación directa de strings
+      const hour = parseInt(slot.split(':')[0]);
 
-        if (hour[0] < 12) {
-            this.availableMorningSlots.push(hour[0]);
-        } else {
-            this.availableAfternoonSlots.push(hour[0]-12);
-        }
+      if (hour < 12) {
+        this.availableMorningSlots.push({ time: slot, isAvailable: isAvailable });
+      } else {
+        this.availableAfternoonSlots.push({ time: slot, isAvailable: isAvailable });
+      }
     });
+
+    console.log("availableMorningSlots",this.availableMorningSlots);
+    console.log("availableAfternoonSlots",this.availableAfternoonSlots);
+
+      // Divide los Slots en AM y PM
+    //  this.availableSlots.forEach(slot => {
+//
+    //    const hour = slot.toString().split(':').map(digital => Number(digital)); // `slot` ya es de tipo `number`, por lo que contiene la hora
+//
+    //    if (hour[0] < 12) {
+    //        this.availableMorningSlots.push(hour[0]);
+    //    } else {
+    //        this.availableAfternoonSlots.push(hour[0]-12);
+    //    }
+    //});
 
     });
   }
@@ -139,6 +173,9 @@ export class BookingsPage implements OnInit {
   }
 
   async getUser(userId: string) {
+    this.upcomingAppointments = [];
+    this.completedAppointments = [];
+    this.cancelledAppointments = [];
     try {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
 
@@ -156,9 +193,9 @@ export class BookingsPage implements OnInit {
         console.log("FechaAppointment", appointmentDateTime);
         console.log("FechaHoy", now);
 
-        if (appointment.status === 'CANCELLED') {
+        if (appointment.status === 'CANCELED') {
           this.cancelledAppointments.push(appointment);
-        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING') && appointmentDateTime > now) {
+        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING' ) && appointmentDateTime > now) {
           this.upcomingAppointments.push(appointment);
         } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'COMPLETED') && appointmentDateTime <= now) {
           if (appointment.id) {
@@ -207,18 +244,31 @@ export class BookingsPage implements OnInit {
     this.util.navigateToPage('e-receipt');
   }
 
-  async presentModal() {
+  review(appointmentId: string | undefined) {
+    if (!appointmentId) {
+      console.error('appointmentId is undefined or null');
+      return;
+    }
+    this.util.navigateToPage(`/review/${appointmentId}`);
+  }
+
+  async presentModal(appointmentId: string , email: string) {
     const modal = await this.modalController.create({
       component: CancelModalPage,
-      cssClass: 'bookmark-modal'
+      cssClass: 'bookmark-modal',
+      componentProps: {
+        'appointmentId': appointmentId // Pasa el appointmentId aquí
+      }
     });
     modal.onDidDismiss().then((data) => {
       console.log(data);
+      this.getUser(email);
       if (data && data.data == 'ok' && data.role == 'ok') {
         this.util.navigateToPage('cancel-booking');
       }
     });
     await modal.present();
+
   }
 
   onBack() {
@@ -244,6 +294,19 @@ export class BookingsPage implements OnInit {
     //this.util.navigateToPage('services-list');
   }
 
+  // Método para cancelar la cita
+  cambiarStatus(appointmentId:string) {
+    // Llama al servicio para actualizar el estado de la cita a "CANCELLED"
+    this.appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.CONFIRMED).subscribe(
+      (response) => {
+        console.log('Appointment Recuperada:', response);
+        this.getToken();
+      },
+      (error) => {
+        console.error('Error cancelling appointment:', error); // Manejo de errores
+      }
+    );
+  }
 
 
 }

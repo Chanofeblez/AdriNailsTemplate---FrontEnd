@@ -5,3 +5,100 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
+
+.ion-padding {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center;     /* Centra verticalmente */
+  height: 100%;            /* Ocupa toda la pantalla */
+}
+
+.form-container {
+  width: 100%;
+  max-width: 400px;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  margin-top: 20%;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  border-radius: 15px;
+}
+
+.header-container {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.form-pos{
+  margin-top: 10px;
+}
+
+.input-content {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+ion-input {
+  --padding-start: 15px;
+  --background: #f3f3f3;
+  --border-radius: 10px;
+  --placeholder-color: #bbb;
+  --color: #333;
+}
+
+.submit-btn {
+  width: 100%;
+  background-color: #ff87a2;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  border-radius: 30px;
+  --background-hover: #ff6580;
+}
+
+.logout-btn {
+  width: 100%;
+  background-color: #ff5c5c;
+  color: white;
+  font-weight: bold;
+  margin-top: 10px;
+  border-radius: 30px;
+  --background-hover: #ff3a3a;
+}
+
+ion-item {
+  --background: transparent;
+  --border-radius: 10px;
+  --padding-start: 0;
+  --padding-end: 0;
+}
+
+ion-input:focus {
+  --background: #fff;
+  --border-color: #ff87a2;
+  --border-radius: 10px;
+}
+
+ion-input[readonly] {
+  --background-color: #e0e0e0; /* Un color gris claro que simula el estado deshabilitado */
+  --padding-start: 15px;
+  --background: none;
+  --border-radius: 10px;
+  --placeholder-color: #e0e0e0;
+  --color: #a7a7a7;  /* Un color gris más oscuro para el texto */
+}
+
+
+
+

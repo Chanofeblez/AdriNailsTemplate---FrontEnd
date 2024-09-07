@@ -93,13 +93,25 @@
   margin-top: 10px; /* Añade un poco de espacio encima del texto */
 }
 
+.social-media-section {
+  text-align: center;
+  margin-top: 40px; /* Ajusta el espacio según sea necesario */
+}
+
+.social-media-section h2 {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--ion-color-primary); /* Usa el color primario o personalízalo */
+}
+
 .social-media-links {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 15px;
   margin-top: 25px;
-  margin-bottom: 25px;
+
 }
 
 .social-media-links a {
@@ -107,9 +119,9 @@
   color: var(--ion-color-primary); /* Puedes ajustar este color para que combine con tu esquema de colores */
   margin: 0 15px; /* Más espacio entre iconos */
   padding: 10px;
-  border-radius: 50%;
-  background-color: #f0f0f0;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
+  //border-radius: 50%;
+  //background-color: #f0f0f0;
+  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
 }
 
 .social-media-links a:hover {

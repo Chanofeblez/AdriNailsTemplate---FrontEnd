@@ -31,40 +31,74 @@
 <ion-content>
   <div class="booking-screen">
     <div class="booking-list" *ngIf="segment =='book'">
-       <div class="slot-screen">
-          <ion-label class="title">Select Date</ion-label>
-          <ion-datetime presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)"> </ion-datetime>
-          <ion-label class="title" *ngIf="selectedDate!==null">Select Hours</ion-label>
-          <div class="slots-section">
-            <ion-row class="slots">
-              <ion-col size="3" *ngFor="let item of availableMorningSlots">
-                <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
-                  <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00AM</ion-label>
-                </div>
-              </ion-col>
-              <ion-col size="3" *ngFor="let item of availableAfternoonSlots">
-                <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}" (click)="save(item)">
-                  <ion-label class="name" [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00PM</ion-label>
-                </div>
-              </ion-col>
-            </ion-row>
+      <div class="slot-screen">
+        <ion-label class="title">Select Date</ion-label>
+        <ion-datetime  [(ngModel)]="selectedDate"  presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)">
+        </ion-datetime>
+        <ion-label class="title" *ngIf="selectedDate!==null">Select Hours</ion-label>
+        <div class="slots-section">
+          <ion-row class="slots">
+            <!-- Morning slots -->
+            <ion-col size="3" *ngFor="let item of availableMorningSlots">
+              <div
+                class="slot-name"
+                [ngClass]="{'disabled': !item.isAvailable, 'enabled': item.isAvailable, 'selected': (selectedSlot?.toString()) == item.time}"
+                (click)="item.isAvailable ? save(item.time) : null">
+                <ion-label class="name">
+                  {{item.time}}
+                </ion-label>
+              </div>
+            </ion-col>
+
+            <!-- Afternoon slots -->
+            <ion-col size="3" *ngFor="let item of availableAfternoonSlots">
+              <div
+                class="slot-name"
+                [ngClass]="{'disabled': !item.isAvailable, 'enabled': item.isAvailable, 'selected': (selectedSlot?.toString()) == item.time}"
+                (click)="item.isAvailable ? save(item.time) : null">
+                <ion-label class="name">
+                  {{item.time}}
+                </ion-label>
+              </div>
+            </ion-col>
+          </ion-row>
+
+
+
+      <!--    <ion-row class="slots">
+            <ion-col size="3" *ngFor="let item of availableMorningSlots">
+              <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}"
+                (click)="save(item)">
+                <ion-label class="name"
+                  [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00AM</ion-label>
+              </div>
+            </ion-col>
+            <ion-col size="3" *ngFor="let item of availableAfternoonSlots">
+              <div class="slot-name" [ngStyle]="{'background-color':selectedSlot == item ? '#F89C02': '#fff'}"
+                (click)="save(item)">
+                <ion-label class="name"
+                  [ngStyle]="{'color':selectedSlot == item ? '#fff': '#F89C02'}">{{item}}:00PM</ion-label>
+              </div>
+            </ion-col>
+          </ion-row> -->
         </div>
-    <!-- <ion-label class="title">Select Specialist</ion-label>
-          <div class="stories-chat-list">
-            <swiper-container #swiper slides-per-view="4.2" autoplay="true">
-              <swiper-slide *ngFor="let item of util.userList;let i = index;">
-                <div class="avtar-list" (click)="saveSpecialist(item.name)"
-                  [ngStyle]="{'border':selectedSpecialist == item.name ? '2px solid #F89C02': '','border-radius':selectedSpecialist == item.name ? '10px': ''}">
-                  <div class="avatar" [ngStyle]="{'background-image': 'url('+item.image+')'}"></div>
-                  <ion-label class="title">{{item.name.split(' ')[0]}}</ion-label>
-                  <ion-label class="sub-title">Hair Stylist</ion-label>
-                </div>
-              </swiper-slide>
-            </swiper-container>
-          </div> -->
-        </div>
+        <!-- <ion-label class="title">Select Specialist</ion-label>
+              <div class="stories-chat-list">
+                <swiper-container #swiper slides-per-view="4.2" autoplay="true">
+                  <swiper-slide *ngFor="let item of util.userList;let i = index;">
+                    <div class="avtar-list" (click)="saveSpecialist(item.name)"
+                      [ngStyle]="{'border':selectedSpecialist == item.name ? '2px solid #F89C02': '','border-radius':selectedSpecialist == item.name ? '10px': ''}">
+                      <div class="avatar" [ngStyle]="{'background-image': 'url('+item.image+')'}"></div>
+                      <ion-label class="title">{{item.name.split(' ')[0]}}</ion-label>
+                      <ion-label class="sub-title">Hair Stylist</ion-label>
+                    </div>
+                  </swiper-slide>
+                </swiper-container>
+              </div> -->
+      </div>
       <ion-footer>
-        <ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary" [disabled]="!isFormValid()">
+        <ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary"
+          [disabled]="!isFormValid()">
           Continue
         </ion-button>
       </ion-footer>
@@ -98,7 +132,7 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="presentModal()">
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="item.id ? presentModal(item.id,item.customerEmail) : null">
                 Cancel Booking
               </ion-button>
             </ion-col>
@@ -141,8 +175,8 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="onReceipt()">
-                View E-Receipt
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="review(item.id)">
+                <ion-icon name="chatbox-ellipses-outline"></ion-icon> Leave a Review
               </ion-button>
             </ion-col>
           </ion-row>
@@ -176,6 +210,20 @@
             </div>
           </ion-col>
         </ion-row>
+        <div class="bottom-content">
+          <ion-row>
+            <ion-col size="12">
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="item.id ? cambiarStatus(item.id) : null">
+                Recuperar Booking
+              </ion-button>
+            </ion-col>
+          <!--  <ion-col size="6">
+              <ion-button expand="block" fill="solid" shape="round" size="small" (click)="onReceipt()">
+                View E-Receipt
+              </ion-button>
+            </ion-col> -->
+          </ion-row>
+        </div>
       </ion-card>
       <div *ngIf="cancelledAppointments.length === 0" class="no-appointments-message">
         No cancelled appointments to display.

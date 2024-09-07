@@ -1,13 +1,81 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>cursos</ion-title>
+    <ion-title>Reseña de Appointment</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">cursos</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content >
+  <ion-card *ngIf="appointment" class="review-card">
+    <ion-card-header>
+      <ion-card-title class="text-center">{{ appointment.serviceName }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <div class="review-container">
+        <div class="rating-label-container">
+          <ion-label class="rating-label">Leave a Review:</ion-label>
+        </div>
+        <div class="rating-range-container">
+          <textarea class="review-text" placeholder="Write your review..."></textarea>
+        </div>
+      </div>
+
+        <!-- Evaluación en estrellas -->
+        <div class="rating-container">
+          <div class="rating-label-container">
+            <ion-label class="rating-label">Rate the service:</ion-label>
+          </div>
+          <div class="rating-range-container">
+            <ion-range [(ngModel)]="rating" min="1" max="5" step="1">
+              <ion-icon slot="start" name="star-outline"></ion-icon>
+              <ion-icon slot="end" name="star"></ion-icon>
+            </ion-range>
+            <div class="rating-value">{{rating}} / 5</div> <!-- Muestra el valor aquí -->
+          </div>
+        </div>
+
+
+        <!-- Cargar imagen -->
+        <div class="image-upload-container">
+          <ion-label>Upload a photo or take a new one:</ion-label>
+          <div class="upload-buttons">
+            <!-- Botón para cargar desde la galería -->
+            <div class="upload-button">
+              <ion-icon name="folder" class="upload-icon" (click)="triggerFileInput()"></ion-icon>
+              <input id="fileInput" type="file" accept="image/*" (change)="onFileSelected($event)" hidden>
+            </div>
+
+            <!-- Botón para tomar una foto -->
+            <div class="upload-button">
+              <ion-icon name="camera" class="upload-icon" (click)="triggerCameraInput()"></ion-icon>
+              <input id="cameraInput" type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" hidden>
+            </div>
+          </div>
+        </div>
+        <!-- Cargar imagen
+        <div class="image-upload-container">
+          <ion-label>Upload a photo or take a new one:</ion-label>
+          <div class="upload-buttons"> -->
+            <!-- Botón para tomar una foto
+            <div class="upload-button">
+              <label for="cameraInput">Take a photo:</label>
+              <input id="cameraInput" type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)">
+            </div> -->
+            <!-- Botón para cargar desde la galería
+            <div class="upload-button">
+              <label for="fileInput">Upload a file:</label>
+              <input id="fileInput" type="file" accept="image/*" (change)="onFileSelected($event)">
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Botón de envío -->
+        <div class="text-center">
+          <ion-button expand="block" fill="solid" color="primary" shape="round" size="large" (click)="submitReview()">Submit
+            Review</ion-button>
+        </div>
+
+    </ion-card-content>
+  </ion-card>
 </ion-content>
+

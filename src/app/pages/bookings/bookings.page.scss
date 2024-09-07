@@ -29,3 +29,27 @@ ion-footer {
   margin-right: 2px;
 }
 
+.slot-name {
+  border: 1px solid #FF69B4; /* Rosa fuerte */
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.slot-name.disabled {
+  background-color: #f2f2f2;
+  color: #ccc;
+  cursor: not-allowed;
+}
+
+.slot-name.enabled {
+  background-color: #fff;
+  color: #000;
+}
+
+.slot-name.selected {
+  background-color: #FF69B4; /* Rosa fuerte para el seleccionado */
+  color: #fff;
+}
+
+

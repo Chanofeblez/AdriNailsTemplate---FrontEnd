@@ -114,6 +114,14 @@ const routes: Routes = [
         loadChildren: () => import('../packages-list/packages-list.module').then(m => m.PackagesListPageModule)
       },
       {
+        path: 'review-list',
+        loadChildren: () => import('../review-list/review-list.module').then(m => m.ReviewListPageModule)
+      },
+      {
+        path: 'review/:appointmentId',
+        loadChildren: () => import('../cursos/cursos.module').then(m => m.CursosPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full',

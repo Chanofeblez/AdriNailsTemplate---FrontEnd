@@ -1,0 +1,143 @@
+ion-card {
+  height: auto;
+}
+
+ion-card.review-card {
+  border-radius: 20px;
+  box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 10%;
+  padding: 5px;
+}
+
+ion-card-title.text-center {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+ion-item {
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.text-center {
+  margin-top: 40px;
+  text-align: center;
+}
+
+ion-button {
+  font-size: 1.3rem; /* Tamaño de la fuente un poco mayor */
+  padding: 12px 0; /* Aumenta el tamaño del botón */
+  box-shadow: 0 4px 10px #ffffff; /* Añade sombra para mayor profundidad */
+  transition: background-color 0.3s ease, box-shadow 0.3s ease; /* Transición suave para hover */
+}
+
+.review-container {
+  width: 100%;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.review-text {
+  width: 100% !important;
+  height: 100px;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-sizing: border-box;
+}
+
+ion-range {
+  margin-top: 10px;
+}
+
+.review-title {
+  font-size: 1.1em;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.rating-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.rating-label-container {
+  width: 100%;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.rating-label {
+  font-size: 1.1rem;
+  white-space: nowrap;
+}
+
+.rating-range-container {
+  width: 100%;
+  position: relative;
+}
+
+ion-range {
+  --bar-background: #ff5fa2;
+  --bar-background-active: #ff87b5;
+  width: 100%;
+  margin-top: 10px; /* Asegura que haya suficiente espacio */
+}
+
+.rating-value {
+  font-size: 1.1rem;
+  color: #333;
+  margin-top: 5px; /* Espaciado entre el range y el valor */
+}
+
+ion-icon {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+.image-upload-container {
+  margin-top: 30px;
+  width: 100%;
+}
+
+.upload-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.upload-button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 48%;
+}
+
+ion-label {
+  font-size: 1.1rem; /* Aumenta ligeramente el tamaño de la etiqueta */
+  margin-bottom: 5px; /* Aumenta el espacio debajo de la etiqueta */
+  text-align: center;
+}
+
+ion-icon.upload-icon {
+  font-size: 2.5rem;
+  color: #333;
+  cursor: pointer; /* Hacer el icono clicable */
+}
+
+input[type="file"] {
+  display: none; /* Esconde el input de archivo por defecto */
+//  width: 100%;
+//  padding: 10px; /* Añade padding para que parezca más un botón */
+//  border-radius: 5px; /* Opcional: redondea los bordes */
+//  background-color: #f3f3f3; /* Opcional: cambia el color del fondo */
+}
+

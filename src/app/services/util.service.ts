@@ -89,75 +89,26 @@ export class UtilService {
 
   salonList: any[] = [
     {
-      "name": "Elevate Salon",
-      "address": "3788 Chapel Street Sugar Land",
-      "cover": "assets/images/salon-cover/1.png",
+      "name": "Russian Manicure",
+      "description": "3788 Chapel Street Sugar Land",
+      "cover": "assets/images/avatar/manRuso.jpeg",
       "rate": "4.2",
       "distance": "1.2 KM"
     },
     {
-      "name": "Luxe Hair Studio",
-      "address": "3104 Public Works Drive Chattanooga",
-      "cover": "assets/images/salon-cover/2.png",
+      "name": "Dual Forms",
+      "description": "3104 Public Works Drive Chattanooga",
+      "cover": "assets/images/avatar/dualForm.jpeg",
       "rate": "4.6",
       "distance": "1.2 KM"
     },
     {
-      "name": "The Mane Event",
-      "address": "864 Lucy Lane Evansville",
-      "cover": "assets/images/salon-cover/3.png",
+      "name": "Russian Peddicure",
+      "description": "864 Lucy Lane Evansville",
+      "cover": "assets/images/avatar/pedicureRuso.jpg",
       "rate": "5.0",
       "distance": "1.2 KM"
-    },
-    {
-      "name": "Shear Bliss Salon",
-      "address": "837 Nutter Street Kansas City",
-      "cover": "assets/images/salon-cover/4.png",
-      "rate": "4.8",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "Cutting Edge Hair Design",
-      "address": "3241 Willis Avenue Mayo",
-      "cover": "assets/images/salon-cover/5.png",
-      "rate": "4.3",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "The Strand Studio",
-      "address": "4206 Lightning Point Drive Memphis",
-      "cover": "assets/images/salon-cover/6.png",
-      "rate": "4.1",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "Fringe Benefits Hair Salon",
-      "address": "4284 Elk City Road Indianapolis",
-      "cover": "assets/images/salon-cover/7.png",
-      "rate": "5.0",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "Crowning Glory Salon",
-      "address": "4237 Diane Street City Of Commerce",
-      "cover": "assets/images/salon-cover/8.png",
-      "rate": "4.9",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "The Glam Room",
-      "address": "356 Whitman Court Stamford",
-      "cover": "assets/images/salon-cover/9.png",
-      "rate": "4.5",
-      "distance": "1.2 KM"
-    },
-    {
-      "name": "The Tress Effect",
-      "address": "4658 Stonecoal Road Toledo",
-      "cover": "assets/images/salon-cover/10.png",
-      "rate": "3.6",
-      "distance": "1.2 KM"
-    },
+    }
   ];
 
  // manicureList: Servicio[] = [

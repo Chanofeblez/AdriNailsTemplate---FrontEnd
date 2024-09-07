@@ -52,5 +52,16 @@ export class AuthService {
     return this.http.get<Customer>(`${this.apiUrl}/by-email`, { params: { email } });
   }
 
+  // Método para actualizar el perfil del cliente, pasando el ID en la URL
+  updateUserProfile(id: string, customer: Customer): Observable<Customer> {
+    return this.http.put<Customer>(`${this.apiUrl}/${id}`, customer);
+  }
+
+  // Método para limpiar el token de autenticación y hacer logout
+  logout(): void {
+    localStorage.removeItem('authToken'); // Elimina el token del localStorage
+    sessionStorage.removeItem('authToken'); // Si también usas sessionStorage
+  }
+
 }
 

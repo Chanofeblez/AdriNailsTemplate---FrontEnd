@@ -37,11 +37,13 @@ export class InboxPage implements OnInit {
   private alertController = inject(AlertController);
   private router          = inject(ActivatedRoute);
 
-  constructor() { }
+  constructor() {
+    this.segment = 'manicure';
+  }
 
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
-      this.segment = params['type'];
+      this.segment = params['type'] ? params['type'] : 'manicure';
       console.log(this.segment);
     });
     this.loadImages();

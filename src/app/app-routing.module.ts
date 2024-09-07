@@ -69,11 +69,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/reset-password/reset-password.module').then(m => m.ResetPasswordPageModule)
   },
   {
-    path: 'review-list',
-    loadChildren: () => import('./pages/review-list/review-list.module').then(m => m.ReviewListPageModule)
-  },
-
-  {
     path: 'salon-list',
     loadChildren: () => import('./pages/salon-list/salon-list.module').then(m => m.SalonListPageModule)
   },
@@ -93,10 +88,6 @@ const routes: Routes = [
   {
     path: 'welcome',
     loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
-  },
-  {
-    path: 'cursos',
-    loadChildren: () => import('./pages/cursos/cursos.module').then( m => m.CursosPageModule)
   }
 ];
 @NgModule({

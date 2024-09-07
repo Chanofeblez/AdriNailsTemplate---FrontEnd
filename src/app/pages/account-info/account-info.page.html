@@ -17,35 +17,43 @@
 </ion-header>
 
 <ion-content class="ion-padding">
-  <div class="profile-info">
-    <div class="user-avtar" [ngStyle]="{'background-image': 'url(assets/images/avatar/12.jpg)'}">
-      <div class="edit-btn">
-        <ion-icon slot="icon-only" name="create-outline" color="light"></ion-icon>
-      </div>
+
+  <div class="profile-info form-container">
+    <div class="header-container">
+      <ion-text color="primary">
+        <h2>Profile</h2>
+      </ion-text>
     </div>
+    <form [formGroup]="profileForm" (ngSubmit)="onUpdate()" class="form-pos">
+      <ion-item lines="none" class="input-content">
+        <ion-input placeholder="Full Name" type="text" formControlName="name"></ion-input>
+      </ion-item>
 
-    <ion-item lines="none" class="input-content">
-      <ion-input placeholder="Full Name" type="text"></ion-input>
-    </ion-item>
+      <ion-item lines="none" class="input-content">
+        <ion-input placeholder="Email Address" type="email" formControlName="email" readonly></ion-input>
+      </ion-item>
 
-    <ion-item lines="none" class="input-content">
-      <ion-input placeholder="Nick Name" type="text"></ion-input>
-    </ion-item>
+      <ion-item lines="none" class="input-content">
+        <ion-input placeholder="Phone Number" type="text" formControlName="phoneNumber"></ion-input>
+      </ion-item>
 
-    <ion-item lines="none" class="input-content">
-      <ion-input placeholder="Email Address" type="email"></ion-input>
-    </ion-item>
+      <!-- Si permites que el usuario cambie su contraseña
+      <ion-item lines="none" class="input-content">
+        <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
+      </ion-item>  -->
 
-    <ion-item lines="none" class="input-content">
-      <ion-input placeholder="Date Of Birth" type="number"></ion-input>
-    </ion-item>
+      <!-- Botón de Guardar -->
+      <ion-button expand="block" shape="round" class="submit-btn" [disabled]="!isFormEdited || !profileForm.valid" type="submit">
+        {{ isFormEdited ? 'Save' : 'Update' }}
+      </ion-button>
 
-    <ion-item lines="none" class="input-content">
-      <ion-textarea rows="5" placeholder="About"></ion-textarea>
-    </ion-item>
-
-    <ion-button expand="block" shape="round" color="primary" class="submit-btn" (click)="onPin()">
-      Continue
-    </ion-button>
+      <!-- Botón de Logout -->
+      <ion-button expand="block" shape="round" class="logout-btn" (click)="onLogout()">
+        Logout
+      </ion-button>
+    </form>
   </div>
 </ion-content>
+
+
+

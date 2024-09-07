@@ -5,8 +5,9 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { NavigationExtras } from '@angular/router';
+import { CourseService } from 'src/app/services/course.service';
 import { UtilService } from 'src/app/services/util.service';
 
 @Component({
@@ -16,11 +17,18 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class PackagesListPage implements OnInit {
 
-  constructor(
-    public util: UtilService
-  ) { }
+  courses: any[] = [];
+
+  private courseService = inject(CourseService);
+  public util = inject(UtilService);
+
+  constructor() { }
 
   ngOnInit() {
+    this.courseService.getCourses().subscribe(data => {
+      this.courses = data;
+      console.log("Cursos", this.courses);
+    });
   }
 
   onBack() {
@@ -34,7 +42,7 @@ export class PackagesListPage implements OnInit {
         image: image
       }
     };
-    this.util.navigateToPage('package-details', param);
+   // this.util.navigateToPage('package-details', param);
   }
 
   onPayment() {
