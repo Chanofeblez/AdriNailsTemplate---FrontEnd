@@ -175,7 +175,7 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="review(item.id)">
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="review(item.id)"  [disabled]="item.review != null">
                 <ion-icon name="chatbox-ellipses-outline"></ion-icon> Leave a Review
               </ion-button>
             </ion-col>

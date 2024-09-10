@@ -16,8 +16,10 @@
           <ion-label class="rating-label">Leave a Review:</ion-label>
         </div>
         <div class="rating-range-container">
-          <textarea class="review-text" placeholder="Write your review..."></textarea>
+          <textarea [(ngModel)]="reviewText" class="review-text" placeholder="Write your review..."></textarea>
+          <div *ngIf="!reviewText" class="error">Please enter your review</div>
         </div>
+
       </div>
 
         <!-- Evaluación en estrellas -->
@@ -31,6 +33,7 @@
               <ion-icon slot="end" name="star"></ion-icon>
             </ion-range>
             <div class="rating-value">{{rating}} / 5</div> <!-- Muestra el valor aquí -->
+            <div *ngIf="!rating" class="error">Please select a rating</div>
           </div>
         </div>
 
@@ -50,7 +53,9 @@
               <ion-icon name="camera" class="upload-icon" (click)="triggerCameraInput()"></ion-icon>
               <input id="cameraInput" type="file" accept="image/*" capture="environment" (change)="onFileSelected($event)" hidden>
             </div>
+            <div *ngIf="!selectedFile" class="error">Please upload a photo</div>
           </div>
+
         </div>
         <!-- Cargar imagen
         <div class="image-upload-container">

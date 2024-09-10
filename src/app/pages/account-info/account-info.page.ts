@@ -106,9 +106,16 @@ export class AccountInfoPage implements OnInit {
   }
 
   // Función para logout
-  onLogout() {
-    this.authService.logout(); // Llama al método logout del servicio
-    this.util.navigateRoot('/login'); // Redirige al usuario a la página de inicio de sesión
+ onLogout() {
+     // Limpia el token de autenticación
+  localStorage.removeItem('authToken');
+  sessionStorage.removeItem('authToken');
+
+  // Reinicia manualmente las variables globales o el estado de tu aplicación
+  //this.appStateService.resetAppState();
+
+  // Redirige al login (si es necesario)
+  //this.router.navigate(['/login']);
   }
 
 

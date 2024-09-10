@@ -38,10 +38,11 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(
       tap((response: any) => {
         if (response && response.token) {
-
+          window.location.reload();
         }
       })
     );
+
   }
 
   getUserByToken(token: string): Observable<string> {
@@ -59,8 +60,13 @@ export class AuthService {
 
   // Método para limpiar el token de autenticación y hacer logout
   logout(): void {
-    localStorage.removeItem('authToken'); // Elimina el token del localStorage
-    sessionStorage.removeItem('authToken'); // Si también usas sessionStorage
+    // Limpia el token de autenticación del localStorage y sessionStorage
+  localStorage.removeItem('authToken');
+  sessionStorage.removeItem('authToken');
+
+  // Reinicia la aplicación forzando una recarga
+  window.location.reload();
+
   }
 
 }

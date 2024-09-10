@@ -96,13 +96,15 @@
     <div class="booking-list" *ngIf="segment =='manicure'">
       <ion-row class="salon-info-list">
         <ion-col size="6" *ngFor="let item of manicureImages; let i = index">
-          <ion-card mode="ios" class="cart-content">
-            <div class="top-content1">
-              <ion-label >{{ item.title }}</ion-label>
-            </div>
-            <ion-row class="salon-info-list">
-              <ion-col size="12">
-                <div class="cover" [ngStyle]="{'background-image': 'url(' + item.imageUrl + ')'}"></div>
+          <ion-card mode="ios" class="gallery-card">
+            <ion-row>
+              <ion-col size="12" class="image-container" (click)="openImageModal(item.imageUrl ?? '')">
+                <img [src]="item.imageUrl" class="service-image" alt="{{ item.title }}" />
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12" class="card-title">
+                <ion-label class="service-title">{{ item.title }}</ion-label>
               </ion-col>
             </ion-row>
           </ion-card>
@@ -113,13 +115,15 @@
     <div class="booking-list" *ngIf="segment =='pedicure'">
       <ion-row class="salon-info-list">
         <ion-col size="6" *ngFor="let item of pedicureImages; let i = index">
-          <ion-card mode="ios" class="cart-content">
-            <div class="top-content1">
-              <ion-label >{{ item.title }}</ion-label>
-            </div>
-            <ion-row class="salon-info-list">
-              <ion-col size="12">
-                <div class="cover" [ngStyle]="{'background-image': 'url(' + item.imageUrl + ')'}"></div>
+          <ion-card mode="ios" class="gallery-card">
+            <ion-row>
+              <ion-col size="12" class="image-container" (click)="openImageModal(item.imageUrl ?? '')">
+                <img [src]="item.imageUrl" class="service-image" alt="Service Image"/>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size="12" class="card-title">
+                <ion-label class="service-title">{{ item.title }}</ion-label>
               </ion-col>
             </ion-row>
           </ion-card>
@@ -132,32 +136,32 @@
     No images to display.
   </div>
 
-  <!-- Formulario para subir imagenes -->
+  <!-- Formulario para subir imagenes
   <div class="image-upload">
-    <form (submit)="onSubmit()">
-      <!-- Campo para ingresar el título de la imagen -->
+    <form (submit)="onSubmit()">  -->
+      <!-- Campo para ingresar el título de la imagen
       <ion-item>
         <ion-label position="stacked">Image Title</ion-label>
         <ion-input [(ngModel)]="imageTitle" name="imageTitle" required></ion-input>
-      </ion-item>
+      </ion-item> -->
 
-      <!-- Campo para seleccionar el tipo de imagen -->
+      <!-- Campo para seleccionar el tipo de imagen
     <ion-item>
       <ion-label position="stacked">Image Type</ion-label>
       <ion-select [(ngModel)]="imageType" name="imageType" required>
         <ion-select-option value="Manicure">Manicure</ion-select-option>
         <ion-select-option value="Pedicure">Pedicure</ion-select-option>
       </ion-select>
-    </ion-item>
+    </ion-item> -->
 
-      <!-- Campo para seleccionar el archivo -->
+      <!-- Campo para seleccionar el archivo
       <ion-item>
         <ion-label position="stacked">Select Image</ion-label>
         <input type="file" (change)="onFileSelected($event)" accept="image/*">
-      </ion-item>
+      </ion-item> -->
 
-      <!-- Botón para subir la imagen-->
+      <!-- Botón para subir la imagen
       <ion-button expand="block" type="submit" [disabled]="!selectedFile">Upload Image</ion-button>
     </form>
-  </div>
+  </div> -->
 </ion-content>

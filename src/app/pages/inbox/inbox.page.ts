@@ -7,10 +7,11 @@
 */
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 import { Image } from 'src/app/model/image.interface';
 import { ImageService } from 'src/app/services/image.service';
 import { UtilService } from 'src/app/services/util.service';
+import ImageModalPage from '../imagemodal/imagemodal.page';
 
 @Component({
   selector: 'app-inbox',
@@ -36,6 +37,7 @@ export class InboxPage implements OnInit {
   private imageService    = inject(ImageService);
   private alertController = inject(AlertController);
   private router          = inject(ActivatedRoute);
+  private modalController = inject(ModalController);
 
   constructor() {
     this.segment = 'manicure';
@@ -62,12 +64,11 @@ export class InboxPage implements OnInit {
           const base64Data = image.data; // El data ya está en Base64
           const imageUrl = `data:${image.contentType};base64,${base64Data}`;
           this.imageList[index].imageUrl = imageUrl;
-
           // Filtrar por tipo
           if (image.type === 'Manicure') {
-            this.manicureImages.push(image);
+            this.manicureImages.push(this.imageList[index]);
           } else if (image.type === 'Pedicure') {
-            this.pedicureImages.push(image);
+            this.pedicureImages.push(this.imageList[index]);
           }
         });
         console.info('Images', this.imageList);
@@ -131,5 +132,23 @@ export class InboxPage implements OnInit {
     };
     this.util.navigateToPage('chats', param);
   }
+
+  async openImageModal(imageUrl: string) {
+    if (!imageUrl) {
+      console.error('El valor de imageUrl es undefined o null.');
+      return;
+    }
+    const modal = await this.modalController.create({
+      component: ImageModalPage,
+      componentProps: { imageData: imageUrl },
+      backdropDismiss: true, // Permitir cerrar el modal al tocar fuera
+    });
+    // Presentar el modal
+    await modal.present();
+
+    // Acceder directamente al elemento modal
+    modal.classList.add('transparent-modal'); // Añadir la clase CSS personalizada
+  }
+
 
 }

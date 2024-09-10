@@ -100,11 +100,6 @@ const routes: Routes = [
         path: 'payment-modal',
         loadChildren: () => import('../payment-modal/payment-modal.module').then( m => m.PaymentModalPageModule)
       },
-
-      {
-        path: 'profile',
-        loadChildren: () => import('../profile/profile.module').then(m => m.ProfilePageModule)
-      },
       {
         path: 'package-details',
         loadChildren: () => import('../package-details/package-details.module').then(m => m.PackageDetailsPageModule)
@@ -120,6 +115,14 @@ const routes: Routes = [
       {
         path: 'review/:appointmentId',
         loadChildren: () => import('../cursos/cursos.module').then(m => m.CursosPageModule)
+      },
+      {
+        path: 'cancel-modal',
+        loadChildren: () => import('../cancel-modal/cancel-modal.module').then(m => m.CancelModalPageModule)
+      },
+      {
+        path: 'imagemodal',
+        loadChildren: () => import('../imagemodal/imagemodal.module').then( m => m.ImagemodalPageModule)
       },
       {
         path: '',

@@ -11,6 +11,14 @@ export interface Appointment {
   totalCost: number; // Costo total de la cita
   status: AppointmentStatus; // Estado de la cita
   imagePath: string;
+  review?: Review; // El review, si está presente
+}
+
+export interface Review {
+  id: string;
+  rating: number;
+  reviewText: string;
+  customerPhoto: string;
 }
 
 export enum AppointmentStatus {

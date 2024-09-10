@@ -11,44 +11,16 @@ import { AuthguardsGuard } from './guard/authguards.guard';  // Ajusta la ruta s
 
 const routes: Routes = [
   {
-    path: '',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
+    path: 'success-payment',
+    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
   },
   {
-    path: 'tabs',
-    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
-  },
-  {
-    path: 'auth',
-    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthPageModule)
-  },
-  {
-    path: 'bookmarks',
-    loadChildren: () => import('./pages/bookmarks/bookmarks.module').then(m => m.BookmarksPageModule)
-  },
-  {
-    path: 'cancel-booking',
-    loadChildren: () => import('./pages/cancel-booking/cancel-booking.module').then(m => m.CancelBookingPageModule)
-  },
-  {
-    path: 'cancel-modal',
-    loadChildren: () => import('./pages/cancel-modal/cancel-modal.module').then(m => m.CancelModalPageModule)
+    path: 'success',
+    loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
   {
     path: 'cancel-success-modal',
     loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
-  },
-  {
-    path: 'chats',
-    loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsPageModule)
-  },
-  {
-    path: 'explore',
-    loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExplorePageModule)
-  },
-  {
-    path: 'notifications',
-    loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
   },
   {
     path: 'login',
@@ -61,34 +33,63 @@ const routes: Routes = [
    // canActivate: [AuthguardsGuard]  // Proteges la ruta de login
   },
   {
-    path: 'remove-bookmark',
-    loadChildren: () => import('./pages/remove-bookmark/remove-bookmark.module').then(m => m.RemoveBookmarkPageModule)
-  },
-  {
     path: 'reset-password',
     loadChildren: () => import('./pages/reset-password/reset-password.module').then(m => m.ResetPasswordPageModule)
   },
   {
-    path: 'salon-list',
-    loadChildren: () => import('./pages/salon-list/salon-list.module').then(m => m.SalonListPageModule)
-  },
-
-  {
-    path: 'specialist',
-    loadChildren: () => import('./pages/specialist/specialist.module').then(m => m.SpecialistPageModule)
+    path: 'tabs',
+    loadChildren: () => import('./pages/tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'success',
-    loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
+    path: '',
+    redirectTo: '/tabs/home',
+    pathMatch: 'full'
   },
   {
-    path: 'success-payment',
-    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
-  },
-  {
-    path: 'welcome',
-    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
+    path: '**',
+    redirectTo: 'tabs/home',  // Redirige a la ruta 'home' o la que quieras
+    pathMatch: 'full'
   }
+//  {
+//    path: 'auth',
+//    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthPageModule)
+//  },
+//  {
+//    path: 'bookmarks',
+//    loadChildren: () => import('./pages/bookmarks/bookmarks.module').then(m => m.BookmarksPageModule)
+//  },
+//  {
+//    path: 'saved-paidmethod',
+//    loadChildren: () => import('./pages/cancel-booking/cancel-booking.module').then(m => m.CancelBookingPageModule)
+//  },
+//  {
+//    path: 'notifications',
+//    loadChildren: () => import('./pages/notifications/notifications.module').then(m => m.NotificationsPageModule)
+//  },
+//  {
+//    path: 'chats',
+//    loadChildren: () => import('./pages/chats/chats.module').then(m => m.ChatsPageModule)
+//  },
+//  {
+//    path: 'explore',
+//    loadChildren: () => import('./pages/explore/explore.module').then(m => m.ExplorePageModule)
+//  },
+//  {
+//    path: 'remove-bookmark',
+//    loadChildren: () => import('./pages/remove-bookmark/remove-bookmark.module').then(m => m.RemoveBookmarkPageModule)
+//  },
+//  {
+//    path: 'salon-list',
+//    loadChildren: () => import('./pages/salon-list/salon-list.module').then(m => m.SalonListPageModule)
+//  },
+//  {
+//    path: 'specialist',
+//    loadChildren: () => import('./pages/specialist/specialist.module').then(m => m.SpecialistPageModule)
+//  },
+//  {
+//    path: 'welcome',
+//    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)
+//  },
 ];
 @NgModule({
   imports: [

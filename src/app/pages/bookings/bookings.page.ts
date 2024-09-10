@@ -76,14 +76,12 @@ export class BookingsPage implements OnInit {
 
   ngOnInit() {
     this.getToken();
-    console.log("Oninit");
   }
 
   // Este método se ejecuta cada vez que se entra en la vista
   ionViewWillEnter() {
     this.resetDate();
     this.cdr.detectChanges(); // Forzar la detección de cambios
-    console.log("ionViewWillEnter");
   }
 
   // Método para resetear la fecha seleccionada
@@ -190,14 +188,14 @@ export class BookingsPage implements OnInit {
       for (const appointment of appointments) {
         // Combinar la fecha y hora del appointment en un solo objeto Date
         const appointmentDateTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
-        console.log("FechaAppointment", appointmentDateTime);
-        console.log("FechaHoy", now);
 
         if (appointment.status === 'CANCELED') {
           this.cancelledAppointments.push(appointment);
+        } else if (appointment.status === 'COMPLETED') {
+          this.completedAppointments.push(appointment);
         } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING' ) && appointmentDateTime > now) {
           this.upcomingAppointments.push(appointment);
-        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'COMPLETED') && appointmentDateTime <= now) {
+        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING') && appointmentDateTime <= now) {
           if (appointment.id) {
             appointment.status = AppointmentStatus.COMPLETED; // Cambiar el estado a COMPLETED
             try {

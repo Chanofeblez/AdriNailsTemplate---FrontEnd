@@ -1,0 +1,27 @@
+ion-content {
+  --background: rgba(0, 0, 0, 0.5); /* Fondo oscuro semitransparente */
+  backdrop-filter: blur(8px); /* Aplica un efecto de desenfoque */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Asegura que ocupe todo el alto */
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Asegura que ocupe todo el modal */
+}
+
+img {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain; /* Asegura que la imagen no se deforme */
+  border-radius: 10px;
+}
+
+.transparent-modal {
+  --background: transparent; /* Fondo completamente transparente */
+  backdrop-filter: blur(8px); /* Desenfoca el fondo para dar sensación de transparencia */
+}

@@ -44,8 +44,15 @@ export class CursosPage implements OnInit {
   }
 
   submitReview() {
+    console.log("the review", this.reviewText );
     if (!this.selectedFile || !this.reviewText || !this.rating) {
-      alert("Please fill out the review, select a rating, and upload a photo.");
+      let missingFields = [];
+
+      if (!this.reviewText) missingFields.push('Review');
+      if (!this.rating) missingFields.push('Rating');
+      if (!this.selectedFile) missingFields.push('Photo');
+
+      alert(`Please fill out the following fields: ${missingFields.join(', ')}`);
       return;
     }
 

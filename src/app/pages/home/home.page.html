@@ -26,7 +26,7 @@
   <div class="home_screen">
     <ion-label class="greeting-title">{{ greeting }}, {{userName}} 👋</ion-label>
     <div class="sliders">
-      <swiper-container #swiper>
+      <swiper-container #swiper [slidesPerView]="1.05" [spaceBetween]="10">
         <swiper-slide *ngFor="let post of util.posts">
           <div class="slider-image1" [ngStyle]="{'background-image': 'url(' + post.imagePath + ')'}">
             <div class="offer-details1">
@@ -60,7 +60,7 @@
     <div class="services-section">
       <h2 class="section-title">Servicios</h2>
       <div class="services-container">
-        <swiper-container #swiper>
+        <swiper-container #swiper [slidesPerView]="1.5" [spaceBetween]="10">
           <swiper-slide class="service-card" *ngFor="let service of services">
             <img [src]="service.imagePath" alt="{{ service.name }}" class="service-image" />
             <div class="service-details">

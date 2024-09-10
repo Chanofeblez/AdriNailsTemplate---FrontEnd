@@ -38,9 +38,6 @@ export class HomePage implements OnInit {
     slidesPerView: 3,
   };
 
-
-
-
   constructor(
     public util: UtilService
   ) { }
