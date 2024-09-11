@@ -12,6 +12,7 @@ import { SuccessPage } from '../success/success.page';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Customer } from 'src/app/model/customer.interface';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-account-info',
@@ -28,9 +29,16 @@ export class AccountInfoPage implements OnInit {
   public util             = inject(UtilService);
   private modalController = inject(ModalController);
   private formBuilder     = inject(FormBuilder);
-  private authService   = inject(AuthService);
+  private authService     = inject(AuthService);
+  private router          = inject(Router);
+
 
   constructor() { }
+
+ // ionViewDidEnter() {
+ //   this.initForm();
+ //   this.loadCustomerEmail(); // Cargar email del usuario autenticado
+ // }
 
   ngOnInit() {
     this.initForm();
@@ -106,16 +114,14 @@ export class AccountInfoPage implements OnInit {
   }
 
   // Función para logout
- onLogout() {
-     // Limpia el token de autenticación
-  localStorage.removeItem('authToken');
-  sessionStorage.removeItem('authToken');
+  onLogout() {
+    // Limpia el token de autenticación
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
 
-  // Reinicia manualmente las variables globales o el estado de tu aplicación
-  //this.appStateService.resetAppState();
+    // Recarga la aplicación por completo
+    window.location.reload();
 
-  // Redirige al login (si es necesario)
-  //this.router.navigate(['/login']);
   }
 
 

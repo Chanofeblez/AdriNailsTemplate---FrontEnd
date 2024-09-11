@@ -20,7 +20,7 @@ register();
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
+export class HomePage {
 
   userId: string;
   userName: string; // Aquí almacenaremos el nombre del usuario
@@ -32,6 +32,7 @@ export class HomePage implements OnInit {
   private authService     = inject(AuthService);
   private router          = inject(Router);
   private servicioService = inject(ServicioService);
+  public util             = inject(UtilService);
 
   slideOpts = {
     initialSlide: 0,
@@ -39,14 +40,30 @@ export class HomePage implements OnInit {
   };
 
   constructor(
-    public util: UtilService
-  ) { }
 
-  ngOnInit() {
-    this.getToken();
-    this.setGreeting();
-    this.loadServices();
+  ) {
+    console.log("HOME2");
   }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter executed once");
+    this.loadServices();
+    this.userId = "";
+    this.getToken(); // Aquí puedes volver a cargar los datos si es necesario
+    this.setGreeting();
+  }
+
+//  ngOnInit() {
+//    console.log("ngOnInit executed once");
+//    this.loadServices();
+//  }
+//
+//  ionViewWillEnter() {
+//    this.userId = "";
+//    console.log("ionViewWillEnter executed every time view is entered");
+//    this.getToken(); // Aquí puedes volver a cargar los datos si es necesario
+//    this.setGreeting();
+//  }
 
   loadServices() {
     this.servicioService.getAllServicios().subscribe(
@@ -84,6 +101,9 @@ export class HomePage implements OnInit {
     } else {
       console.error('Token not found');
     }
+  }
+  resetUserId(){
+    this.userId = "";
   }
 
   getCustomerByEmail(email: string) {

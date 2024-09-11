@@ -90,7 +90,7 @@ export class ServicesListPage implements OnInit {
         time:      this.selectedTime
       }
     };
-    this.util.navigateToPage('service-details', param);
+    this.util.navigateToPage('/tabs/service-details', param);
   }
 
   onPayment() {

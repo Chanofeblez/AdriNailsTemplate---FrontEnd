@@ -134,6 +134,7 @@ export class BookingsPage implements OnInit {
   }
 
   onDateChange(event: any) {
+    this.selectedSlot = null;
     const selectedDate = event.detail.value;
 
     // Verifica que `selectedDate` no sea nulo
@@ -247,7 +248,7 @@ export class BookingsPage implements OnInit {
       console.error('appointmentId is undefined or null');
       return;
     }
-    this.util.navigateToPage(`/review/${appointmentId}`);
+    this.util.navigateToPage(`/tabs/review/${appointmentId}`);
   }
 
   async presentModal(appointmentId: string , email: string) {
@@ -282,14 +283,16 @@ export class BookingsPage implements OnInit {
     if(this.selectedSlot != null && this.selectedSlot >= 1 && this.selectedSlot <= 7 ){
       this.selectedSlot+=12;
     }
-    this.router.navigate(['/services-list'], {
+    console.log("onPayment");
+    this.router.navigate(['/tabs/services-list'], {
       queryParams: {
         user: this.userId,
         date: this.selectedDate,
         time: this.selectedSlot
       }
     });
-    //this.util.navigateToPage('services-list');
+
+   // this.util.navigateToPage('/services-list');
   }
 
   // Método para cancelar la cita

@@ -21,6 +21,7 @@ export class SuccessPage implements OnInit {
     setTimeout(() => {
       this.modalController.dismiss();
     }, 3000);
+
   }
 
   ngOnInit() {

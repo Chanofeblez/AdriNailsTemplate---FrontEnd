@@ -45,8 +45,10 @@ export class LoginPage implements OnInit {
           localStorage.setItem('authToken', response.jwt);
           await this.presentSuccessToast();
           console.log('Login successful', response);
+
           // Redirigir al usuario después del inicio de sesión
-          await this.router.navigate(['/home']);
+          this.router.navigate(['/tabs/home']);
+
         },
         async (error) => {
           console.error('Login error', error);
@@ -54,6 +56,7 @@ export class LoginPage implements OnInit {
         }
       );
     }
+
   }
 
   async presentSuccessToast() {

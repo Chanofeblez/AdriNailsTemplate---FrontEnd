@@ -16,6 +16,7 @@ import { AppointmentService } from 'src/app/services/appointment.service';
 import { Appointment, AppointmentStatus } from 'src/app/model/appointment.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Customer } from 'src/app/model/customer.interface';
+import { SuccessPage } from '../success/success.page';
 
 @Component({
   selector: 'app-service-details',
@@ -151,30 +152,41 @@ export class ServiceDetailsPage implements OnInit {
 
   createAppointment() {
 
-            const appointmentRequestDTO : Appointment = {
-              customerEmail: this.userId, // Usar el email del Customer
-              serviceName: this.name, // Usar el ID del Servicio
-              serviceVariantIds: this.varianteAppointment.map(variant => variant.id), // Mapeamos las variantes a sus IDs
-              appointmentDate: this.selectedDate,
-              appointmentTime: this.selectedTime,
-              totalCost: this.total, // Asumiendo que tienes el total calculado
-              status: AppointmentStatus.PENDING, // Estado por defecto
-              imagePath: this.imagePath
-            };
-            console.log("Created Appointment DTO", appointmentRequestDTO);
+    const appointmentRequestDTO: Appointment = {
+      customerEmail: this.userId, // Usar el email del Customer
+      serviceName: this.name, // Usar el ID del Servicio
+      serviceVariantIds: this.varianteAppointment.map(variant => variant.id), // Mapeamos las variantes a sus IDs
+      appointmentDate: this.selectedDate,
+      appointmentTime: this.selectedTime,
+      totalCost: this.total, // Asumiendo que tienes el total calculado
+      status: AppointmentStatus.PENDING, // Estado por defecto
+      imagePath: this.imagePath
+    };
+    console.log("Created Appointment DTO", appointmentRequestDTO);
 
-            // Llamar al servicio para crear el appointment
-            this.appointmentService.createAppointment(appointmentRequestDTO).subscribe(
-              (response: Appointment) => {
-                // Manejar la respuesta del servidor
-                console.log("Create Appointment",response);
-                this.navCtrl.navigateForward('/'); // Navegar a la página de confirmación
-              },
-              (error: any) => {
-                // Manejar el error
-                console.error('Error creating appointment:', error);
-              }
-            );
+    // Llamar al servicio para crear el appointment
+    this.appointmentService.createAppointment(appointmentRequestDTO).subscribe(
+      async (response: Appointment) => {
+        // Manejar la respuesta del servidor
+        console.log("Create Appointment", response);
+
+        // Llamar al modal de éxito
+        const modal = await this.modalController.create({
+          component: SuccessPage  // El componente del modal
+        });
+
+        await modal.present();  // Mostrar el modal
+
+        // Redirigir a la pantalla deseada después de que el modal se cierre automáticamente
+        modal.onDidDismiss().then(() => {
+          this.navCtrl.navigateForward('/tabs/home');  // Navegar a la página de inicio o cualquier otra página
+        });
+      },
+      (error: any) => {
+        // Manejar el error
+        console.error("Error creating appointment:", error);
+      }
+    );
   }
 
 

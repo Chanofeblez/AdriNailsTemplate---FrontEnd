@@ -8,6 +8,7 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthguardsGuard } from './guard/authguards.guard';  // Ajusta la ruta según la ubicación de tu AuthGuard
+import { HomePage } from './pages/home/home.page';
 
 const routes: Routes = [
   {
@@ -47,7 +48,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'tabs/home',  // Redirige a la ruta 'home' o la que quieras
+    redirectTo: '/tabs/home',  // Redirige a la ruta 'home' o la que quieras
     pathMatch: 'full'
   }
 //  {
@@ -93,7 +94,10 @@ const routes: Routes = [
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {
+      preloadingStrategy: PreloadAllModules,
+       onSameUrlNavigation: 'reload'
+     })
   ],
   exports: [RouterModule]
 })

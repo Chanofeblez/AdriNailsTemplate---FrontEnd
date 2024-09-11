@@ -16,14 +16,16 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'account-info',
-        loadChildren: () => import('../account-info/account-info.module').then(m => m.AccountInfoPageModule)
+        path: 'home',
+        loadChildren: () => import('../home/home.module').then((m) => m.HomePageModule),
+        runGuardsAndResolvers: 'always'  // Forzar la recarga del componente
       },
       {
-        path: 'home',
-        loadChildren: () =>
-          import('../home/home.module').then((m) => m.HomePageModule),
+        path: 'account-info',
+        loadChildren: () => import('../account-info/account-info.module').then(m => m.AccountInfoPageModule),
+
       },
+
       {
         path: 'courses',
         loadChildren: () =>
@@ -131,11 +133,6 @@ const routes: Routes = [
       },
     ],
   },
-  {
-    path: '',
-    redirectTo: '/tabs/home',
-    pathMatch: 'full'
-  }
 ];
 
 @NgModule({
