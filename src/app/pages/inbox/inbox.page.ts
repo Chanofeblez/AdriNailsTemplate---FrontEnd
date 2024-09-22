@@ -7,7 +7,7 @@
 */
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Image } from 'src/app/model/image.interface';
 import { ImageService } from 'src/app/services/image.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -38,6 +38,7 @@ export class InboxPage implements OnInit {
   private alertController = inject(AlertController);
   private router          = inject(ActivatedRoute);
   private modalController = inject(ModalController);
+  private loadingController = inject(LoadingController);
 
   constructor() {
     this.segment = 'manicure';
@@ -53,33 +54,40 @@ export class InboxPage implements OnInit {
 
   //Load Image
   loadImages() {
-    this.imageService.getAllImages().subscribe(
-      (images: Image[]) => {
-        // Vaciar las listas antes de llenarlas de nuevo
-        this.manicureImages = [];
-        this.pedicureImages = [];
+    // Mostrar el loader antes de iniciar la carga
+    this.presentLoading().then((loading) => {
+      this.imageService.getAllImages().subscribe(
+        (images: Image[]) => {
+          // Vaciar las listas antes de llenarlas de nuevo
+          this.manicureImages = [];
+          this.pedicureImages = [];
 
-        this.imageList = images;
-        this.imageList.forEach((image, index) => {
-          const base64Data = image.data; // El data ya está en Base64
-          const imageUrl = `data:${image.contentType};base64,${base64Data}`;
-          this.imageList[index].imageUrl = imageUrl;
-          // Filtrar por tipo
-          if (image.type === 'Manicure') {
-            this.manicureImages.push(this.imageList[index]);
-          } else if (image.type === 'Pedicure') {
-            this.pedicureImages.push(this.imageList[index]);
-          }
-        });
-        console.info('Images', this.imageList);
-        console.info('Manicure Images', this.manicureImages);
-        console.info('Pedicure Images', this.pedicureImages);
-      },
-      (error) => {
-        console.error('Error loading images', error);
-      }
-    );
+          this.imageList = images;
+          this.imageList.forEach((image, index) => {
+            const base64Data = image.data; // El data ya está en Base64
+            const imageUrl = `data:${image.contentType};base64,${base64Data}`;
+            this.imageList[index].imageUrl = imageUrl;
+            // Filtrar por tipo
+            if (image.type === 'Manicure') {
+              this.manicureImages.push(this.imageList[index]);
+            } else if (image.type === 'Pedicure') {
+              this.pedicureImages.push(this.imageList[index]);
+            }
+          });
+
+          // Ocultar el loader cuando las imágenes hayan cargado
+          this.dismissLoading(loading);
+          console.info('Images', this.imageList);
+        },
+        (error) => {
+          console.error('Error loading images', error);
+          // Ocultar el loader en caso de error también
+          this.dismissLoading(loading);
+        }
+      );
+    });
   }
+
 
   //Save Image
   onFileSelected(event: any) {
@@ -150,5 +158,17 @@ export class InboxPage implements OnInit {
     modal.classList.add('transparent-modal'); // Añadir la clase CSS personalizada
   }
 
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading images...',
+      spinner: 'bubbles', // Puedes cambiar el tipo de spinner ('lines', 'bubbles', etc.)
+    });
+    await loading.present();
+    return loading;
+  }
+
+  async dismissLoading(loading: HTMLIonLoadingElement) {
+    await loading.dismiss();
+  }
 
 }

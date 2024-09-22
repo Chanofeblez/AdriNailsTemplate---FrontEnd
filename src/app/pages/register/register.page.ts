@@ -123,7 +123,7 @@ export class RegisterPage implements OnInit {
         await this.presentSuccessToast();
         console.log('miembro creado');
         this.registerForm.reset();
-        await this.router.navigate(['/']);
+        await this.router.navigate(['/login']);
       } catch (error) {
         console.error('Error en el registro', error);
         await this.presentErrorToast();

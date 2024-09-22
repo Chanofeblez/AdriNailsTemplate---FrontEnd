@@ -5,8 +5,22 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-ion-footer {
-  margin-top: auto; /* Empuja el botón hacia abajo */
+ion-content.full-content {
+  height: 100%;
+}
+
+ion-label {
+  font-size: 12px;
+}
+
+.booking-screen {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.slot-screen {
+  flex: 1; /* Ocupa el espacio disponible */
 }
 
 .no-appointments-message {
@@ -21,12 +35,80 @@ ion-footer {
 }
 
 .date1 {
-  font-size: 12px;
+  font-size: 11px;
   font-family: 'bold';
   color: var(--ion-color-dark);
   text-align: start;
 
   margin-right: 2px;
+}
+
+
+
+
+
+ion-content {
+  --background: #fff; /* Asegúrate de que el fondo sea consistente */
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+ion-footer {
+  height: 15%;
+  padding: 10px 0;
+  /* Aumenta el padding si es necesario */
+  display: flex;
+  justify-content: center;
+  /* Centra el botón */
+  align-items: center;
+}
+
+//Seggments
+ion-segment {
+  display: flex;
+  justify-content: space-between; /* Asegura que los botones se distribuyan uniformemente */
+  width: 100%; /* Asegura que el segmento ocupe todo el ancho disponible */
+}
+
+ion-segment-button {
+  flex-grow: 1; /* Los botones crecerán para ocupar el espacio disponible */
+  text-align: center; /* Alinea el texto al centro */
+  font-size: 12px; /* Reduce ligeramente el tamaño del texto */
+  padding: 8px 0; /* Añade algo de padding vertical */
+  white-space: nowrap; /* Evita que el texto se divida en líneas */
+}
+
+ion-segment-button ion-label {
+  overflow: hidden; /* Evita el desbordamiento del texto */
+  text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
+  max-width: 100px; /* Ajusta el ancho máximo del botón */
+}
+
+//Appointment
+ion-button.botonapp {
+  background-color: #fff; /* Color de fondo rosado */
+  border: #FF4081; /* Rosa fuerte */
+  color: #FF4081; /* Texto en blanco */
+  border-radius: 25px; /* Bordes redondeados */
+  height: 45px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.botonapp[disabled] {
+  //background-color: #ffffff !important; /* Color gris claro para deshabilitado */
+  //color: #e0e0e0 !important; /* Texto más claro */
+ // border: none !important; /* Asegúrate de eliminar el borde cuando esté deshabilitado */
+  cursor: not-allowed;
+  opacity: 0.5;
+ // pointer-events: none;
+}
+
+.botonapp:active {
+  background-color: #FF4081; /* Color más claro al hacer clic */
+  border: 2px solid #FF4081; /* Mantiene el borde rosado */
+  color: white; /* Texto blanco al hacer clic */
 }
 
 .slot-name {
@@ -48,26 +130,110 @@ ion-footer {
 }
 
 .slot-name.selected {
-  background-color: #FF69B4; /* Rosa fuerte para el seleccionado */
-  color: #fff;
+  background-color: #FF4081; /* Usa el color rosado de tu app */
+  color: #fff; /* Texto en blanco */
+  border: 1px solid #FF4081; /* Borde del mismo color que el fondo */
 }
 
-ion-button[disabled] {
-  background-color: #e0e0e0 !important; /* Color gris claro para deshabilitado */
-  color: #9e9e9e !important; /* Texto más claro */
-  border-color: #e0e0e0 !important; /* Borde gris claro */
-  cursor: not-allowed; /* Cambia el cursor para mostrar que está deshabilitado */
-  opacity: 0.5; /* Para hacer que el botón se vea atenuado */
-  pointer-events: none; /* Asegura que no se puede hacer clic en el botón */
+//Upcoming
+.booking-list {
+  height: auto;
+  padding: 5px;
 }
 
-ion-button {
-  transition: background-color 0.3s ease, border-color 0.3s ease; /* Transición suave */
+ion-card {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
+  border-radius: 15px; /* Bordes redondeados */
+  margin-bottom: 10px; /* Separación entre las tarjetas */
+  padding: 5px; /* Espacio interno */
 }
 
-ion-button:active {
-  background-color: #ffb3b3; /* Un color más claro al presionar */
+ion-label.date1 {
+  font-size: 12px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+  margin-bottom: 5px;
 }
 
+.top-content {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
+.salon-info-list {
+  margin-top: 15px;
+}
 
+.cover {
+  width: 100%;
+  height: 100px; /* Ajusta la altura de la imagen */
+  background-size: cover;
+  background-position: center;
+  border-radius: 8px;
+}
+
+.name-content {
+  padding-left: 10px;
+}
+
+.service-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--ion-color-primary);
+  margin-top: 5px;
+}
+
+.service-extras {
+  font-size: 14px;
+  color: #666;
+}
+
+.bottom-content {
+  width: 100%;
+  display: flex;
+  justify-content: center; /* Centrar el botón */
+  padding: 5px 0; /* Espaciado superior e inferior */
+}
+
+.botoncancel {
+  width: 100%; /* El botón ocupará todo el ancho disponible */
+  height: 45px; /* Ajusta la altura del botón */
+  font-size: 16px; /* Aumenta el tamaño del texto */
+  border-radius: 25px; /* Bordes redondeados */
+  background-color: #fff; /* Fondo blanco */
+  color: #ff4081; /* Color del texto acorde a la paleta de la app */
+  border: 1px solid #ff4081; /* Borde rosado */
+  font-weight: bold; /* Texto en negrita */
+  text-transform: uppercase; /* Texto en mayúsculas */
+  cursor: pointer; /* Muestra un puntero al pasar sobre el botón */
+  text-align: center; /* Centra el texto */
+}
+
+.botoncancel:active {
+  background-color: #ff80ab; /* Cambia de color al hacer clic */
+}
+
+.botoncancel[disabled] {
+  background-color: #cccccc !important; /* Color gris claro para deshabilitado */
+  cursor: not-allowed; /* Cursor deshabilitado */
+  opacity: 0.6;
+}
+
+//Canceled
+.end-item1 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.cancelled1 {
+  background-color: #ff1f14; /* Color rojo claro */
+  color: white; /* Texto blanco */
+  font-size: 10px; /* Aumenta el tamaño del texto */
+  font-weight: bold; /* Negrita para que se destaque */
+  padding: 5px 10px; /* Ajusta el padding */
+  border-radius: 12px; /* Bordes redondeados */
+  text-transform: uppercase; /* Texto en mayúsculas */
+}

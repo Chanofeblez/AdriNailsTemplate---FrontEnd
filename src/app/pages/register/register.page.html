@@ -18,25 +18,23 @@
 <ion-content class="ion-padding">
   <div class="login-screen">
 
-
-
-    <form [formGroup]="registerForm" (ngSubmit)="onRegister()">
+    <form [formGroup]="registerForm" (ngSubmit)="onRegister()" autocomplete="new-password">
       <div class="logo-content">
         <img src="assets/images/auth.png" alt="" class="img">
       </div>
       <ion-label class="title">Create Your Account</ion-label>
       <ion-item>
         <ion-label position="floating">Full Name</ion-label>
-        <ion-input type="text" class="form-control" formControlName="name" ></ion-input>
-        <span class="warni" *ngIf="isValidField('name')">
+        <ion-input type="text" class="form-control" formControlName="name" autocomplete="new-password" ></ion-input>
+        <span class="warni" *ngIf="!isValidField('name') && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)">
           *You must enter your full name.
         </span>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Email</ion-label>
-        <ion-input type="email" class="form-control" formControlName="email"></ion-input>
-        <span class="warni" *ngIf="isValidField('email')">
+        <ion-input type="email" class="form-control" formControlName="email" autocomplete="new-password"></ion-input>
+        <span class="warni" *ngIf="!isValidField('email') && (registerForm.get('email')?.touched || registerForm.get('email')?.dirty)">
           *The email is mandatory and must be valid.
         </span>
       </ion-item>
@@ -44,16 +42,16 @@
 
       <ion-item>
         <ion-label position="floating">Password</ion-label>
-        <ion-input type="password" class="form-control" formControlName="password"></ion-input>
-        <span class="warni" *ngIf="isValidField('password')">
+        <ion-input type="password" class="form-control" formControlName="password" autocomplete="new-password"></ion-input>
+        <span class="warni" *ngIf="!isValidField('password') && (registerForm.get('password')?.touched || registerForm.get('password')?.dirty)">
           *You must enter your password.
         </span>
       </ion-item>
 
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
-        <ion-input  type="text" class="form-control" formControlName="phoneNumber"></ion-input>
-        <span class="warni" *ngIf="isValidField('phoneNumber')">
+        <ion-input  type="text" class="form-control" formControlName="phoneNumber" autocomplete="new-password"></ion-input>
+        <span class="warni" *ngIf="!isValidField('phoneNumber') && (registerForm.get('phoneNumber')?.touched || registerForm.get('phoneNumber')?.dirty)">
           *You must enter your phone number.
         </span>
       </ion-item>

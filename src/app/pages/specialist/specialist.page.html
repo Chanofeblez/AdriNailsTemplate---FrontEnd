@@ -5,24 +5,47 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 -->
-<ion-header class="ion-no-border">
-  <ion-toolbar color="primary" mode="md">
-    <ion-buttons slot="start">
-      <ion-button (click)="onBack()" color="light">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <ion-title>Our Specialist</ion-title>
-    <ion-buttons slot="end">
-      <ion-button color="light">
-        <ion-icon slot="icon-only" name="ellipsis-horizontal-circle-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
 
-<ion-content>
-  <div class="specialist-screen">
+  <ion-content fullscreen="true" class="ion-no-padding">
+    <div class="profile-info form-container">
+      <div class="header-container">
+        <ion-text color="primary">
+          <h2>Edit Profile</h2>
+        </ion-text>
+      </div>
+
+      <form [formGroup]="profileForm" (ngSubmit)="onUpdate()" class="form-pos">
+        <ion-item lines="none" class="input-content">
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-input placeholder="Full Name" type="text" formControlName="name"></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-content" disabled="true">
+          <ion-icon name="mail-outline" slot="start"></ion-icon>
+          <ion-input placeholder="Email Address" type="email" formControlName="email" readonly></ion-input>
+        </ion-item>
+
+        <ion-item lines="none" class="input-content">
+          <ion-icon name="call-outline" slot="start"></ion-icon>
+          <ion-input placeholder="Phone Number" type="text" formControlName="phoneNumber"></ion-input>
+        </ion-item>
+
+        <ion-text color="medium">
+          <p style="font-size: 0.7em; text-align: left; margin-top: 10px;">
+            *If you want to update your email, please contact us at <br><strong>adrinailsdesign&#64;yahoo.com</strong>
+          </p>
+        </ion-text>
+
+        <!-- Botón de Guardar -->
+        <ion-button expand="block" shape="round" fill="outline" class="submit-btn"
+          [disabled]="!isFormEdited || !profileForm.valid" type="submit">
+          {{ isFormEdited ? 'Save' : 'Update' }}
+        </ion-button>
+      </form>
+    </div>
+  </ion-content>
+
+<!--  <div class="specialist-screen">
     <ion-card mode="ios" class="content" *ngFor="let item of util.userList;">
       <ion-row>
         <ion-col size="2">
@@ -41,5 +64,5 @@
         </ion-col>
       </ion-row>
     </ion-card>
-  </div>
-</ion-content>
+  </div> -->
+

@@ -24,6 +24,43 @@
         <h2>Profile</h2>
       </ion-text>
     </div>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" shape="round" (click)="navigateToProfile()">View Profile</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" shape="round" (click)="navigateToPrivacy()">Privacy Policy</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" shape="round" (click)="navigateToCancellation()">Cancellation Policy</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" shape="round" (click)="navigateToDeletion()">Account Deletion Policy</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="12">
+        <ion-button expand="block" shape="round" color="danger" (click)="onLogout()">Logout</ion-button>
+      </ion-col>
+    </ion-row>
+  </div>
+<!--  <div class="profile-info form-container">
+    <div class="header-container">
+      <ion-text color="primary">
+        <h2>Profile</h2>
+      </ion-text>
+    </div>
     <form [formGroup]="profileForm" (ngSubmit)="onUpdate()" class="form-pos">
       <ion-item lines="none" class="input-content">
         <ion-input placeholder="Full Name" type="text" formControlName="name"></ion-input>
@@ -37,22 +74,20 @@
         <ion-input placeholder="Phone Number" type="text" formControlName="phoneNumber"></ion-input>
       </ion-item>
 
-      <!-- Si permites que el usuario cambie su contraseña
+       Si permites que el usuario cambie su contraseña
       <ion-item lines="none" class="input-content">
         <ion-input placeholder="Password" type="password" formControlName="password"></ion-input>
       </ion-item>  -->
-
-      <!-- Botón de Guardar -->
+<!-- Botón de Guardar
       <ion-button expand="block" shape="round" class="submit-btn" [disabled]="!isFormEdited || !profileForm.valid" type="submit">
-        {{ isFormEdited ? 'Save' : 'Update' }}
-      </ion-button>
-
-      <!-- Botón de Logout -->
+        {{ isFormEdited ? 'Sa ve' : 'Update' }}
+      </ion-button> -->
+<!-- Botón de Logout
       <ion-button expand="block" shape="round" class="logout-btn" (click)="onLogout()">
         Logout
       </ion-button>
     </form>
-  </div>
+  </div>  -->
 </ion-content>
 
 

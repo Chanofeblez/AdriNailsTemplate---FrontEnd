@@ -39,9 +39,7 @@ export class HomePage {
     slidesPerView: 3,
   };
 
-  constructor(
-
-  ) {
+  constructor() {
     console.log("HOME2");
   }
 
@@ -99,7 +97,7 @@ export class HomePage {
         }
       );
     } else {
-      console.error('Token not found');
+      console.log('Token no Found');
     }
   }
   resetUserId(){
@@ -136,7 +134,8 @@ export class HomePage {
 
 
   onSalonList(category: string) {
-    this.router.navigate(['/gallery'], { queryParams: { type: category } });
+    console.log("OnSalonList", category);
+    this.router.navigate(['/tabs/gallery'], { queryParams: { type: category } });
   }
 
   onSalonInfo(index: number) {

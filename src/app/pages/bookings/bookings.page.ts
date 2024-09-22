@@ -5,8 +5,8 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
-import { ModalController, NavController } from '@ionic/angular';
+import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
+import { IonDatetime, ModalController, NavController } from '@ionic/angular';
 import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
 import { register } from 'swiper/element';
@@ -26,15 +26,17 @@ import { ServicioService } from 'src/app/services/servicio.service';
 })
 export class BookingsPage implements OnInit {
 
+  @ViewChild(IonDatetime, { static: false }) dateTime!: IonDatetime;
+
   segment: any = 'book';
   minDate: string;
   userId: string;
   user:Customer;
   serviceImageUrl: string;
   selectedDate: string | null = null;
-  selectedSlot: number | null = null;
-  availableMorningSlots: { time: string, isAvailable: boolean }[] = []; // Horarios disponibles después de filtrar
-  availableAfternoonSlots: { time: string, isAvailable: boolean }[] = []; // Horarios disponibles después de filtrar
+  previusselectedDate: string | null = null;
+  selectedSlot: string | null = null;
+  formattedSlot: { time: string, isAvailable: boolean }[] = [];
   availableSlots: string[] = []; // Horarios disponibles después de filtrar
 
 
@@ -86,6 +88,8 @@ export class BookingsPage implements OnInit {
 
   // Método para resetear la fecha seleccionada
   resetDate() {
+    this.cdr.detectChanges();
+    this.previusselectedDate = null;
     this.selectedDate = null; // Reinicia el valor de la fecha seleccionada
     this.selectedSlot = null;
     console.log("this.selectedDate", this.selectedDate);
@@ -93,61 +97,120 @@ export class BookingsPage implements OnInit {
   }
 
   loadAvailableSlots(selectedDate: string) {
-    this.availableMorningSlots = []; // Reinicia la lista de slots AM
-    this.availableAfternoonSlots = []; // Reinicia la lista de slots PM
-
+    this.availableSlots = [];
+    this.formattedSlot = [];
     this.appointmentService.loadAvailableSlots(selectedDate).subscribe((slots: string[]) => {
       this.availableSlots = slots;
-      console.log("Available",this.availableSlots);
+      console.log("Available", this.availableSlots);
 
       // Lista de todos los slots
-      const allSlots = ['10:00:00', '13:00:00','15:00:00', '17:00:00'];
+      const allSlots = ['10:00:00', '13:00:00', '15:00:00', '17:00:00'];
 
       // Compara todos los slots con los disponibles
-    allSlots.forEach(slot => {
-      const isAvailable = this.availableSlots.includes(slot); // Comparación directa de strings
-      const hour = parseInt(slot.split(':')[0]);
+      allSlots.forEach(slot => {
+        const isAvailable = this.availableSlots.includes(slot); // Verifica si el slot está disponible
+        const formattedSlot = this.convertTo12HourFormat(slot); // Convierte el slot al formato de 12 horas
 
-      if (hour < 12) {
-        this.availableMorningSlots.push({ time: slot, isAvailable: isAvailable });
-      } else {
-        this.availableAfternoonSlots.push({ time: slot, isAvailable: isAvailable });
-      }
-    });
-
-    console.log("availableMorningSlots",this.availableMorningSlots);
-    console.log("availableAfternoonSlots",this.availableAfternoonSlots);
-
-      // Divide los Slots en AM y PM
-    //  this.availableSlots.forEach(slot => {
-//
-    //    const hour = slot.toString().split(':').map(digital => Number(digital)); // `slot` ya es de tipo `number`, por lo que contiene la hora
-//
-    //    if (hour[0] < 12) {
-    //        this.availableMorningSlots.push(hour[0]);
-    //    } else {
-    //        this.availableAfternoonSlots.push(hour[0]-12);
-    //    }
-    //});
-
+        // Agrega el slot formateado al arreglo formattedSlots
+        this.formattedSlot.push({ time: formattedSlot, isAvailable: isAvailable });
+      });
+      // Ahora tienes el array formattedSlots con los slots en formato de 12 horas y su disponibilidad
+      console.log("formattedSlots", this.formattedSlot);
     });
   }
+
+  convertTo12HourFormat(time: string): string {
+    let [hour, minute] = time.split(':');
+    let hourInt = parseInt(hour);
+
+    const ampm = hourInt >= 12 ? 'PM' : 'AM';
+    hourInt = hourInt % 12 || 12; // Convierte 0 a 12 y mantiene el resto
+
+    return `${hourInt}:${minute} ${ampm}`;
+  }
+
+  convertTo24HourFormat(time: string): string {
+    let [hour, minuteWithAMPM] = time.split(':');
+    let minute = minuteWithAMPM.slice(0, 2); // Extrae los minutos (primeros 2 caracteres)
+    let ampm = minuteWithAMPM.slice(3).trim(); // Extrae AM o PM
+
+    let hourInt = parseInt(hour);
+
+    if (ampm === 'PM' && hourInt < 12) {
+      hourInt += 12; // Convierte a formato de 24 horas
+    }
+
+    if (ampm === 'AM' && hourInt === 12) {
+      hourInt = 0; // Convierte medianoche a 00:00 en formato 24 horas
+    }
+
+    return `${hourInt.toString().padStart(2, '0')}:${minute}:00`; // Retorna en formato HH:mm:ss
+  }
+
+  save(time: string) {
+    // Convierte el slot seleccionado a string antes de compararlo
+    const selectedSlotString = this.selectedSlot ? this.selectedSlot.toString() : null;
+
+    // Extrae la hora de `time` como número en formato de 24 horas
+    const [hour, minuteWithAMPM] = time.split(':');
+    let hourInt = parseInt(hour, 10);
+    const ampm = minuteWithAMPM.slice(3).trim(); // Extrae AM o PM
+
+    if (ampm === 'PM' && hourInt < 12) hourInt += 12; // Convierte a formato 24h
+    if (ampm === 'AM' && hourInt === 12) hourInt = 0;  // Maneja la medianoche como 00
+
+    // Formatea el slot a HH:mm:ss
+    const formattedSlot = `${hourInt.toString().padStart(2, '0')}:${minuteWithAMPM.slice(0, 2)}:00`;
+
+    // Si el slot que se hace clic es el mismo que el seleccionado, lo deselecciona
+    if (selectedSlotString === formattedSlot) {
+        this.selectedSlot = null; // Deselecciona el slot
+    } else {
+        this.selectedSlot = formattedSlot; // Selecciona el slot como cadena en formato HH:mm:ss
+    }
+
+    console.log(this.selectedDate + " " + this.selectedSlot);
+}
 
   onDateChange(event: any) {
-    this.selectedSlot = null;
-    const selectedDate = event.detail.value;
+    const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
+    console.log('Fecha newSelectedDate:', newSelectedDate);
+    console.log('this.previusselectedDate', this.previusselectedDate);
+    // Si la nueva fecha es la misma que la ya seleccionada, deselecciona la fecha
+    if (this.previusselectedDate === newSelectedDate) {
+      this.previusselectedDate = null;
+      this.selectedDate = null;
+      this.selectedSlot = null; // También deselecciona el slot si la fecha se deselecciona
+      console.log('Fecha deseleccionada');
 
-    // Verifica que `selectedDate` no sea nulo
-    if (selectedDate) {
-      this.selectedDate = selectedDate.split('T')[0]; // Si solo necesitas la fecha sin la hora
-      console.log(this.selectedDate); // Para depuración, imprimirá la fecha en el formato "YYYY-MM-DD"
+      // Reinicia el ion-datetime directamente
+      this.resetIonDatetime();
+
+      // Limpia los slots visualmente también
+      this.formattedSlot = []; // Asegúrate de que esta variable controla la visualización de los slots
+    } else {
+      this.previusselectedDate = newSelectedDate; // Si es una fecha diferente, selecciona la nueva fecha
+      this.selectedDate = newSelectedDate;
+      this.selectedSlot = null; // Reinicia el slot seleccionado
+      console.log('Fecha seleccionada:', this.previusselectedDate);
 
       // Cargar los horarios disponibles para la fecha seleccionada
-      this.loadAvailableSlots(this.selectedDate!);
-    } else {
-      console.error('Fecha seleccionada no válida');
+      this.loadAvailableSlots(this.previusselectedDate);
     }
   }
+
+  formatDate(date: string): string {
+    return date.split('T')[0]; // Extrae solo la parte de la fecha "YYYY-MM-DD"
+  }
+
+  // Método para reiniciar ion-datetime
+  resetIonDatetime() {
+    if (this.dateTime) {
+      this.dateTime.reset(); // Reinicia el ion-datetime
+    }
+  }
+
+
 
   getToken() {
     const token = localStorage.getItem('authToken');
@@ -161,13 +224,11 @@ export class BookingsPage implements OnInit {
 
         },
         (error) => {
-          console.error('Error al obtener el username:', error);
-          // Verifica el contenido del error
           console.log('Error completo:', error);
         }
       );
     } else {
-      console.error('Token not found');
+      console.log('Token no Found');
     }
   }
 
@@ -179,7 +240,7 @@ export class BookingsPage implements OnInit {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
 
       if (!appointments || appointments.length === 0) {
-        console.error("No appointments found or appointments is undefined");
+        console.log("No appointments found or appointments is undefined");
         return; // Salir de la función si no hay citas
       }
 
@@ -224,10 +285,13 @@ export class BookingsPage implements OnInit {
     });
   }
 
-  save(save: any) {
-    console.log(this.selectedDate + " " + this.selectedSlot);
-    this.selectedSlot = save;
-    console.log(this.selectedDate + " " + this.selectedSlot);
+
+
+  isSlotSelected(itemTime: string): boolean {
+     // Obtén solo la hora de itemTime y compárala con selectedSlot
+     const timeIn24HourFormat = this.convertTo24HourFormat(itemTime); // Convierte itemTime a 24 horas
+     console.log("timeIn24HourFormat", timeIn24HourFormat);
+    return this.selectedSlot === timeIn24HourFormat; // Compara con el selectedSlot
   }
 
   isFormValid(): boolean {
@@ -279,20 +343,21 @@ export class BookingsPage implements OnInit {
   }
 
   onPayment() {
+    if (this.selectedSlot != null) {
+      // Convertir el slot a string antes de pasarlo a la función
+      const selectedSlotString = this.selectedSlot.toString();
+      // Convertir el slot a formato de 24 horas
+      const slotIn24HourFormat = this.convertTo24HourFormat(selectedSlotString);
+      console.log("Slot en formato de 24 horas:", slotIn24HourFormat);
 
-    if(this.selectedSlot != null && this.selectedSlot >= 1 && this.selectedSlot <= 7 ){
-      this.selectedSlot+=12;
+      this.router.navigate(['/tabs/services-list'], {
+        queryParams: {
+          user: this.userId,
+          date: this.selectedDate,
+          time: slotIn24HourFormat // Envía el slot en formato de 24 horas al backend
+        }
+      });
     }
-    console.log("onPayment");
-    this.router.navigate(['/tabs/services-list'], {
-      queryParams: {
-        user: this.userId,
-        date: this.selectedDate,
-        time: this.selectedSlot
-      }
-    });
-
-   // this.util.navigateToPage('/services-list');
   }
 
   // Método para cancelar la cita

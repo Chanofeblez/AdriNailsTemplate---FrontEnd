@@ -7,5 +7,5 @@
 */
 export const environment = {
   production: true,
-  base_url: 'http://localhost:8081'
+  base_url: 'https://adrinailsdesign-c393e5baf34a.herokuapp.com'
 };

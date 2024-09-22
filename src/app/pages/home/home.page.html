@@ -24,7 +24,7 @@
 
 <ion-content class="ion-padding">
   <div class="home_screen">
-    <ion-label class="greeting-title" *ngIf="userName">{{ greeting }}, {{userName}} 👋</ion-label>
+    <ion-label class="gallery-title" *ngIf="userName">{{ greeting }}, {{userName}} 👋</ion-label>
     <div class="sliders">
       <swiper-container #swiper [slidesPerView]="1.05" [spaceBetween]="10">
         <swiper-slide *ngFor="let post of util.posts">
@@ -40,25 +40,31 @@
 
     <div class="breaker"></div>
 
+    <!-- Título de la galería -->
+    <ion-label class="gallery-title">Gallery</ion-label>
+
     <div class="category-links">
       <div class="category-info" (click)="onSalonList('manicure')">
         <div class="circle-content">
           <img src="assets/images/avatar/pedicure.jpg" alt="Manicure" class="img">
         </div>
-        <ion-label class="name">Manicure</ion-label>
+        <ion-label class="name">MANICURE</ion-label>
       </div>
       <div class="category-info" (click)="onSalonList('pedicure')">
         <div class="circle-content">
           <img src="assets/images/avatar/pedicureRuso1.jpg" alt="Pedicure" class="img">
         </div>
-        <ion-label class="name">Pedicure</ion-label>
+        <ion-label class="name">PEDICURE</ion-label>
       </div>
     </div>
+
+
 
     <div class="breaker"></div>
 
     <div class="services-section">
-      <h2 class="section-title">Servicios</h2>
+      <ion-label class="gallery-title">Services</ion-label>
+      <p class="gallery-description">Explore the different types of services we offer. This is a gallery for reference only.</p>
       <div class="services-container">
         <swiper-container #swiper [slidesPerView]="1.5" [spaceBetween]="10">
           <swiper-slide class="service-card" *ngFor="let service of services">

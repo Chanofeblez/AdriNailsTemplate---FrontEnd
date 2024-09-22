@@ -5,3 +5,52 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
+
+.ion-no-padding {
+  padding: 0; /* Elimina todo el padding del ion-content */
+}
+
+.profile-info {
+  display: block; /* Cambia flex por block para un flujo natural */
+  justify-content: flex-start; /* Alinea hacia la parte superior */
+  align-items: center; /* Si quieres centrar horizontalmente, mantén este */
+  padding-top: 40px; /* Elimina cualquier padding superior si lo hay */
+  margin-top: 0;
+  padding-left: 20px; /* Márgenes laterales para centrar el contenido */
+  padding-right: 20px; /* Márgenes laterales para centrar el contenido */
+}
+
+
+
+.form-container {
+  padding-top: 20%; /* Elimina el padding superior del contenedor del formulario */
+}
+
+.input-content {
+  margin-bottom: 15px; /* Espacio entre los inputs */
+}
+
+.submit-btn:active {
+  transform: scale(0.98); /* Leve efecto de presión en click */
+}
+
+ion-icon {
+  font-size: 1.2em; /* Ajustar el tamaño del icono */
+  margin-right: 10px; /* Un poco más de espacio entre el icono y el texto */
+  margin-left: 10px;
+}
+
+
+
+ion-item.ion-focused ion-icon {
+  color: #ff4081; /* Cambia el color del icono cuando el campo está activo */
+}
+
+ion-item.ion-focused {
+  border-bottom: 2px solid #ff4081; /* Borde más destacado en el campo activo */
+}
+
+
+
+
+

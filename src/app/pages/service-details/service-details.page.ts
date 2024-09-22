@@ -6,10 +6,10 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Servicio, ServicioVariant } from 'src/app/model/manicure-service.interface';
 import { UtilService } from 'src/app/services/util.service';
-import { ModalController, NavController } from '@ionic/angular';
+import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
 import { AuthService } from 'src/app/services/auth.service';
 import { AppointmentService } from 'src/app/services/appointment.service';
@@ -32,7 +32,7 @@ export class ServiceDetailsPage implements OnInit {
   imagePath: string;
 
   servicios: Servicio[]=[];
-  mostrarServicio : Servicio;
+  mostrarServicio : Servicio | null = null;
   varianteServicio: ServicioVariant[] = [];
   varianteAppointment: ServicioVariant[] = [];
 
@@ -44,18 +44,18 @@ export class ServiceDetailsPage implements OnInit {
   public util                = inject(UtilService);
   private modalController    = inject(ModalController);
   private route              = inject(ActivatedRoute);
+  private router             = inject(Router);
   private authService        = inject(AuthService);
   private navCtrl            = inject(NavController);
   private appointmentService = inject(AppointmentService);
-  private servicioService = inject(ServicioService);
+  private servicioService    = inject(ServicioService);
+  private toastController    = inject(ToastController);
 
   constructor() {
 
   }
 
   ngOnInit() {
-    this.loadServicios();
-
     this.route.queryParams.subscribe(params => {
       this.userId= params['user'];
       this.selectedDate = params['date'];
@@ -63,8 +63,6 @@ export class ServiceDetailsPage implements OnInit {
       this.name = params['name'];
       this.total = params['price'];
       this.imagePath = params['imagePath'];
-
-
       console.log(this.userId);
       console.log(this.name);
       console.log(this.selectedDate);
@@ -74,11 +72,27 @@ export class ServiceDetailsPage implements OnInit {
     });
   }
 
+  ionViewWillEnter() {
+    // Reinicia los componentes cada vez que se entra a la página
+    this.resetPage();
+    this.loadServicios();
+  }
+
+  resetPage() {
+    // Aquí puedes reiniciar cualquier variable o estado
+    this.varianteAppointment = [];
+    this.total = 0;
+    this.mostrarServicio = null;
+    this.varianteServicio = [];
+    console.log('Página reiniciada');
+  }
+
   loadServicios(): void {
     this.servicioService.getAllServicios().subscribe(
       (data: Servicio[]) => {
         console.log(data);
         this.servicios = data;
+        console.log(this.servicios);
         this.separateServicios(this.servicios);
       },
       (error) => {
@@ -92,9 +106,11 @@ export class ServiceDetailsPage implements OnInit {
       if(servicios[i].name === this.name){
         this.mostrarServicio = servicios[i];
         this.total=this.mostrarServicio.price;
+        console.log(servicios[i]);
         this.varianteServicio = servicios[i].variants;
       }
     }
+    console.log(this.varianteServicio);
   }
 
   onBack() {
@@ -145,8 +161,9 @@ export class ServiceDetailsPage implements OnInit {
       // El usuario está logueado, puedes proceder a crear el appointment
       this.createAppointment();
     } else {
-      // El usuario no está logueado, redirigir a la página de login
-      // this.showLoginPrompt();
+      // El usuario no está logueado, mostrar mensaje de error y redirigir al login
+    this.presentToast('You must be logged in to create an appointment.');
+    this.router.navigate(['/login']); // Redirigir al login
     }
   }
 
@@ -189,6 +206,16 @@ export class ServiceDetailsPage implements OnInit {
     );
   }
 
+  // Método para mostrar el toast
+async presentToast(message: string) {
+  const toast = await this.toastController.create({
+    message: message,
+    duration: 2000, // Duración del toast (2 segundos)
+    color: 'warning', // Puedes elegir otros colores como "danger", "success", etc.
+    position: 'bottom' // Posición del toast
+  });
+  toast.present();
+}
 
 
   showLoginPrompt() {

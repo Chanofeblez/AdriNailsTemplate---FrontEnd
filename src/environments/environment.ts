@@ -6,6 +6,6 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 export const environment = {
-  production: false,
-  base_url: 'http://localhost:8081'
+  production: true,
+  base_url: 'https://adrinailsdesign-c393e5baf34a.herokuapp.com'
 };

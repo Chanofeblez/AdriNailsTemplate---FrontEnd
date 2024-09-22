@@ -31,13 +31,14 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
     this.loginForm = this.fb.group({
-      email: ['chano.feblez@yahoo.com', [Validators.required, Validators.email]],
-      password: ['12345678', [Validators.required, Validators.minLength(6)]]
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]]
     });
   }
 
   onLogin() {
     console.log('Staring Login');
+    console.log(this.loginForm.value); // Verifica que el email y password sean correctos
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         async (response) => {

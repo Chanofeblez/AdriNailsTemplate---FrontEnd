@@ -26,24 +26,59 @@ export class AccountInfoPage implements OnInit {
   customerEmail: string;
   customerId: string;
 
-  public util             = inject(UtilService);
+  public util = inject(UtilService);
   private modalController = inject(ModalController);
-  private formBuilder     = inject(FormBuilder);
-  private authService     = inject(AuthService);
-  private router          = inject(Router);
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  private router = inject(Router);
 
 
   constructor() { }
 
- // ionViewDidEnter() {
- //   this.initForm();
- //   this.loadCustomerEmail(); // Cargar email del usuario autenticado
- // }
+  // ionViewDidEnter() {
+  //   this.initForm();
+  //   this.loadCustomerEmail(); // Cargar email del usuario autenticado
+  // }
 
   ngOnInit() {
     this.initForm();
     this.loadCustomerEmail(); // Cargar email del usuario autenticado
   }
+
+  // Navegación a la pantalla de edición de perfil
+  navigateToProfile() {
+    this.router.navigate(['/tabs/account']);
+  }
+
+  // Navegación a la política de privacidad
+  navigateToPrivacy() {
+    this.router.navigate(['/tabs/privacy-policy']);
+  }
+
+  // Navegación a la política de cancelación
+  navigateToCancellation() {
+    this.router.navigate(['/tabs/cancellation-policy']);
+  }
+
+  // Navegación a la política de eliminación de perfil
+  navigateToDeletion() {
+    this.router.navigate(['/tabs/deletion-policy']);
+  }
+
+  // Función para logout
+  onLogout() {
+    // Limpia el token de autenticación
+    localStorage.removeItem('authToken');
+    sessionStorage.removeItem('authToken');
+
+    // Navegar a home sin recargar toda la página
+    this.router.navigate(['/home']).then(() => {
+      // Si necesitas forzar una recarga de los componentes en home puedes hacerlo aquí
+      window.location.reload(); // Opcional: sólo si realmente necesitas recargar todo desde el servidor
+    });
+
+  }
+
 
   // Inicializar el formulario con validación
   initForm() {
@@ -113,16 +148,6 @@ export class AccountInfoPage implements OnInit {
     }
   }
 
-  // Función para logout
-  onLogout() {
-    // Limpia el token de autenticación
-    localStorage.removeItem('authToken');
-    sessionStorage.removeItem('authToken');
-
-    // Recarga la aplicación por completo
-    window.location.reload();
-
-  }
 
 
   onBack() {

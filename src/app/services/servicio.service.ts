@@ -19,7 +19,6 @@ export class ServicioService {
 
   // Método para obtener todos los servicios
   getAllServicios(): Observable<Servicio[]> {
-    console.log(this.http.get<Servicio[]>(this.apiUrl));
     return this.http.get<Servicio[]>(this.apiUrl);
   }
 

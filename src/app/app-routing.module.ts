@@ -50,7 +50,8 @@ const routes: Routes = [
     path: '**',
     redirectTo: '/tabs/home',  // Redirige a la ruta 'home' o la que quieras
     pathMatch: 'full'
-  }
+  },
+
 //  {
 //    path: 'auth',
 //    loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthPageModule)
@@ -83,10 +84,7 @@ const routes: Routes = [
 //    path: 'salon-list',
 //    loadChildren: () => import('./pages/salon-list/salon-list.module').then(m => m.SalonListPageModule)
 //  },
-//  {
-//    path: 'specialist',
-//    loadChildren: () => import('./pages/specialist/specialist.module').then(m => m.SpecialistPageModule)
-//  },
+//
 //  {
 //    path: 'welcome',
 //    loadChildren: () => import('./pages/welcome/welcome.module').then(m => m.WelcomePageModule)

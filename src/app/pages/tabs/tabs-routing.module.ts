@@ -127,6 +127,22 @@ const routes: Routes = [
         loadChildren: () => import('../imagemodal/imagemodal.module').then( m => m.ImagemodalPageModule)
       },
       {
+        path: 'account',
+        loadChildren: () => import('../specialist/specialist.module').then(m => m.SpecialistPageModule)
+      },
+      {
+        path: 'privacy-policy',
+        loadChildren: () => import('../privacypolicy/privacypolicy.module').then( m => m.PrivacypolicyPageModule)
+      },
+      {
+        path: 'cancellation-policy',
+        loadChildren: () => import('../cancellationpolicy/cancellationpolicy.module').then( m => m.CancellationpolicyPageModule)
+      },
+      {
+        path: 'deletion-policy',
+        loadChildren: () => import('../accountdeletionpolicy/accountdeletionpolicy.module').then( m => m.AccountdeletionpolicyPageModule)
+      },
+      {
         path: '',
         redirectTo: '/tabs/home',
         pathMatch: 'full',

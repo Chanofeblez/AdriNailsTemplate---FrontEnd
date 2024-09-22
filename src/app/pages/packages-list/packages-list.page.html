@@ -34,7 +34,7 @@
           <ion-label class="desc">New Course... Coming Soon...</ion-label>
           <div class="price-tab">
          <!--   <ion-label class="price">₹{{5 * (i+1)}} </ion-label> -->
-            <ion-button expand="block" shape="round" color="primary" size="small"
+            <ion-button expand="block" shape="round" color="primary" size="small" [disabled]=true
               (click)="onPackageInfo(item.name,item.cover)">
               Buy
             </ion-button>
