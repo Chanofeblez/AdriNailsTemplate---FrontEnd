@@ -43,11 +43,11 @@ export class HomePage {
     console.log("HOME2");
   }
 
-  ionViewDidEnter() {
+  async ionViewDidEnter() {
     console.log("ionViewDidEnter executed once");
     this.loadServices();
     this.userId = "";
-    this.getUserByToken(); // Aquí puedes volver a cargar los datos si es necesario
+   await this.getUserByToken(); // Aquí puedes volver a cargar los datos si es necesario
     this.setGreeting();
   }
 

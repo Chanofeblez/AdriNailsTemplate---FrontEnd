@@ -43,15 +43,17 @@ export class PackagesListPage implements OnInit {
     // Verificar si el usuario está logueado
     this.checkLoginStatus();
 
+    // Obtener todos los cursos primero
+    this.courseService.getCourses().subscribe(data => {
+      this.courses = data;
+      console.log("Cursos", this.courses);
+    });
+
     try {
       // Llamar al método que maneja la obtención del usuario por token y esperar que termine
       await this.getUserByToken();
 
-      // Obtener todos los cursos primero
-      this.courseService.getCourses().subscribe(data => {
-        this.courses = data;
-        console.log("Cursos", this.courses);
-      });
+
 
       // Ahora que ya tenemos el userId desde getUserByToken, obtenemos los cursos pagados usando el userId
       if (this.userId) {

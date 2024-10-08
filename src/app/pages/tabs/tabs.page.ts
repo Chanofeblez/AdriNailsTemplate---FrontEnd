@@ -5,7 +5,7 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, inject, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -17,19 +17,36 @@ import { UtilService } from 'src/app/services/util.service';
 })
 export class TabsPage implements OnInit {
 
+  logged: boolean;
+
   public util        = inject(UtilService);
   public authService = inject(AuthService);
   private router     = inject(Router);
-
-  logged: boolean;
+  private cdRef      = inject(ChangeDetectorRef);
 
   constructor() { }
 
   async ngOnInit() {
+    console.log("ngOnInit Tabs executed once");
     // Suscríbete al observable para obtener el valor booleano
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
       console.log(this.logged); // Ahora puedes usar el valor booleano
+
+      // Forzar la detección de cambios
+      this.cdRef.detectChanges();
+    });
+  }
+
+  ionViewDidEnter() {
+    console.log("ionViewDidEnter executed once");
+    // Suscríbete al observable para obtener el valor booleano
+    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+      this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
+      console.log(this.logged); // Ahora puedes usar el valor booleano
+
+      // Forzar la detección de cambios
+      this.cdRef.detectChanges();
     });
   }
 
