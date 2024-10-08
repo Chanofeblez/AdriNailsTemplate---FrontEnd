@@ -15,21 +15,30 @@ import { UtilService } from 'src/app/services/util.service';
   styleUrls: ['./package-details.page.scss'],
 })
 export class PackageDetailsPage implements OnInit {
-  name: any = '';
-  image: any = '';
+  name: string = '';
+  image: string = '';
+  description: string = '';
+  pdfPath: string = '';
+  videoPath: string = '';
+
   constructor(
     public util: UtilService,
     private route: ActivatedRoute
-  ) {
+  ) {}
+
+  ngOnInit() {
     this.route.queryParams.subscribe((data: any) => {
-      console.log(data);
+      console.log(data); // Imprime los datos recibidos para asegurarte de que están siendo pasados correctamente.
+
+      // Asigna los valores recibidos desde los parámetros de la ruta
       this.name = data.name;
       this.image = data.image;
+      this.description = data.description;
+      this.pdfPath = data.pdfPath;
+      this.videoPath = data.videoPath;
     });
   }
 
-  ngOnInit() {
-  }
 
   onBack() {
     this.util.onBack();

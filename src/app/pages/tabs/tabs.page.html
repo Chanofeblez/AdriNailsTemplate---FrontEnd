@@ -30,7 +30,7 @@
       <ion-label>Home</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="packages-list">
+    <ion-tab-button tab="courses-list">
       <ion-icon aria-hidden="true" name="play-circle-outline"></ion-icon>
       <ion-label>Courses</ion-label>
     </ion-tab-button>
@@ -45,12 +45,12 @@
       <ion-label>Pictures</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="account-info" *ngIf="authService.isLoggedIn()">
+    <ion-tab-button tab="account-info" *ngIf="logged">
       <ion-icon aria-hidden="true" name="person-outline"></ion-icon>
       <ion-label>Profile</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button (click)="onNotification()" *ngIf="!authService.isLoggedIn()">
+    <ion-tab-button (click)="onNotification()" *ngIf="!logged">
       <ion-icon aria-hidden="true" name="log-in-outline"></ion-icon>
       <ion-label>Login</ion-label>
     </ion-tab-button>

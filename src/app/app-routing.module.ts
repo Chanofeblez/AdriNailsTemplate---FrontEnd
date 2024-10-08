@@ -50,7 +50,11 @@ const routes: Routes = [
     path: '**',
     redirectTo: '/tabs/home',  // Redirige a la ruta 'home' o la que quieras
     pathMatch: 'full'
+  },  {
+    path: 'confirmappointmentmodal',
+    loadChildren: () => import('./pages/confirmappointmentmodal/confirmappointmentmodal.module').then( m => m.ConfirmappointmentmodalPageModule)
   },
+
 
 //  {
 //    path: 'auth',

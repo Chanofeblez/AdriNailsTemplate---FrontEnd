@@ -47,7 +47,7 @@ export class HomePage {
     console.log("ionViewDidEnter executed once");
     this.loadServices();
     this.userId = "";
-    this.getToken(); // Aquí puedes volver a cargar los datos si es necesario
+    this.getUserByToken(); // Aquí puedes volver a cargar los datos si es necesario
     this.setGreeting();
   }
 
@@ -77,22 +77,20 @@ export class HomePage {
     );
   }
 
-  getToken() {
+  getUserByToken() {
     const token = localStorage.getItem('authToken');
     console.log('Token', token);
     if (token) {
       this.authService.getUserByToken(token).subscribe(
-        (response:any) => {
-          console.log('Username:', response);
-          // Aquí puedes manejar el username, por ejemplo, almacenarlo en una variable o en el estado del componente
-          this.userId = response.username;
-          this.getCustomerByEmail(this.userId);
-          console.log('Username', this.userId);
-
+        (response: any) => {
+          console.log('Customer:', response);
+          this.userName = response.name;
+          // Ahora response es un objeto Customer completo
+          this.userId = response.id; // O maneja cualquier campo necesario
+         console.log('Customer ID:', this.userId);
         },
         (error) => {
-          console.error('Error al obtener el username:', error);
-          // Verifica el contenido del error
+          console.error('Error al obtener el cliente:', error);
           console.log('Error completo:', error);
         }
       );
@@ -100,6 +98,8 @@ export class HomePage {
       console.log('Token no Found');
     }
   }
+
+
   resetUserId(){
     this.userId = "";
   }

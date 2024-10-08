@@ -103,11 +103,11 @@ const routes: Routes = [
         loadChildren: () => import('../payment-modal/payment-modal.module').then( m => m.PaymentModalPageModule)
       },
       {
-        path: 'package-details',
+        path: 'courses-details',
         loadChildren: () => import('../package-details/package-details.module').then(m => m.PackageDetailsPageModule)
       },
       {
-        path: 'packages-list',
+        path: 'courses-list',
         loadChildren: () => import('../packages-list/packages-list.module').then(m => m.PackagesListPageModule)
       },
       {

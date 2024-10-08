@@ -6,7 +6,7 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { ModalController, NavParams } from '@ionic/angular';
+import { ModalController, NavParams, ToastController } from '@ionic/angular';
 import { AppointmentStatus } from 'src/app/model/appointment.interface';
 import { AppointmentService } from 'src/app/services/appointment.service';
 
@@ -21,7 +21,8 @@ export class CancelModalPage implements OnInit {
 
   private modalController    = inject(ModalController);
   private appointmentService = inject(AppointmentService);
-  private navParams = inject(NavParams);
+  private navParams          = inject(NavParams);
+  private toastController    = inject(ToastController);
 
   constructor() { }
 
@@ -36,17 +37,37 @@ export class CancelModalPage implements OnInit {
   }
 
    // Método para cancelar la cita
-   cancelarAppointment() {
+  cancelarAppointment() {
     // Llama al servicio para actualizar el estado de la cita a "CANCELLED"
-    this.appointmentService.updateAppointmentStatus(this.appointmentId, AppointmentStatus.CANCELED).subscribe(
-      (response) => {
-        console.log('Appointment cancelled:', response);
-        this.dismiss('ok'); // Cierra el modal tras cancelar la cita
-      },
-      (error) => {
-        console.error('Error cancelling appointment:', error); // Manejo de errores
-      }
-    );
+    this.appointmentService.updateAppointmentStatus(this.appointmentId, AppointmentStatus.CANCELED)
+      .subscribe(
+        async (response) => {
+          console.log('Appointment cancelled: ', response);
+
+          // Muestra un toast de éxito
+          const toast = await this.toastController.create({
+            message: 'Your appointment was successfully cancelled. Please note, up to 100% of the service fee may still be charged according to our cancellation policy.',
+            duration: 4000,
+            color: 'success',
+            position: 'bottom'
+          });
+          await toast.present();
+
+          this.dismiss('ok'); // Cierra el modal tras cancelar la cita
+        },
+        async (error) => {
+          console.error('Error cancelling appointment:', error);
+
+          // Muestra un toast de error
+          const toast = await this.toastController.create({
+            message: 'Failed to cancel your appointment. Please try again.',
+            duration: 3000,
+            color: 'danger',
+            position: 'bottom'
+          });
+          await toast.present();
+        }
+      );
   }
 
 }

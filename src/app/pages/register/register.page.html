@@ -23,9 +23,10 @@
         <img src="assets/images/auth.png" alt="" class="img">
       </div>
       <ion-label class="title">Create Your Account</ion-label>
+
       <ion-item>
         <ion-label position="floating">Full Name</ion-label>
-        <ion-input type="text" class="form-control" formControlName="name" autocomplete="new-password" ></ion-input>
+        <ion-input type="text" class="form-control" formControlName="name" autocomplete="new-password"></ion-input>
         <span class="warni" *ngIf="!isValidField('name') && (registerForm.get('name')?.touched || registerForm.get('name')?.dirty)">
           *You must enter your full name.
         </span>
@@ -39,7 +40,6 @@
         </span>
       </ion-item>
 
-
       <ion-item>
         <ion-label position="floating">Password</ion-label>
         <ion-input type="password" class="form-control" formControlName="password" autocomplete="new-password"></ion-input>
@@ -50,37 +50,18 @@
 
       <ion-item>
         <ion-label position="floating">Phone Number</ion-label>
-        <ion-input  type="text" class="form-control" formControlName="phoneNumber" autocomplete="new-password"></ion-input>
+        <ion-input type="text" class="form-control" formControlName="phoneNumber" autocomplete="new-password"></ion-input>
         <span class="warni" *ngIf="!isValidField('phoneNumber') && (registerForm.get('phoneNumber')?.touched || registerForm.get('phoneNumber')?.dirty)">
           *You must enter your phone number.
         </span>
       </ion-item>
-
-    <!--  <ion-item lines="none" class="check-item">
-        <ion-label>Remember me</ion-label>
-        <ion-checkbox slot="start" mode="md"></ion-checkbox>
-      </ion-item> -->
 
       <ion-button shape="round" expand="block" type="submit" color="primary" [disabled]="!registerForm.valid">
         Sign Up
       </ion-button>
     </form>
 
-    <!-- Casilla de verificación para agregar tarjeta de banco
-    <ion-item lines="none" class="check-item">
-      <ion-label>Add Bank Card</ion-label>
-      <ion-checkbox slot="start" mode="md" [(ngModel)]="addBankCard"></ion-checkbox>
-    </ion-item> -->
-
-    <!-- Square Payment Form, mostrado si el checkbox está marcado
-    <div *ngIf="addBankCard">
-      <div id="card-container"></div>
-      <button id="card-button" ion-button expand="block" type="button">
-        Add Card
-      </button>
-    </div> -->
-
-     <ion-row class="or-content">
+    <ion-row class="or-content">
       <ion-col size="4">
         <div class="line"></div>
       </ion-col>
@@ -92,21 +73,8 @@
       </ion-col>
     </ion-row>
 
-  <!-- <div class="social-login">
-      <ion-button fill="outline" color="medium" (click)="onNext()">
-        <ion-icon slot="icon-only" name="logo-facebook" color="secondary"></ion-icon>
-      </ion-button>
-      <ion-button fill="outline" color="medium" (click)="onNext()">
-        <ion-icon slot="icon-only" name="logo-google" color="danger"></ion-icon>
-      </ion-button>
-      <ion-button fill="outline" color="medium" (click)="onNext()">
-        <ion-icon slot="icon-only" name="logo-apple" color="dark"></ion-icon>
-      </ion-button>
-    </div> -->
-
     <ion-button expand="block" fill="clear" shape="round" color="medium" (click)="onBack()">
-      <span class="register-lbl-gray">Already have an account ?</span> &nbsp; <span class="register-lbl-bold">Sign
-        In</span>
+      <span class="register-lbl-gray">Already have an account?</span> &nbsp; <span class="register-lbl-bold">Sign In</span>
     </ion-button>
   </div>
 </ion-content>

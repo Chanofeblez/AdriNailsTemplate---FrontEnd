@@ -17,6 +17,8 @@ import { Appointment, AppointmentStatus } from 'src/app/model/appointment.interf
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Customer } from 'src/app/model/customer.interface';
 import { SuccessPage } from '../success/success.page';
+import { ConfirmAppointmentModalPage } from '../confirmappointmentmodal/confirmappointmentmodal.page';
+import { ConfirmappointmentmodalPageModule } from '../confirmappointmentmodal/confirmappointmentmodal.module';
 
 @Component({
   selector: 'app-service-details',
@@ -30,6 +32,7 @@ export class ServiceDetailsPage implements OnInit {
   selectedDate: string;
   selectedTime: string;
   imagePath: string;
+  logged: boolean;
 
   servicios: Servicio[]=[];
   mostrarServicio : Servicio | null = null;
@@ -156,10 +159,15 @@ export class ServiceDetailsPage implements OnInit {
     this.util.navigateToPage('payment-modal');
   }
 
-  onApply() {
-    if (this.authService.isLoggedIn()) {
+ async onApply() {
+  this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+    this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
+    console.log(this.logged); // Ahora puedes usar el valor booleano
+  });
+    if (this.logged ) {
+      console.log("Adentro");
       // El usuario está logueado, puedes proceder a crear el appointment
-      this.createAppointment();
+      await this.presentConfirmModal();
     } else {
       // El usuario no está logueado, mostrar mensaje de error y redirigir al login
     this.presentToast('You must be logged in to create an appointment.');
@@ -167,24 +175,42 @@ export class ServiceDetailsPage implements OnInit {
     }
   }
 
-  createAppointment() {
-
+  async presentConfirmModal() {
     const appointmentRequestDTO: Appointment = {
-      customerEmail: this.userId, // Usar el email del Customer
-      serviceName: this.name, // Usar el ID del Servicio
-      serviceVariantIds: this.varianteAppointment.map(variant => variant.id), // Mapeamos las variantes a sus IDs
+      customerEmail: this.userId,  // Usar el email del Customer
+      serviceName: this.name,  // Usar el ID del Servicio
+      serviceVariantIds: this.varianteAppointment.map(variant => variant.id),  // Mapear las variantes a sus IDs
       appointmentDate: this.selectedDate,
       appointmentTime: this.selectedTime,
-      totalCost: this.total, // Asumiendo que tienes el total calculado
-      status: AppointmentStatus.PENDING, // Estado por defecto
+      totalCost: this.total,  // Asumiendo que tienes el total calculado
+      status: AppointmentStatus.PENDING,  // Estado por defecto
       imagePath: this.imagePath
     };
-    console.log("Created Appointment DTO", appointmentRequestDTO);
 
+    // Abre el modal de confirmación y pasa el appointmentRequestDTO
+    const modal = await this.modalController.create({
+      component: ConfirmAppointmentModalPage,
+      cssClass: 'bookmark-modal',  // El componente del modal de confirmación
+      componentProps: { appointment: appointmentRequestDTO },  // Pasa los detalles del appointment
+      backdropDismiss: false,
+    });
+
+    modal.onDidDismiss().then((result) => {
+      if (result.data === 'confirm') {
+        // Si el usuario confirma, crea el appointment
+        this.createAppointment(appointmentRequestDTO);
+      }
+    });
+
+    await modal.present();
+  }
+
+
+  createAppointment(appointmentRequestDTO: Appointment) {
+    console.log("appointmentRequestDTO", appointmentRequestDTO);
     // Llamar al servicio para crear el appointment
     this.appointmentService.createAppointment(appointmentRequestDTO).subscribe(
       async (response: Appointment) => {
-        // Manejar la respuesta del servidor
         console.log("Create Appointment", response);
 
         // Llamar al modal de éxito
@@ -192,7 +218,7 @@ export class ServiceDetailsPage implements OnInit {
           component: SuccessPage  // El componente del modal
         });
 
-        await modal.present();  // Mostrar el modal
+        await modal.present();
 
         // Redirigir a la pantalla deseada después de que el modal se cierre automáticamente
         modal.onDidDismiss().then(() => {
@@ -200,11 +226,12 @@ export class ServiceDetailsPage implements OnInit {
         });
       },
       (error: any) => {
-        // Manejar el error
         console.error("Error creating appointment:", error);
+        // Manejar el error
       }
     );
   }
+
 
   // Método para mostrar el toast
 async presentToast(message: string) {

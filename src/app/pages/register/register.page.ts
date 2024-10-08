@@ -21,10 +21,6 @@ import { UtilService } from 'src/app/services/util.service';
 export class RegisterPage implements OnInit {
 
   registerForm: FormGroup;
-  addBankCard: boolean = false;
-  payments: any;
-  card: any;
-  sourceId: string;
 
   private fb             = inject(FormBuilder);
   private authService    = inject(AuthService);
@@ -39,74 +35,15 @@ export class RegisterPage implements OnInit {
       name: ['', Validators.required],
       email: ['', [Validators.required, this.emailValidator]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]],
-      cardNonce: [''] // Este campo almacenará el token de la tarjeta si se agrega
+      phoneNumber: ['', [Validators.required, Validators.pattern('[0-9]{10}')]]
     });
-    // Inicializar Square Payment SDK solo si el usuario elige agregar una tarjeta
-    if (this.addBankCard) {
-      await this.initializeSquare();
-    }
   }
 
   async onRegister() {
-    if (this.addBankCard && this.card) {
-      // Procesar la tarjeta antes de enviar el formulario
-      const result = await this.card.tokenize();
-      if (result.status === 'OK') {
-        // Verificar si el control 'cardNonce' está presente en el formulario
-        const cardNonceControl = this.registerForm.get('cardNonce');
-        if (cardNonceControl) {
-          cardNonceControl.setValue(result.token);
-          this.submitForm(); // Enviar el formulario después de tokenizar
-        } else {
-          console.error('Card nonce control is missing from the form group.');
-        }
-      } else {
-        console.error('Failed to tokenize card:', result.errors);
-      }
-    } else {
-      this.submitForm();
-    }
+    this.submitForm(); // Directly submit the form without payment logic
   }
 
-  async initializeSquare() {
-    try {
-      if (!window.Square) {
-        throw new Error('Square.js failed to load properly');
-      }
-
-      // Inicializa el objeto de pagos de Square con tu aplicación y location ID
-      this.payments = window.Square.payments('YOUR_SQUARE_APPLICATION_ID', 'YOUR_LOCATION_ID');
-      this.card = await this.payments.card();
-      await this.card.attach('#card-container');
-
-      // Asignar evento de clic al botón de añadir tarjeta
-      document.getElementById('card-button')?.addEventListener('click', async (event) => {
-        event.preventDefault();
-        try {
-          const result = await this.card.tokenize();
-          if (result.status === 'OK') {
-            const cardNonceControl = this.registerForm.get('cardNonce');
-            if (cardNonceControl) {
-              cardNonceControl.setValue(result.token);
-              console.log('Card tokenized successfully:', result.token);
-            } else {
-              console.error('Card nonce control is missing from the form group.');
-            }
-          } else {
-            console.error('Failed to tokenize card:', result.errors);
-          }
-        } catch (error) {
-          console.error('Tokenization failed:', error);
-        }
-      });
-
-    } catch (error) {
-      console.error('Failed to initialize Square PaymentForm:', error);
-    }
-  }
-
-   emailValidator(control: AbstractControl): ValidationErrors | null {
+  emailValidator(control: AbstractControl): ValidationErrors | null {
     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     const valid = emailRegex.test(control.value);
     return valid ? null : { invalidEmail: true };
@@ -118,14 +55,32 @@ export class RegisterPage implements OnInit {
       console.log('Form Data:', formData);
 
       try {
+        console.log('Registration started');
         const response = await this.authService.register(formData).toPromise(); // Convertimos el observable en promesa
-        console.log('Registro exitoso', response);
+        console.log('Registration successful', response);
+
+        // Loguear automáticamente al usuario después del registro
+        const loginCredentials = {
+          email: formData.email,
+          password: formData.password
+        };
+
+        console.log('Attempting to login after registration...');
+        const loginResponse = await this.authService.login(loginCredentials).toPromise(); // Inicia sesión automáticamente
+        console.log('Login successful', loginResponse);
+
+        // Guardar el token de autenticación
+        localStorage.setItem('authToken', loginResponse.jwt);
+
         await this.presentSuccessToast();
-        console.log('miembro creado');
+        console.log('Member created and logged in');
         this.registerForm.reset();
-        await this.router.navigate(['/login']);
+
+        // Redirigir al usuario a la página principal o dashboard
+        await this.router.navigate(['/tabs/home']);
+
       } catch (error) {
-        console.error('Error en el registro', error);
+        console.error('Error during registration or login', error);
         await this.presentErrorToast();
       }
     } else {
@@ -133,6 +88,7 @@ export class RegisterPage implements OnInit {
     }
     console.log('Finish SubmitForm');
   }
+
 
   onBack() {
     this.util.navigateToPage('/login');
@@ -148,33 +104,26 @@ export class RegisterPage implements OnInit {
 
   async presentSuccessToast() {
     const toast = await this.toastController.create({
-      message: 'Registro Exitoso. Tu cuenta ha sido creada correctamente.',
+      message: 'Successful Registration. Your account has been created correctly.',
       duration: 3000,
       color: 'success',
-      position: 'top'
+      position: 'bottom'
     });
     toast.present();
   }
 
   async presentErrorToast() {
     const toast = await this.toastController.create({
-      message: 'Hubo un problema al crear tu cuenta. Por favor, intenta nuevamente.',
+      message: 'There was a problem creating your account. Please try again.',
       duration: 3000,
       color: 'danger',
-      position: 'top'
+      position: 'bottom'
     });
     toast.present();
   }
 
-  isValidField( field: string){
-
+  isValidField(field: string) {
     return this.registerForm.controls[field] && this.registerForm.controls[field].touched;
-   // if(this.registerForm.get(campo)?.invalid && this.formSubmitted){
-   //   return true;
-   // } else{
-   //   return false;
-   // }
   }
-
-
 }
+

@@ -36,15 +36,17 @@ export class LoginPage implements OnInit {
     });
   }
 
-  onLogin() {
+ async onLogin() {
     console.log('Staring Login');
     console.log(this.loginForm.value); // Verifica que el email y password sean correctos
+
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         async (response) => {
           console.log("Guardar en el local");
           localStorage.setItem('authToken', response.jwt);
           await this.presentSuccessToast();
+
           console.log('Login successful', response);
 
           // Redirigir al usuario después del inicio de sesión
@@ -53,9 +55,13 @@ export class LoginPage implements OnInit {
         },
         async (error) => {
           console.error('Login error', error);
+          console.error('Login error', error.message);
           await this.presentErrorToast();
         }
       );
+    } else {
+      console.log('Formulario no es válido');
+      await this.presentErrorToast(); // Si el formulario es inválido, muestra un error
     }
 
   }

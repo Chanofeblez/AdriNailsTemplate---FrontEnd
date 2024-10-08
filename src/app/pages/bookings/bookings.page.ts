@@ -6,7 +6,7 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, ModalController, NavController } from '@ionic/angular';
+import { IonDatetime, ModalController, NavController, ToastController } from '@ionic/angular';
 import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
 import { register } from 'swiper/element';
@@ -31,7 +31,7 @@ export class BookingsPage implements OnInit {
   segment: any = 'book';
   minDate: string;
   userId: string;
-  user:Customer;
+  user: Customer;
   serviceImageUrl: string;
   selectedDate: string | null = null;
   previusselectedDate: string | null = null;
@@ -40,9 +40,9 @@ export class BookingsPage implements OnInit {
   availableSlots: string[] = []; // Horarios disponibles después de filtrar
 
 
-  upcomingAppointments  : Appointment[] = [];
-  completedAppointments : Appointment[] = [];
-  cancelledAppointments : Appointment[] = [];
+  upcomingAppointments: Appointment[] = [];
+  completedAppointments: Appointment[] = [];
+  cancelledAppointments: Appointment[] = [];
 
   slotList: any[] = [
     "10:00am",
@@ -57,15 +57,15 @@ export class BookingsPage implements OnInit {
 
   selectedSpecialist: any = '';
 
-  public util                = inject(UtilService);
-  private modalController    = inject(ModalController);
-  private navCtrl            = inject(NavController);
-  private router             = inject(Router);
+  public util = inject(UtilService);
+  private modalController = inject(ModalController);
+  private navCtrl = inject(NavController);
+  private router = inject(Router);
   private appointmentService = inject(AppointmentService);
-  private authService        = inject(AuthService);
-  private servicioService    = inject(ServicioService);
-  private cdr                = inject(ChangeDetectorRef);
-
+  private authService = inject(AuthService);
+  private servicioService = inject(ServicioService);
+  private cdr = inject(ChangeDetectorRef);
+  private toastController = inject(ToastController);
 
   constructor() {
     const today = new Date();
@@ -77,13 +77,14 @@ export class BookingsPage implements OnInit {
   }
 
   ngOnInit() {
-    this.getToken();
+    this.getUserByToken();
   }
 
   // Este método se ejecuta cada vez que se entra en la vista
   ionViewWillEnter() {
     this.resetDate();
     this.cdr.detectChanges(); // Forzar la detección de cambios
+    this.getUserAppointment(this.userId);
   }
 
   // Método para resetear la fecha seleccionada
@@ -164,13 +165,13 @@ export class BookingsPage implements OnInit {
 
     // Si el slot que se hace clic es el mismo que el seleccionado, lo deselecciona
     if (selectedSlotString === formattedSlot) {
-        this.selectedSlot = null; // Deselecciona el slot
+      this.selectedSlot = null; // Deselecciona el slot
     } else {
-        this.selectedSlot = formattedSlot; // Selecciona el slot como cadena en formato HH:mm:ss
+      this.selectedSlot = formattedSlot; // Selecciona el slot como cadena en formato HH:mm:ss
     }
 
     console.log(this.selectedDate + " " + this.selectedSlot);
-}
+  }
 
   onDateChange(event: any) {
     const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
@@ -210,20 +211,22 @@ export class BookingsPage implements OnInit {
     }
   }
 
-
-
-  getToken() {
+  getUserByToken() {
     const token = localStorage.getItem('authToken');
+    console.log('Token:', token);
     if (token) {
       this.authService.getUserByToken(token).subscribe(
-        (response:any) => {
-          console.log('Username:', response);
-          // Aquí puedes manejar el username, por ejemplo, almacenarlo en una variable o en el estado del componente
-          this.userId = response.username;
-          this.getUser(this.userId);
+        (response: any) => {
+          console.log('Customer:', response);
+          // Ahora response es un objeto Customer completo
+          this.userId = response.id;  // O maneja cualquier campo necesario
+          console.log('Customer ID:', this.userId);
 
+          // Llama directamente a getUser() después de obtener el userId
+          this.getUserAppointment(this.userId);
         },
         (error) => {
+          console.error('Error al obtener el cliente:', error);
           console.log('Error completo:', error);
         }
       );
@@ -232,65 +235,72 @@ export class BookingsPage implements OnInit {
     }
   }
 
-  async getUser(userId: string) {
+  async getUserAppointment(userId: string) {
     this.upcomingAppointments = [];
     this.completedAppointments = [];
     this.cancelledAppointments = [];
+
     try {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
-
       if (!appointments || appointments.length === 0) {
-        console.log("No appointments found or appointments is undefined");
+        console.log('No appointments found or appointment is undefined');
         return; // Salir de la función si no hay citas
       }
 
       const now = new Date(); // Obtener la fecha y hora actual
-      console.log("Appointments", appointments)
+      console.log('Appointments:', appointments);
 
       for (const appointment of appointments) {
-        // Combinar la fecha y hora del appointment en un solo objeto Date
         const appointmentDateTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
-
         if (appointment.status === 'CANCELED') {
           this.cancelledAppointments.push(appointment);
         } else if (appointment.status === 'COMPLETED') {
           this.completedAppointments.push(appointment);
-        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING' ) && appointmentDateTime > now) {
-          this.upcomingAppointments.push(appointment);
-        } else if ((appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING') && appointmentDateTime <= now) {
-          if (appointment.id) {
-            appointment.status = AppointmentStatus.COMPLETED; // Cambiar el estado a COMPLETED
-            try {
-              await this.appointmentService.updateAppointmentStatus(appointment.id, AppointmentStatus.COMPLETED).toPromise();
-              console.log('Appointment status updated to COMPLETED');
-              this.completedAppointments.push(appointment);
-            } catch (error) {
-              console.error('Error updating appointment status', error);
+        } else if (appointment.status === 'CONFIRMED' || appointment.status === 'PENDING' || appointment.status === 'UPCOMING') {
+          if (appointmentDateTime > now) {
+            this.upcomingAppointments.push(appointment);
+          } else if (appointmentDateTime <= now) {
+            // Cambiar el estado a COMPLETED si la cita ya pasó
+            if (appointment.id) {
+              appointment.status = AppointmentStatus.COMPLETED;
+              try {
+                await this.appointmentService.updateAppointmentStatus(appointment.id, AppointmentStatus.COMPLETED).toPromise();
+                console.log('Appointment status updated to COMPLETED');
+                this.completedAppointments.push(appointment);
+              } catch (error) {
+                console.error('Error updating appointment status', error);
+              }
+            } else {
+              console.error('Appointment ID is undefined');
             }
-          } else {
-            console.error('Appointment ID is undefined');
           }
         }
       }
-      console.log("LISTASUPP", this.upcomingAppointments);
-      console.log("LISTASCOMP", this.completedAppointments);
+
+      // Ordenar las listas por fecha
+      const sortByDate = (a: Appointment, b: Appointment) =>
+        new Date(a.appointmentDate).getTime() - new Date(b.appointmentDate).getTime();
+
+      this.upcomingAppointments.sort(sortByDate);
+      this.completedAppointments.sort(sortByDate);
+      this.cancelledAppointments.sort(sortByDate);
+
+      console.log('LISTAUP:', this.upcomingAppointments);
+      console.log('LISTASCOMP:', this.completedAppointments);
     } catch (error) {
-      console.error('Error fetching appointments', error);
+      console.error('Error fetching appointments:', error);
     }
   }
 
-  getServiceImageUrl(serviceName: string){
+  getServiceImageUrl(serviceName: string) {
     this.servicioService.getServiceImageUrl(serviceName).subscribe(imageUrl => {
       this.serviceImageUrl = imageUrl;
     });
   }
 
-
-
   isSlotSelected(itemTime: string): boolean {
-     // Obtén solo la hora de itemTime y compárala con selectedSlot
-     const timeIn24HourFormat = this.convertTo24HourFormat(itemTime); // Convierte itemTime a 24 horas
-     console.log("timeIn24HourFormat", timeIn24HourFormat);
+    // Obtén solo la hora de itemTime y compárala con selectedSlot
+    const timeIn24HourFormat = this.convertTo24HourFormat(itemTime); // Convierte itemTime a 24 horas
     return this.selectedSlot === timeIn24HourFormat; // Compara con el selectedSlot
   }
 
@@ -315,7 +325,7 @@ export class BookingsPage implements OnInit {
     this.util.navigateToPage(`/tabs/review/${appointmentId}`);
   }
 
-  async presentModal(appointmentId: string , email: string) {
+  async presentModal(appointmentId: string, email: string) {
     const modal = await this.modalController.create({
       component: CancelModalPage,
       cssClass: 'bookmark-modal',
@@ -325,7 +335,7 @@ export class BookingsPage implements OnInit {
     });
     modal.onDidDismiss().then((data) => {
       console.log(data);
-      this.getUser(email);
+      this.getUserAppointment(email);
       if (data && data.data == 'ok' && data.role == 'ok') {
         this.util.navigateToPage('cancel-booking');
       }
@@ -360,19 +370,67 @@ export class BookingsPage implements OnInit {
     }
   }
 
-  // Método para cancelar la cita
-  cambiarStatus(appointmentId:string) {
-    // Llama al servicio para actualizar el estado de la cita a "CANCELLED"
-    this.appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.CONFIRMED).subscribe(
-      (response) => {
-        console.log('Appointment Recuperada:', response);
-        this.getToken();
-      },
-      (error) => {
-        console.error('Error cancelling appointment:', error); // Manejo de errores
+  // Método para cambiar el estado de la cita
+  async cambiarStatus(appointmentId: string, appointmentDate: string, appointmentTime: string) {
+    try {
+      // Llamar a un servicio para verificar la disponibilidad
+      const isAvailable = await this.appointmentService.checkAvailability(appointmentDate, appointmentTime).toPromise();
+      console.log("isAvailable", isAvailable);
+
+      if (isAvailable) {
+        // Si está disponible, proceder a cambiar el estado
+        this.appointmentService.updateAppointmentStatus(appointmentId, AppointmentStatus.CONFIRMED).subscribe(
+          async (response) => {
+            console.log('Appointment Recuperada:', response);
+
+            // Mostrar un toast de éxito
+            const toast = await this.toastController.create({
+              message: 'Your booking has been successfully restored.',
+              duration: 3000,
+              color: 'success',
+              position: 'bottom'
+            });
+            await toast.present();
+
+            this.getUserByToken(); // Llama a getToken() si todo salió bien
+          },
+          async (error) => {
+            console.error('Failed to restore your booking:', error);
+
+            // Mostrar un toast de error
+            const toast = await this.toastController.create({
+              message: 'Failed to restore your booking. Please try again.',
+              duration: 3000,
+              color: 'danger',
+              position: 'bottom'
+            });
+            await toast.present();
+          }
+        );
+      } else {
+        // Si no está disponible, mostrar un mensaje al usuario
+        const toast = await this.toastController.create({
+          message: 'The selected time is no longer available. Please choose a different time.',
+          duration: 3000,
+          color: 'warning',
+          position: 'bottom'
+        });
+        await toast.present();
       }
-    );
+    } catch (error) {
+      console.error('Error checking availability:', error);
+
+      // Mostrar un mensaje de error si ocurre algún problema en la verificación
+      const toast = await this.toastController.create({
+        message: 'An error occurred while checking the availability. Please try again.',
+        duration: 3000,
+        color: 'danger',
+        position: 'bottom'
+      });
+      await toast.present();
+    }
   }
+
 
 
 }

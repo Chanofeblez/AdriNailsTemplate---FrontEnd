@@ -1,4 +1,5 @@
 import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ModalController, NavParams } from '@ionic/angular';
 
 import { Payments, payments } from '@square/web-sdk';
@@ -15,16 +16,22 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
 
   private payments: any;
   private card: any;
+  idCourse: string;
   amount: number;
   sourceId: string;
   customerId: string;
+  title: string;
   private locationId: string = 'L05J2ZG1FMA4X';
 
   private modalController = inject(ModalController);
-  private navParams = inject( NavParams );
-  private paymentService = inject( PaymentService );
+  private navParams       = inject( NavParams );
+  private paymentService  = inject( PaymentService );
+  private router          = inject( Router );
 
   constructor() {
+    this.title = this.navParams.get('title');
+    this.idCourse = this.navParams.get('idCourse');
+    console.log("this.idCourse",this.idCourse);
     this.amount = this.navParams.get('amount');
     this.customerId = this.navParams.get('customerId');
   }
@@ -74,12 +81,28 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
     console.log('Payment token:', token);
     // Logic to send the token to your server and process the payment
     try {
-      const response = await this.paymentService.processPayment(token, this.amount, this.customerId, this.locationId).toPromise();
+      console.log('token', token);
+      console.log('this.id', this.idCourse);
+      console.log('this.amount', this.amount);
+      console.log('this.customerId', this.customerId);
+      console.log('this.locationId', this.locationId);
+      const response = await this.paymentService.processPayment(token, this.amount, this.customerId, this.locationId, this.idCourse).toPromise();
       console.log('Payment successful:', response);
+
       this.modalController.dismiss({
         status: 'success',
         payment: response
       });
+
+      // Redirige al usuario a /tabs/courses-details después del pago exitoso
+      this.router.navigate(['/tabs/courses-details'], {
+        queryParams: {
+          id: this.idCourse,  // Por ejemplo, el ID del curso
+          amount: this.amount,
+          customerId: this.customerId
+        }
+      });
+
     } catch (error) {
       console.error('Payment failed:', error);
       this.modalController.dismiss({

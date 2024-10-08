@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-accountdeletionpolicy',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AccountdeletionpolicyPage implements OnInit {
 
+  navCtrl = inject(NavController);
+
   constructor() { }
 
   ngOnInit() {
+  }
+
+  goBack() {
+    this.navCtrl.back();
   }
 
 }

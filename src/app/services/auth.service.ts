@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Customer } from '../model/customer.interface';
 
@@ -17,12 +17,31 @@ export class AuthService {
 
   constructor() { }
 
-  isLoggedIn(): boolean {
-    const token = localStorage.getItem('authToken'); // O sessionStorage
-    return token != null; // Si existe un token, el usuario está logueado
+  isLoggedIn(): Observable<boolean> {
+    const token = localStorage.getItem('authToken');
+
+    if (!token) {
+      return of(false); // Devuelve un observable que emite 'false' si no hay token
+    }
+
+    // Verifica con el servidor si el token es válido
+    return this.getUserByToken(token).pipe(
+      map((username) => {
+        console.log("username",username);
+        // Si se encuentra un username, el token es válido
+        return !!username;
+      }),
+      catchError((error) => {
+        console.error('Error al verificar el token', error);
+        return of(false); // Si hay un error, devuelve 'false'
+      })
+    );
   }
 
+
+
   register(customer: Customer): Observable<any> {
+    console.log("En el servicio");
     return this.http.post(`${this.apiUrl}`, customer).pipe(
       tap((response: any) => {
         if (response && response.token) {
@@ -45,12 +64,12 @@ export class AuthService {
 
   }
 
-  getUserByToken(token: string): Observable<string> {
-    return this.http.post<string>(`${this.apiUrl}/extract-username`, { token });
+  getUserByToken(token: string): Observable<Customer> {
+    return this.http.post<Customer>(`${this.apiUrl}/extract-username`, { token });
   }
 
   getCustomerByEmail(email: string): Observable<Customer> {
-    return this.http.get<Customer>(`${this.apiUrl}/by-email`, { params: { email } });
+    return this.http.get<Customer>(`${this.apiUrl}/by-email`, { params: { email:email } });
   }
 
   // Método para actualizar el perfil del cliente, pasando el ID en la URL

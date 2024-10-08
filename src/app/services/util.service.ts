@@ -89,27 +89,511 @@ export class UtilService {
 
   salonList: any[] = [
     {
+      "id" : 1,
       "name": "Russian Manicure",
       "description": "3788 Chapel Street Sugar Land",
       "cover": "assets/images/avatar/manRuso.jpeg",
-      "rate": "4.2",
+      "price": "42",
       "distance": "1.2 KM"
     },
     {
+      "id" : 2,
       "name": "Dual Forms",
       "description": "3104 Public Works Drive Chattanooga",
       "cover": "assets/images/avatar/dualForm.jpeg",
-      "rate": "4.6",
+      "price": "46",
       "distance": "1.2 KM"
     },
     {
+      "id" : 3,
       "name": "Russian Peddicure",
       "description": "864 Lucy Lane Evansville",
       "cover": "assets/images/avatar/pedicureRuso.jpg",
-      "rate": "5.0",
+      "price": "50",
       "distance": "1.2 KM"
     }
   ];
+
+//  [
+//    {
+//      "name": "An Extra Color",
+//      "description": "An Extra Color",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 10.00
+//    },
+//    {
+//      "name": "French Tip Design",
+//      "description": "French Tip Design",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 15.00
+//    },
+//    {
+//      "name": "Double French Tip",
+//      "description": "Double French Tip",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 20.00
+//    },
+//    {
+//      "name": "Repair( 1 Nail )",
+//      "description": "Repair( 1 Nail )",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 10.00
+//    },
+//    {
+//      "name": "Repair( 2 Nail )",
+//      "description": "Repair( 2 Nail )",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 20.00
+//    },
+//    {
+//      "name": "Repair( All Nails ) Reinforce All Nails with Polygel",
+//      "description": "Repair( All Nails ) Reinforce All Nails with Polygel",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 30.00
+//    },
+//    {
+//      "name": "Change in the Shape of Nail",
+//      "description": "Change in the Shape of Nail",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 10.00
+//    },
+//    {
+//      "name": "Nail Art Design, Easy Pattern on Each Nail",
+//      "description": "Nail Art Design, Easy Pattern on Each Nail",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 30.00
+//    },
+//    {
+//      "name": "Nail Art Design, Complicated Pattern on Each Nail",
+//      "description": "Nail Art Design, Complicated Pattern on Each Nail",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 50.00
+//    },
+//    {
+//      "name": "Simple Design( 1 Nail Designed )",
+//      "description": "Simple Design( 1 Nail Designed )",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 10.00
+//    },
+//    {
+//      "name": "Chrome",
+//      "description": "Chrome",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 20.00
+//    },
+//    {
+//      "name": "Ombré Design",
+//      "description": "Ombré Design",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 25.00
+//    },
+//    {
+//      "name": "Cat Eye( Magnet Gel )",
+//      "description": "Cat Eye( Magnet Gel )",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 10.00
+//    },
+//    {
+//      "name": "Acrylic Removal",
+//      "description": "Acrylic Removal",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 40.00
+//    },
+//    {
+//      "name": "Gel Removal",
+//      "description": "Gel Removal",
+//      "cover": "assets/images/salon-cover/1.png",
+//      "price": 25.00
+//    }
+//  ]
+
+//[
+//  {
+//    "name": "SHORT NAIL REAPPLICATION",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 110.00,
+//    "note": "",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "MEDIUM NAIL REAPPLICATION",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 120.00,
+//    "note": "",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "LONG NAIL REAPPLICATION",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 170.00,
+//    "note": "",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "SHORT/MEDIUM NAIL | SOFT GEL(RUBBER BASE)",
+//    "description": "No Design | Base Color",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 100.00,
+//    "note": "*Recommended for strong and normal nails",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "SHORT NAIL | FULL SET",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 140.00,
+//    "note": "*Add design service(additional price)",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "MEDIUM NAIL | FULL SET",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 150.00,
+//    "note": "*Add design service(additional price)",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  },
+//  {
+//    "name": "LONG NAIL | FULL SET",
+//    "description": "No Design | Base Color | Hard Gel/PolyGel",
+//    "imagePath": "assets/images/salon-cover/1.png",
+//    "price": 200.00,
+//    "note": "*Add design service(additional price)",
+//    "type": "MANICURE",
+//    "variants": [
+//      {
+//        "id": "fbf7e578-0cd1-4912-967a-f1af3691cde4"
+//      },
+//      {
+//        "id": "1db375e3-95ce-4439-abff-6507af4f0bbc"
+//      },
+//      {
+//        "id": "73a3580c-ed3d-4b03-a830-04b5620ca48b"
+//      },
+//      {
+//        "id": "f5f2d9e0-8db8-4520-9c75-fe4c9008f599"
+//      },
+//      {
+//        "id": "f9e966cf-5bd4-4d3b-aac4-3a67de2e75ab"
+//      },
+//      {
+//        "id": "3a50a784-96a4-446f-b00d-3d118ccdc682"
+//      },
+//      {
+//        "id": "f8bbcf77-a956-4206-83bc-18144b5af854"
+//      },
+//      {
+//        "id": "9b30415e-2a16-44d5-b5c3-b7a4c9a27af1"
+//      },
+//      {
+//        "id": "61b2337a-a9e2-477d-acb9-3c9138518db6"
+//      },
+//      {
+//        "id": "f2f8dd86-ede0-4a54-a9bf-8a6a9c9acc8c"
+//      },
+//      {
+//        "id": "2c4e9f66-95cc-4a65-92e0-955142c22eb8"
+//      },
+//      {
+//        "id": "c08d473b-d7d2-4220-8ed8-8d3dcd9da46a"
+//      },
+//      {
+//        "id": "84821dee-a170-429e-973b-cf61358f4c9f"
+//      },
+//      {
+//        "id": "89e79959-7ea9-4e89-9dd2-56b277ef3872"
+//      },
+//      {
+//        "id": "e0e6d533-f638-41f7-b70f-e8c29ec4cbe6"
+//      }
+//    ]
+//  }
+//]
 
  // manicureList: Servicio[] = [
  //   {
@@ -118,6 +602,7 @@ export class UtilService {
  //     "cover": "assets/images/salon-cover/1.png",
  //     "price": 110.00,
  //     "note" : "",
+
  //     extrasList: [
  //       {
  //         "name": "An Extra Color",

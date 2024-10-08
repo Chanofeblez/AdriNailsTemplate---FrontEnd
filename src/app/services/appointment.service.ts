@@ -59,6 +59,13 @@ export class AppointmentService {
     return this.http.post(`${this.apiUrlSlot}/reserve`, slot);
   }
 
+  // Método para verificar si el horario (slot) sigue disponible
+  checkAvailability(date: string, time: string): Observable<boolean> {
+    return this.http.get<boolean>(`${this.apiUrlSlot}/check`, {
+      params: { date, time }
+    });
+  }
+
   // Método para enviar la reseña al backend
   addReview(appointmentId: string, formData: FormData) {
     return this.http.post(`${this.apiUrl}/${appointmentId}/review`, formData);

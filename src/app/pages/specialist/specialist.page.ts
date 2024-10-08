@@ -36,7 +36,7 @@ export class SpecialistPage implements OnInit {
 
   ngOnInit() {
     this.initForm();
-    this.loadCustomerEmail();
+    this.loadCustomer();
   }
 
   // Inicializar el formulario con validación
@@ -54,26 +54,30 @@ export class SpecialistPage implements OnInit {
   }
 
   // Cargar el email del token (si está en el localStorage o sessionStorage)
-  loadCustomerEmail() {
+  loadCustomer() {
     const token = localStorage.getItem('authToken');
+    console.log('Token:', token);
     if (token) {
-      this.authService.getUserByToken(token).subscribe((email: any) => {
-        this.customerEmail = email.username;
-        this.loadProfileData(this.customerEmail);
-      });
+      this.authService.getUserByToken(token).subscribe(
+        (response: any) => {
+          console.log('Customer:', response);
+          // Ahora response es un objeto Customer completo
+          this.customerId = response.id;  // O maneja cualquier campo necesario
+          this.profileForm.patchValue({
+            name: response.name,
+            email: response.email,
+            phoneNumber: response.phoneNumber
+          });
+          console.log('Customer ID:', this.customerId);
+        },
+        (error) => {
+          console.error('Error al obtener el cliente:', error);
+          console.log('Error completo:', error);
+        }
+      );
+    } else {
+      console.log('Token no Found');
     }
-  }
-
-  // Cargar los datos del perfil del Customer por email
-  loadProfileData(email: string) {
-    this.authService.getCustomerByEmail(email).subscribe((customer: Customer) => {
-      this.customerId = customer.id;
-      this.profileForm.patchValue({
-        name: customer.name,
-        email: customer.email,
-        phoneNumber: customer.phoneNumber
-      });
-    });
   }
 
   async onUpdate() {

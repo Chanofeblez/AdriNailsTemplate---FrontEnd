@@ -12,18 +12,19 @@ export class PaymentService {
 
   private http = inject(HttpClient);
 
-  private apiUrl = `${base_url}/api/payments/charge`; // URL del endpoint de tu backend
+  private apiUrl = `${base_url}/api/payments`; // URL del endpoint de tu backend
 
   constructor() { }
 
-  processPayment(sourceId: string, amount: number, customerId: string, locationId: string): Observable<any> {
+  processPayment(sourceId: string, amount: number, customerId: string, locationId: string, idCourse: string): Observable<any> {
     const paymentRequest = {
       sourceId: sourceId,
       amount: amount,
       customerId: customerId,
-      locationId: locationId
+      locationId: locationId,
+      courseId: idCourse  // Asegúrate de que el campo sea 'courseId'
     };
 
-    return this.http.post<any>(this.apiUrl, paymentRequest);
+    return this.http.post<any>(`${this.apiUrl}/charge-course`, paymentRequest);
   }
 }

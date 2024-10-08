@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar mode="ios">
-    <ion-title color="danger">Pay Deposit</ion-title>
+    <ion-title color="danger">{{this.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,7 +13,7 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <p class="price1">Amount to Pay - ${{amount}}.00</p>
+    <p class="price1">Amount to Pay - ${{amount}}</p>
     <ion-row>
       <ion-col size="6">
         <ion-button (click)="dismiss('cancel')" expand="block" shape="round" color="light">

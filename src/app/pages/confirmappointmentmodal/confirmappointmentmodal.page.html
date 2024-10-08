@@ -1,0 +1,35 @@
+<ion-header mode="ios">
+  <ion-toolbar color="primary">
+    <ion-title>Confirm Appointment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="cancel-modal-screen">
+    <ion-label class="title1">Are you sure you want to book this appointment?</ion-label>
+    <ion-label class="sub-title1">
+      <b>Service:</b> {{ appointment.serviceName }} <br>
+      <b>Date:</b> {{ appointment.appointmentDate | date: 'MMM d, y' }} <br>
+      <b>Time:</b> {{ appointmentTime }} <br>
+      <b>Total Cost:</b> {{ appointment.totalCost | currency }}
+    </ion-label>
+  </div>
+</ion-content>
+
+<ion-footer class="modal-footer">
+  <ion-row>
+    <ion-col size="6" class="center-buttons">
+      <ion-button expand="block" fill="outline" shape="round" size="medium" (click)="dismiss('cancel')" >
+        No, Cancel
+      </ion-button>
+    </ion-col>
+    <ion-col size="6" class="center-buttons">
+      <ion-button (click)="confirmAppointment()" expand="block" shape="round" color="primary">
+        Yes, Confirm
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>
+
+
+

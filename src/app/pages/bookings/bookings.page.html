@@ -38,7 +38,7 @@
         </ion-datetime>
         <ion-label class="title" *ngIf="selectedDate!==null">Select Hours</ion-label>
 
-        <div class="slots-section">
+        <div class="slots-section" *ngIf="selectedDate!==null">
           <ion-row class="slots">
             <ion-col size="3" *ngFor="let item of formattedSlot">
               <div class="slot-name" [ngClass]="{
@@ -154,8 +154,8 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="item.id ? cambiarStatus(item.id) : null" class="botoncancel">
-                Recuperar Booking
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="item.id ? cambiarStatus(item.id, item.appointmentDate, item.appointmentTime) : null" class="botoncancel">
+                Restore Booking
               </ion-button>
             </ion-col>
           </ion-row>

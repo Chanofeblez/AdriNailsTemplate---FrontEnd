@@ -30,4 +30,9 @@ export class CourseService {
   verifyPayment(courseId: string, userId: string): Observable<boolean> {
     return this.http.get<boolean>(`http://localhost:8080/api/payments/verify?courseId=${courseId}&userId=${userId}`);
   }
+
+  // Obtener los cursos pagados por el usuario
+  getPaidCourses(userId: string): Observable<number[]> {
+    return this.http.get<number[]>(`${this.apiUrl}/paid-courses?userId=${userId}`);
+  }
 }

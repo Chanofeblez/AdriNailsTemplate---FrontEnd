@@ -39,11 +39,15 @@
 </ion-content>
 <ion-footer>
   <ion-toolbar>
-    <p class="price1">Total Estimaded - ${{total}}.00</p>
-    <!--<ion-button (click)="onPayment()" expand="block" fill="solid" shape="round" color="primary">-->
-    <ion-button color="primary" expand="block" fill="solid" shape="round" (click)="onApply()">
-      Apply
-    </ion-button>
+    <p class="price1">Total Estimated - ${{total}}.00</p>
+    <ion-row>
+      <ion-col size="6">
+        <ion-button expand="block" fill="outline" shape="round" size="medium" (click)="onBack()">Back</ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button color="primary" expand="block" fill="solid" shape="round" (click)="onApply()">Review and Confirm</ion-button>
+      </ion-col>
+    </ion-row>
   </ion-toolbar>
 </ion-footer>
 
