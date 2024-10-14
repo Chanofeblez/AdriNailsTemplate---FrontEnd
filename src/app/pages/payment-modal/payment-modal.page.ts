@@ -39,10 +39,13 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
   async ngOnInit() {
     console.log('Amount to charge:', this.amount);
     try {
+      console.log('Band 1');
       if (!window.Square) {
         throw new Error('Square.js failed to load properly');
       }
+      console.log('Band 2', this.locationId);
       this.payments = window.Square.payments('sandbox-sq0idb-zUxfDz2eqpyMIMWpmQci0w', this.locationId);
+      console.log('Band 3', this.payments);
       await this.initializeCard(this.payments);
       console.log('Square PaymentForm initialized successfully. ---');
 

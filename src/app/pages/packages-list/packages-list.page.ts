@@ -48,13 +48,9 @@ export class PackagesListPage implements OnInit {
       this.courses = data;
       console.log("Cursos", this.courses);
     });
-
     try {
       // Llamar al método que maneja la obtención del usuario por token y esperar que termine
       await this.getUserByToken();
-
-
-
       // Ahora que ya tenemos el userId desde getUserByToken, obtenemos los cursos pagados usando el userId
       if (this.userId) {
         this.courseService.getPaidCourses(this.userId).subscribe((courses: number[]) => {
@@ -69,6 +65,13 @@ export class PackagesListPage implements OnInit {
     } catch (error) {
       console.error('Error en ngOnInit:', error);
     }
+  }
+
+  async ionViewDidEnter() {
+    console.log("ionViewDidEnter-Cursos executed");
+    // Verificar si el usuario está logueado
+    this.checkLoginStatus();
+    await this.getUserByToken();
   }
 
   async getUserByToken(): Promise<void> {
@@ -128,6 +131,9 @@ export class PackagesListPage implements OnInit {
       if (dataReturned !== null && dataReturned.data.status === 'success') {
         console.log('Payment successful', dataReturned.data.payment);
 
+         // Mostrar un toast de éxito de pago
+    this.presentPaymentSuccessToast();
+
         // Solo redirigir si el pago fue exitoso
         const param: NavigationExtras = {
           queryParams: {
@@ -140,7 +146,7 @@ export class PackagesListPage implements OnInit {
           }
         };
         // Redirige solo después de un pago exitoso
-        this.util.navigateToPage('package-details', param);
+        this.util.navigateToPage('/tabs/courses-details', param);
       } else {
         console.error('Payment failed', dataReturned.data.error);
         // Mostrar un mensaje o alerta indicando que el pago falló
@@ -149,6 +155,16 @@ export class PackagesListPage implements OnInit {
     });
 
     return await modal.present();
+  }
+
+  async presentPaymentSuccessToast() {
+    const toast = await this.toastController.create({
+      message: 'Payment successful!',
+      duration: 2000,  // El toast desaparecerá después de 2 segundos
+      color: 'success',
+      position: 'bottom'  // Puedes cambiar la posición a 'top', 'middle' o 'bottom'
+    });
+    toast.present();
   }
 
   async presentPaymentFailedToast() {
