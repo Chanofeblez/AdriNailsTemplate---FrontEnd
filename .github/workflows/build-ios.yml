@@ -20,8 +20,11 @@ jobs:
       - name: Install activesupport
         run: gem install activesupport -v 7.1.4
 
+      - name: List files in node_modules
+        run: ls -R ./node_modules/@capacitor/ios/scripts/
+
       - name: Install CocoaPods
-        run: |
+        run:
           sudo gem install cocoapods
           cd ios/App
           pod install
@@ -36,8 +39,7 @@ jobs:
           name: ios-workspace
           path: ios-workspace.zip
 
-      - name: List files in node_modules
-        run: ls -R ./node_modules/@capacitor/ios/scripts/
+
 
 
 
