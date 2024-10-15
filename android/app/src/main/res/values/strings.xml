@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Locks &amp; Lashes</string>
+    <string name="title_activity_main">Locks &amp; Lashes</string>
+    <string name="package_name">io.initappz.market.capacitor.looks.and.lashes</string>
+    <string name="custom_url_scheme">io.initappz.market.capacitor.looks.and.lashes</string>
+</resources>
