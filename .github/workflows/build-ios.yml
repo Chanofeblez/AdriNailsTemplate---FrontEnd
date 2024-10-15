@@ -25,7 +25,7 @@ jobs:
         run: gem install activesupport -v 7.1.4
 
       - name: List files in node_modules
-        run: ls -R ../../node_modules/@capacitor/ios/scripts/
+        run: ls -R ./node_modules/@capacitor/ios/scripts/
 
       - name: Install CocoaPods
         run:
