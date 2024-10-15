@@ -10,27 +10,31 @@ jobs:
     runs-on: macos-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        ruby-version: 2.7
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.7
 
-    - name: Install CocoaPods
-      run: |
-        sudo gem install cocoapods
-        cd ios/App
-        pod install
+      - name: Install activesupport
+        run: gem install activesupport -v 7.1.4
 
-    - name: Archive workspace
-      run: zip -r ios-workspace.zip ios/
-      continue-on-error: true
+      - name: Install CocoaPods
+        run: |
+          sudo gem install cocoapods
+          cd ios/App
+          pod install
 
-    - name: Upload artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: ios-workspace
-        path: ios-workspace.zip
+      - name: Archive workspace
+        run: zip -r ios-workspace.zip ios/
+        continue-on-error: true
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-workspace
+          path: ios-workspace.zip
+
 
 
