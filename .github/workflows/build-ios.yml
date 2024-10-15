@@ -10,12 +10,12 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@v1.2.3
         with:
-          ruby-version: 2.7
+          ruby-version: 3.2
 
       - name: Install activesupport
         run: gem install activesupport -v 7.1.4
