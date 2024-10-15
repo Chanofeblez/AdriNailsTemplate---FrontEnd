@@ -36,5 +36,8 @@ jobs:
           name: ios-workspace
           path: ios-workspace.zip
 
+      - name: List files in node_modules
+        run: ls -R ./node_modules/@capacitor/ios/scripts/
+
 
 
