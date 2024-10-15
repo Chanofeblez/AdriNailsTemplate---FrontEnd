@@ -13,9 +13,9 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Set up Ruby
-        uses: ruby/setup-ruby@v1.2.3
+        uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 3.2
+          ruby-version: '3.1'
 
       - name: Install activesupport
         run: gem install activesupport -v 7.1.4
