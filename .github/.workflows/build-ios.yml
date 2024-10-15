@@ -8,28 +8,29 @@ on:
 jobs:
   build:
     runs-on: macos-latest
+
     steps:
-      - uses: actions/checkout@v2
+    - uses: actions/checkout@v2
 
-      - name: Set up Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: 2.7
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
 
-      - name: Install CocoaPods
-        run: |
-          sudo gem install cocoapods
-          cd ios
-          pod init        # Esto genera el Podfile si no existe
-          pod install     # Esto instala las dependencias del Podfile
+    - name: Install CocoaPods
+      run: |
+        sudo gem install cocoapods
+        cd ios/App
+        pod install
 
-      - name: Archive workspace
-        run: zip -r ios-workspace.zip ios/
-        continue-on-error: true
+    - name: Archive workspace
+      run: zip -r ios-workspace.zip ios/
+      continue-on-error: true
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v2
-        with:
-          name: ios-workspace
-          path: ios-workspace.zip
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: ios-workspace
+        path: ios-workspace.zip
+
 
