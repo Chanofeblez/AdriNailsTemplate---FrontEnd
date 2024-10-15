@@ -1,0 +1,36 @@
+name: Build iOS app
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: 2.7
+
+    - name: Install CocoaPods
+      run: |
+        sudo gem install cocoapods
+        cd ios/App
+        pod install
+
+    - name: Archive workspace
+      run: zip -r ios-workspace.zip ios/
+      continue-on-error: true
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: ios-workspace
+        path: ios-workspace.zip
+
+
