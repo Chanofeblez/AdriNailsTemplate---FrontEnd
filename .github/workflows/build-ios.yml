@@ -28,7 +28,7 @@ jobs:
         run: ls -R ./node_modules/@capacitor/ios/scripts/
 
       - name: Install CocoaPods
-        run:
+        run: |
           sudo gem install cocoapods
           cd ios/App
           pod install
