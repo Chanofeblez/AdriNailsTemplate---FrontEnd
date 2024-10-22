@@ -93,11 +93,11 @@ export class LoginPage implements OnInit {
   }
 
   onHome() {
-    this.util.navigateRoot('/tabs');
+    this.router.navigate(['/tabs']);
   }
 
   onReset() {
-    this.util.navigateToPage('/reset-password');
+    this.router.navigate(['/reset-password']);
   }
 
 }

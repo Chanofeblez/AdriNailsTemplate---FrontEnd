@@ -9,6 +9,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { UtilService } from 'src/app/services/util.service';
 import { SuccessPaymentPage } from '../success-payment/success-payment.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-confirm-payments',
@@ -18,7 +19,7 @@ import { SuccessPaymentPage } from '../success-payment/success-payment.page';
 export class ConfirmPaymentsPage implements OnInit {
 
   constructor(
-    public util: UtilService,
+    public router: Router,
     private modalController: ModalController
   ) { }
 
@@ -26,7 +27,7 @@ export class ConfirmPaymentsPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+   // this.util.onBack();
   }
 
   async onNext() {
@@ -39,9 +40,9 @@ export class ConfirmPaymentsPage implements OnInit {
       console.log(data);
       if (data && data.data && data.role == 'ok') {
         if (data && data.role == 'ok' && data.data == 'home') {
-          this.util.navigateRoot('/tabs');
+          this.router.navigate(['/tabs']);
         } else if (data && data.role == 'ok' && data.data == 'e-receipt') {
-          this.util.navigateToPage('e-receipt');
+          this.router.navigate(['e-receipt']);
         }
       }
     });
