@@ -144,8 +144,6 @@ export class HomePage {
     }
   }
 
-
-
   onSalonList(category: string) {
     console.log("OnSalonList", category);
     this.router.navigate(['/tabs/gallery'], { queryParams: { type: category } });

@@ -13,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
 import { Customer } from 'src/app/model/customer.interface';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-account-info',
@@ -26,11 +27,11 @@ export class AccountInfoPage implements OnInit {
   customerEmail: string;
   customerId: string;
 
-  public util = inject(UtilService);
   private modalController = inject(ModalController);
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);
   private router = inject(Router);
+  private location = inject(Location);
 
 
   constructor() { }
@@ -142,7 +143,7 @@ export class AccountInfoPage implements OnInit {
 
           modal.onDidDismiss().then(() => {
             // Navega de vuelta a la página Home o donde prefieras después de cerrar el modal
-            this.util.navigateRoot('/');
+            this.router.navigate(['/tabs']);
           });
 
           await modal.present();
@@ -158,7 +159,7 @@ export class AccountInfoPage implements OnInit {
 
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
 
   async onPin() {
@@ -168,7 +169,7 @@ export class AccountInfoPage implements OnInit {
       cssClass: 'success-modal'
     });
     modal.onDidDismiss().then((data) => {
-      this.util.navigateRoot('/tabs');
+      this.router.navigate(['/tabs']);
     });
     await modal.present();
   }

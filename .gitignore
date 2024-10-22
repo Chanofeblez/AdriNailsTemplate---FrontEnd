@@ -89,3 +89,4 @@ src/app/pages/welcome/
 src/assets/images/notused/
 src/app/pages/select-slot/
 src/app/services/util.service.ts
+src/app/pages/confirm-payments/
