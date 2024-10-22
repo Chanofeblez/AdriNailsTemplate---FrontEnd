@@ -25,7 +25,6 @@ const routes: Routes = [
         loadChildren: () => import('../account-info/account-info.module').then(m => m.AccountInfoPageModule),
 
       },
-
       {
         path: 'courses',
         loadChildren: () =>

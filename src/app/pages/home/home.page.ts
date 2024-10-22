@@ -40,11 +40,9 @@ export class HomePage {
   };
 
   constructor() {
-    console.log("HOME2");
   }
 
   async ionViewDidEnter() {
-    console.log("ionViewDidEnter executed once");
     this.loadServices();
     this.userId = "";
    await this.getUserByToken(); // Aquí puedes volver a cargar los datos si es necesario
@@ -79,19 +77,15 @@ export class HomePage {
 
   getUserByToken() {
     const token = localStorage.getItem('authToken');
-    console.log('Token', token);
     if (token) {
       this.authService.getUserByToken(token).subscribe(
         (response: any) => {
-          console.log('Customer:', response);
           this.userName = response.name;
           // Ahora response es un objeto Customer completo
           this.userId = response.id; // O maneja cualquier campo necesario
-         console.log('Customer ID:', this.userId);
         },
         (error) => {
           console.error('Error al obtener el cliente:', error);
-          console.log('Error completo:', error);
         }
       );
     } else {

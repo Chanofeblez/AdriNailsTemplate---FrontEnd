@@ -31,6 +31,7 @@ export class BookingsPage implements OnInit {
   segment: any = 'book';
   minDate: string;
   userId: string;
+  userEmail: string;
   user: Customer;
   serviceImageUrl: string;
   selectedDate: string | null = null;
@@ -93,8 +94,6 @@ export class BookingsPage implements OnInit {
     this.previusselectedDate = null;
     this.selectedDate = null; // Reinicia el valor de la fecha seleccionada
     this.selectedSlot = null;
-    console.log("this.selectedDate", this.selectedDate);
-    console.log("this.selectedSlot", this.selectedSlot);
   }
 
   loadAvailableSlots(selectedDate: string) {
@@ -102,7 +101,6 @@ export class BookingsPage implements OnInit {
     this.formattedSlot = [];
     this.appointmentService.loadAvailableSlots(selectedDate).subscribe((slots: string[]) => {
       this.availableSlots = slots;
-      console.log("Available", this.availableSlots);
 
       // Lista de todos los slots
       const allSlots = ['10:00:00', '13:00:00', '15:00:00', '17:00:00'];
@@ -116,7 +114,6 @@ export class BookingsPage implements OnInit {
         this.formattedSlot.push({ time: formattedSlot, isAvailable: isAvailable });
       });
       // Ahora tienes el array formattedSlots con los slots en formato de 12 horas y su disponibilidad
-      console.log("formattedSlots", this.formattedSlot);
     });
   }
 
@@ -169,14 +166,10 @@ export class BookingsPage implements OnInit {
     } else {
       this.selectedSlot = formattedSlot; // Selecciona el slot como cadena en formato HH:mm:ss
     }
-
-    console.log(this.selectedDate + " " + this.selectedSlot);
   }
 
   onDateChange(event: any) {
     const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
-    console.log('Fecha newSelectedDate:', newSelectedDate);
-    console.log('this.previusselectedDate', this.previusselectedDate);
     // Si la nueva fecha es la misma que la ya seleccionada, deselecciona la fecha
     if (this.previusselectedDate === newSelectedDate) {
       this.previusselectedDate = null;
@@ -193,7 +186,6 @@ export class BookingsPage implements OnInit {
       this.previusselectedDate = newSelectedDate; // Si es una fecha diferente, selecciona la nueva fecha
       this.selectedDate = newSelectedDate;
       this.selectedSlot = null; // Reinicia el slot seleccionado
-      console.log('Fecha seleccionada:', this.previusselectedDate);
 
       // Cargar los horarios disponibles para la fecha seleccionada
       this.loadAvailableSlots(this.previusselectedDate);
@@ -213,14 +205,12 @@ export class BookingsPage implements OnInit {
 
   getUserByToken() {
     const token = localStorage.getItem('authToken');
-    console.log('Token:', token);
     if (token) {
       this.authService.getUserByToken(token).subscribe(
         (response: any) => {
-          console.log('Customer:', response);
           // Ahora response es un objeto Customer completo
           this.userId = response.id;  // O maneja cualquier campo necesario
-          console.log('Customer ID:', this.userId);
+          this.userEmail = response.email;
 
           // Llama directamente a getUser() después de obtener el userId
           this.getUserAppointment(this.userId);
@@ -243,7 +233,6 @@ export class BookingsPage implements OnInit {
     try {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
       if (!appointments || appointments.length === 0) {
-        console.log('No appointments found or appointment is undefined');
         return; // Salir de la función si no hay citas
       }
 
@@ -358,11 +347,10 @@ export class BookingsPage implements OnInit {
       const selectedSlotString = this.selectedSlot.toString();
       // Convertir el slot a formato de 24 horas
       const slotIn24HourFormat = this.convertTo24HourFormat(selectedSlotString);
-      console.log("Slot en formato de 24 horas:", slotIn24HourFormat);
 
       this.router.navigate(['/tabs/services-list'], {
         queryParams: {
-          user: this.userId,
+          user: this.userEmail,
           date: this.selectedDate,
           time: slotIn24HourFormat // Envía el slot en formato de 24 horas al backend
         }

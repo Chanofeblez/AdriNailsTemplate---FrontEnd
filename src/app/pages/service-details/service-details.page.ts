@@ -19,6 +19,7 @@ import { Customer } from 'src/app/model/customer.interface';
 import { SuccessPage } from '../success/success.page';
 import { ConfirmAppointmentModalPage } from '../confirmappointmentmodal/confirmappointmentmodal.page';
 import { ConfirmappointmentmodalPageModule } from '../confirmappointmentmodal/confirmappointmentmodal.module';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-service-details',
@@ -66,12 +67,6 @@ export class ServiceDetailsPage implements OnInit {
       this.name = params['name'];
       this.total = params['price'];
       this.imagePath = params['imagePath'];
-      console.log(this.userId);
-      console.log(this.name);
-      console.log(this.selectedDate);
-      console.log(this.selectedTime);
-      console.log(this.total);
-      console.log(this.imagePath);
     });
   }
 
@@ -87,15 +82,12 @@ export class ServiceDetailsPage implements OnInit {
     this.total = 0;
     this.mostrarServicio = null;
     this.varianteServicio = [];
-    console.log('Página reiniciada');
   }
 
   loadServicios(): void {
     this.servicioService.getAllServicios().subscribe(
       (data: Servicio[]) => {
-        console.log(data);
         this.servicios = data;
-        console.log(this.servicios);
         this.separateServicios(this.servicios);
       },
       (error) => {
@@ -109,11 +101,9 @@ export class ServiceDetailsPage implements OnInit {
       if(servicios[i].name === this.name){
         this.mostrarServicio = servicios[i];
         this.total=this.mostrarServicio.price;
-        console.log(servicios[i]);
         this.varianteServicio = servicios[i].variants;
       }
     }
-    console.log(this.varianteServicio);
   }
 
   onBack() {
@@ -139,7 +129,6 @@ export class ServiceDetailsPage implements OnInit {
 
   onCheckboxChange(event: any, item: any) {
     const isChecked = event.detail.checked;
-    console.log('Checkbox changed:', isChecked, 'for item:', item);
     if(isChecked){
       this.total+=item.price;
       // Agrega el item a varianteAppointment si está seleccionado
@@ -152,7 +141,6 @@ export class ServiceDetailsPage implements OnInit {
            this.varianteAppointment.splice(index, 1);
        }
     }
-    console.log(this.varianteAppointment);
   }
 
   onPayment() {
@@ -160,10 +148,12 @@ export class ServiceDetailsPage implements OnInit {
   }
 
  async onApply() {
-  this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-    this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
-    console.log(this.logged); // Ahora puedes usar el valor booleano
-  });
+  try {
+    this.logged = await firstValueFrom(this.authService.isLoggedIn());
+    console.log(this.logged); // Ahora puedes usar el valor booleano de manera síncrona
+  } catch (error) {
+    console.error('Error checking logged status:', error);
+  }
     if (this.logged ) {
       console.log("Adentro");
       // El usuario está logueado, puedes proceder a crear el appointment
@@ -186,6 +176,7 @@ export class ServiceDetailsPage implements OnInit {
       status: AppointmentStatus.PENDING,  // Estado por defecto
       imagePath: this.imagePath
     };
+    console.log(appointmentRequestDTO);
 
     // Abre el modal de confirmación y pasa el appointmentRequestDTO
     const modal = await this.modalController.create({

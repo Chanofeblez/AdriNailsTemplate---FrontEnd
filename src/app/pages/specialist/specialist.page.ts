@@ -56,11 +56,9 @@ export class SpecialistPage implements OnInit {
   // Cargar el email del token (si está en el localStorage o sessionStorage)
   loadCustomer() {
     const token = localStorage.getItem('authToken');
-    console.log('Token:', token);
     if (token) {
       this.authService.getUserByToken(token).subscribe(
         (response: any) => {
-          console.log('Customer:', response);
           // Ahora response es un objeto Customer completo
           this.customerId = response.id;  // O maneja cualquier campo necesario
           this.profileForm.patchValue({
@@ -68,7 +66,6 @@ export class SpecialistPage implements OnInit {
             email: response.email,
             phoneNumber: response.phoneNumber
           });
-          console.log('Customer ID:', this.customerId);
         },
         (error) => {
           console.error('Error al obtener el cliente:', error);
@@ -87,7 +84,7 @@ export class SpecialistPage implements OnInit {
             // Mostrar el toast de éxito
         await this.presentToast('Profile updated successfully!', 'success');
         // Navegar de vuelta a las tabs (o donde prefieras)
-        this.util.navigateRoot('/tabs');
+        this.util.navigateRoot('/tabs/account-info');
       },
       async (error) => {
         // Mostrar el toast de error

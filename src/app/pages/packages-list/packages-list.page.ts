@@ -6,14 +6,12 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { NavigationExtras } from '@angular/router';
+import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/course.service';
 import { PaymentService } from 'src/app/services/payment.service';
-import { UtilService } from 'src/app/services/util.service';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
-import { switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-packages-list',
@@ -21,7 +19,7 @@ import { switchMap } from 'rxjs';
   styleUrls: ['./packages-list.page.scss'],
 })
 
-export class PackagesListPage implements OnInit {
+export class PackagesListPage{
 
   paidCourses: number[] = []; // Aquí almacenamos los IDs de los cursos pagados
   courses: any[] = [];
@@ -30,7 +28,7 @@ export class PackagesListPage implements OnInit {
   isLoggedIn: boolean = false; // Cambia a true cuando el usuario está logueado
 
   private courseService = inject(CourseService);
-  public util = inject(UtilService);
+  public router = inject(Router);
   public paymentService = inject(PaymentService);
   public authService = inject(AuthService);
   public modalController = inject(ModalController);
@@ -39,51 +37,44 @@ export class PackagesListPage implements OnInit {
 
   constructor() { }
 
-  async ngOnInit() {
-    // Verificar si el usuario está logueado
-    this.checkLoginStatus();
-
-    // Obtener todos los cursos primero
-    this.courseService.getCourses().subscribe(data => {
-      this.courses = data;
-      console.log("Cursos", this.courses);
-    });
+  async ionViewDidEnter() {
     try {
+      // Verificar si el usuario está logueado
+      this.checkLoginStatus();
+
+      // Obtener todos los cursos
+      this.courseService.getCourses().subscribe(data => {
+        this.courses = data;
+      });
+
       // Llamar al método que maneja la obtención del usuario por token y esperar que termine
       await this.getUserByToken();
+
       // Ahora que ya tenemos el userId desde getUserByToken, obtenemos los cursos pagados usando el userId
       if (this.userId) {
-        this.courseService.getPaidCourses(this.userId).subscribe((courses: number[]) => {
-          this.paidCourses = courses;
-          console.log("paidCourses", this.paidCourses);
-        }, error => {
-          console.error("Error obteniendo los cursos pagados:", error);
-        });
+        this.courseService.getPaidCourses(this.userId).subscribe(
+          (courses: number[]) => {
+            this.paidCourses = courses;
+          },
+          error => {
+            console.error("Error obteniendo los cursos pagados:", error);
+          }
+        );
       } else {
         console.error("UserId no está definido");
       }
     } catch (error) {
-      console.error('Error en ngOnInit:', error);
+      console.error('Error en ionViewDidEnter:', error);
     }
-  }
-
-  async ionViewDidEnter() {
-    console.log("ionViewDidEnter-Cursos executed");
-    // Verificar si el usuario está logueado
-    this.checkLoginStatus();
-    await this.getUserByToken();
   }
 
   async getUserByToken(): Promise<void> {
     const token = localStorage.getItem('authToken');
-    console.log('Token', token);
 
     if (token) {
       return this.authService.getUserByToken(token).toPromise().then((response: any) => {
-        console.log('Customer:', response);
         // Ahora response es un objeto Customer completo
         this.userId = response.id; // O maneja cualquier campo necesario
-        console.log('Customer ID:', this.userId);
       }).catch(error => {
         console.error('Error al obtener el cliente:', error);
         throw error;
@@ -93,9 +84,7 @@ export class PackagesListPage implements OnInit {
     }
   }
 
-
   async buyCourse(item: any) {
-    console.log("item", item);
     // Verificar si el usuario no está logueado
     if (!this.isLoggedIn) {
       await this.presentLoginToast(); // Mostrar el toast para que el usuario inicie sesión
@@ -110,7 +99,6 @@ export class PackagesListPage implements OnInit {
 
     // Prepara los datos para el modal de pago
     const idCourse = item.id;
-    console.log("idCourse", idCourse);
     const amount = item.price;
     const customerId = this.userId;
 
@@ -146,7 +134,7 @@ export class PackagesListPage implements OnInit {
           }
         };
         // Redirige solo después de un pago exitoso
-        this.util.navigateToPage('/tabs/courses-details', param);
+        this.router.navigate(['/tabs/courses-details'], param);
       } else {
         console.error('Payment failed', dataReturned.data.error);
         // Mostrar un mensaje o alerta indicando que el pago falló
@@ -201,15 +189,14 @@ export class PackagesListPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+    //this.util.onBack();
   }
 
   onPayment() {
-    this.util.navigateToPage('select-slot');
+    this.router.navigate(['select-slot']);
   }
 
   onCourseSelected(course: any) {
-    console.log("course.descripcion", course.description);
     const param: NavigationExtras = {
       queryParams: {
         id: course.id,
@@ -220,7 +207,7 @@ export class PackagesListPage implements OnInit {
         videoPath: course.videoPath
       }
     };
-    this.util.navigateToPage('/tabs/courses-details', param);
+    this.router.navigate(['/tabs/courses-details'], param);
   }
 
   // Método para verificar si el cliente está logueado

@@ -27,24 +27,18 @@ export class TabsPage implements OnInit {
   constructor() { }
 
   async ngOnInit() {
-    console.log("ngOnInit Tabs executed once");
     // Suscríbete al observable para obtener el valor booleano
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
-      console.log(this.logged); // Ahora puedes usar el valor booleano
-
       // Forzar la detección de cambios
       this.cdRef.detectChanges();
     });
   }
 
   ionViewDidEnter() {
-    console.log("ionViewDidEnter executed once");
     // Suscríbete al observable para obtener el valor booleano
     this.authService.isLoggedIn().subscribe((isLoggedIn) => {
       this.logged = isLoggedIn; // Asigna el valor del observable a 'logged'
-      console.log(this.logged); // Ahora puedes usar el valor booleano
-
       // Forzar la detección de cambios
       this.cdRef.detectChanges();
     });

@@ -27,7 +27,6 @@ export class AuthService {
     // Verifica con el servidor si el token es válido
     return this.getUserByToken(token).pipe(
       map((username) => {
-        console.log("username",username);
         // Si se encuentra un username, el token es válido
         return !!username;
       }),

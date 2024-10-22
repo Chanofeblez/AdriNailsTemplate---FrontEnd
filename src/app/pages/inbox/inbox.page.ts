@@ -47,7 +47,6 @@ export class InboxPage implements OnInit {
   ngOnInit() {
     this.router.queryParams.subscribe(params => {
       this.segment = params['type'] ? params['type'] : 'manicure';
-      console.log(this.segment);
     });
     this.loadImages();
   }
@@ -77,7 +76,6 @@ export class InboxPage implements OnInit {
 
           // Ocultar el loader cuando las imágenes hayan cargado
           this.dismissLoading(loading);
-          console.info('Images', this.imageList);
         },
         (error) => {
           console.error('Error loading images', error);

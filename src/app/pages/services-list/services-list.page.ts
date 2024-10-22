@@ -6,7 +6,7 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationExtras } from '@angular/router';
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Servicio } from 'src/app/model/manicure-service.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { UtilService } from 'src/app/services/util.service';
@@ -29,7 +29,7 @@ export class ServicesListPage implements OnInit {
 
   public servicioService   = inject(ServicioService);
   private route = inject(ActivatedRoute);
-  private util = inject(UtilService);
+  private router = inject(Router);
 
   constructor(
 
@@ -42,9 +42,6 @@ export class ServicesListPage implements OnInit {
       this.userId= params['user'];
       this.selectedDate = params['date'];
       this.selectedTime = params['time'];
-      console.log('User:', this.userId);
-      console.log('Selected Date:', this.selectedDate);
-      console.log('Selected Time:', this.selectedTime);
     });
 
   }
@@ -52,7 +49,6 @@ export class ServicesListPage implements OnInit {
   loadServicios(): void {
     this.servicioService.getAllServicios().subscribe(
       (data: Servicio[]) => {
-        console.log(data);
         this.servicios = data;
         this.separateServicios(this.servicios);
       },
@@ -90,7 +86,7 @@ export class ServicesListPage implements OnInit {
         time:      this.selectedTime
       }
     };
-    this.util.navigateToPage('/tabs/service-details', param);
+    this.router.navigate(['/tabs/service-details'], param);
   }
 
   onPayment() {

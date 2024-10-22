@@ -65,3 +65,25 @@ testem.log
 # System files
 .DS_Store
 Thumbs.db
+
+# Agregar carpetas específicas que deseas excluir
+src/app/pages/auth/
+src/app/pages/cancel-success-modal/
+src/app/pages/e-receipt/
+src/app/pages/explore/
+src/app/pages/gallery-list/
+src/app/pages/help/
+src/app/pages/invite-friends/
+src/app/pages/languages/
+src/app/pages/notification-settings/
+src/app/pages/notifications/
+src/app/pages/payments/
+src/app/pages/profile/
+src/app/pages/remove-bookmark/
+src/app/pages/review-list/
+src/app/pages/salon-info/
+src/app/pages/salon-list/
+src/app/pages/security-settings/
+src/app/pages/success-payment/
+src/app/pages/welcome/
+src/assets/images/notused/
