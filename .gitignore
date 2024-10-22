@@ -87,3 +87,5 @@ src/app/pages/security-settings/
 src/app/pages/success-payment/
 src/app/pages/welcome/
 src/assets/images/notused/
+src/app/pages/select-slot/
+src/app/services/util.service.ts

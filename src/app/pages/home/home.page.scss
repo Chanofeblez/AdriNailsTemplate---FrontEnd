@@ -6,6 +6,17 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 
+/*TITLE*/
+.gallery-title {
+  display: block;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  color: #333; /* Ajusta el color según tu diseño */
+}
+
 .slider-image1 {
   position: relative;
   background-size: cover;
@@ -162,6 +173,8 @@
 .services-section {
   margin-top: 30px;
   margin-bottom: 20px;
+  margin-right: 20px;
+  margin-left: 20px;
 }
 
 .section-title {
@@ -214,15 +227,7 @@ h2, .section-title, .greeting-title {
   text-align: center;
 }
 
-.gallery-title {
-  display: block;
-  text-align: center;
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  color: #333; /* Ajusta el color según tu diseño */
-}
+
 
 .gallery-description {
   text-align: center;

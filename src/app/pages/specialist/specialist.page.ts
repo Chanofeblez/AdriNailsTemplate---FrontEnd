@@ -84,7 +84,7 @@ export class SpecialistPage implements OnInit {
             // Mostrar el toast de éxito
         await this.presentToast('Profile updated successfully!', 'success');
         // Navegar de vuelta a las tabs (o donde prefieras)
-        this.util.navigateRoot('/tabs/account-info');
+        this.router.navigate(['/tabs/account-info']);
       },
       async (error) => {
         // Mostrar el toast de error

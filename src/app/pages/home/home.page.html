@@ -27,7 +27,7 @@
     <ion-label class="gallery-title" *ngIf="userName">{{ greeting }}, {{userName}} 👋</ion-label>
     <div class="sliders">
       <swiper-container #swiper [slidesPerView]="1.05" [spaceBetween]="10">
-        <swiper-slide *ngFor="let post of util.posts">
+        <swiper-slide *ngFor="let post of posts">
           <div class="slider-image1" [ngStyle]="{'background-image': 'url(' + post.imagePath + ')'}">
             <div class="offer-details1">
               <h2>{{ post.serviceName }}</h2>

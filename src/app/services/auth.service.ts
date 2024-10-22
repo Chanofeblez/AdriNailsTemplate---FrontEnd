@@ -1,6 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment.prod';
 import { Customer } from '../model/customer.interface';
 
@@ -47,10 +47,16 @@ export class AuthService {
           console.log("Guardar en el local");
           localStorage.setItem('authToken', response.token);
         }
+      }),
+      catchError((error: HttpErrorResponse) => {
+        console.error("Error en el servicio:", error);
+        // Extrae el mensaje de error de la respuesta
+        const errorMessage = error.error?.error || error.error || 'Unknown error';
+        // Lanza un nuevo error con el mensaje adecuado
+        return throwError(() => new Error(errorMessage));
       })
     );
   }
-
 
   login(credentials: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/login`, credentials).pipe(

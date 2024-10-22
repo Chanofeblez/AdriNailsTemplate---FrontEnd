@@ -13,6 +13,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Customer } from 'src/app/model/customer.interface';
 import { Servicio } from 'src/app/model/manicure-service.interface';
 import { ServicioService } from '../../services/servicio.service';
+import { Post } from 'src/app/model/post.interface';
 
 register();
 @Component({
@@ -38,6 +39,24 @@ export class HomePage {
     initialSlide: 0,
     slidesPerView: 3,
   };
+
+  posts: Post[] = [
+    {
+      imagePath: 'assets/images/extras/complicatedDEN.jpg',
+      serviceName: 'Manicure Deluxe',
+      description: 'A luxurious manicure experience with the best products.'
+    },
+    {
+      imagePath: 'assets/images/extras/simpleDEN.jpg',
+      serviceName: 'Pedicure Spa',
+      description: 'Relaxing pedicure with foot massage and exfoliation.'
+    },
+    {
+      imagePath: 'assets/images/extras/cateye.jpeg',
+      serviceName: 'Gel Polish',
+      description: 'Long-lasting gel polish with a shiny finish.'
+    },
+  ];
 
   constructor() {
   }
@@ -132,14 +151,14 @@ export class HomePage {
     this.router.navigate(['/tabs/gallery'], { queryParams: { type: category } });
   }
 
-  onSalonInfo(index: number) {
-    const param: NavigationExtras = {
-      queryParams: {
-        id: index
-      }
-    };
-    this.util.navigateToPage('salon-info', param);
-  }
+ // onSalonInfo(index: number) {
+ //   const param: NavigationExtras = {
+ //     queryParams: {
+ //       id: index
+ //     }
+ //   };
+ //   this.util.navigateToPage('salon-info', param);
+ // }
 
 //  onNotification() {
 //    this.util.navigateToPage('login');
