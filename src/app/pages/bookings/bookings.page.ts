@@ -7,7 +7,6 @@
 */
 import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
 import { IonDatetime, ModalController, NavController, ToastController } from '@ionic/angular';
-import { UtilService } from 'src/app/services/util.service';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
 import { register } from 'swiper/element';
 import { Router } from '@angular/router';
@@ -18,6 +17,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { LocalTime } from 'src/app/model/localtime.interface';
 import { Customer } from 'src/app/model/customer.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-bookings',
@@ -58,7 +58,7 @@ export class BookingsPage implements OnInit {
 
   selectedSpecialist: any = '';
 
-  public util = inject(UtilService);
+  public location = inject(Location);
   private modalController = inject(ModalController);
   private navCtrl = inject(NavController);
   private router = inject(Router);
@@ -67,6 +67,17 @@ export class BookingsPage implements OnInit {
   private servicioService = inject(ServicioService);
   private cdr = inject(ChangeDetectorRef);
   private toastController = inject(ToastController);
+
+  categories: any[] = [
+    {
+      "name": "manicures",
+      "image": "assets/images/category/9.png"
+    },
+    {
+      "name": "pedicures",
+      "image": "assets/images/category/10.png"
+    }
+  ];
 
   constructor() {
     const today = new Date();
@@ -308,7 +319,7 @@ export class BookingsPage implements OnInit {
   }
 
   onReceipt() {
-    this.util.navigateToPage('e-receipt');
+    this.router.navigate(['e-receipt']);
   }
 
   review(appointmentId: string | undefined) {
@@ -316,7 +327,7 @@ export class BookingsPage implements OnInit {
       console.error('appointmentId is undefined or null');
       return;
     }
-    this.util.navigateToPage(`/tabs/review/${appointmentId}`);
+    this.router.navigate([`/tabs/review/${appointmentId}`]);
   }
 
   async presentModal(appointmentId: string, email: string) {
@@ -331,7 +342,7 @@ export class BookingsPage implements OnInit {
       console.log(data);
       this.getUserAppointment(email);
       if (data && data.data == 'ok' && data.role == 'ok') {
-        this.util.navigateToPage('cancel-booking');
+        this.router.navigate(['cancel-booking']);
       }
     });
     await modal.present();
@@ -339,7 +350,7 @@ export class BookingsPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
 
   saveSpecialist(name: string) {

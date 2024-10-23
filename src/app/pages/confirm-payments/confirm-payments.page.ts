@@ -7,7 +7,6 @@
 */
 import { Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { UtilService } from 'src/app/services/util.service';
 import { SuccessPaymentPage } from '../success-payment/success-payment.page';
 import { Router } from '@angular/router';
 

@@ -111,7 +111,7 @@
               <ion-label class="address">{{item.totalCost}}</ion-label>
               <ion-label class="service-title">Services:</ion-label>
               <ion-label class="service-name"> <span class="name"
-                  *ngFor="let sub of util.categories.slice(0,6);let i = index;"> {{sub.name}} <span *ngIf="i < 5"
+                  *ngFor="let sub of categories.slice(0,6);let i = index;"> {{sub.name}} <span *ngIf="i < 5"
                     class="separate">,</span> </span> </ion-label>
             </div>
           </ion-col>
