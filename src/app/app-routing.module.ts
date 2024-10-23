@@ -11,18 +11,18 @@ import { AuthguardsGuard } from './guard/authguards.guard';  // Ajusta la ruta s
 import { HomePage } from './pages/home/home.page';
 
 const routes: Routes = [
-  {
-    path: 'success-payment',
-    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
-  },
+//  {
+//    path: 'success-payment',
+//    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
+//  },
   {
     path: 'success',
     loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
-  {
-    path: 'cancel-success-modal',
-    loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
-  },
+//  {
+//    path: 'cancel-success-modal',
+//    loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
+//  },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
