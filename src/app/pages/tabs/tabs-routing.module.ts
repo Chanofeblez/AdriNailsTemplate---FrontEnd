@@ -41,57 +41,12 @@ const routes: Routes = [
           import('../inbox/inbox.module').then((m) => m.InboxPageModule),
       },
       {
-        path: 'profile',
-        loadChildren: () =>
-          import('../profile/profile.module').then((m) => m.ProfilePageModule),
-      },
-      {
-        path: 'salon-info',
-        loadChildren: () => import('../salon-info/salon-info.module').then(m => m.SalonInfoPageModule)
-      },
-      {
-        path: 'select-slot',
-        loadChildren: () => import('../select-slot/select-slot.module').then(m => m.SelectSlotPageModule)
-      },
-      {
-        path: 'payments',
-        loadChildren: () => import('../payments/payments.module').then(m => m.PaymentsPageModule)
-      },
-      {
-        path: 'e-receipt',
-        loadChildren: () => import('../e-receipt/e-receipt.module').then(m => m.EReceiptPageModule)
-      },
-      {
         path: 'service-details',
         loadChildren: () => import('../service-details/service-details.module').then(m => m.ServiceDetailsPageModule)
       },
       {
         path: 'services-list',
         loadChildren: () => import('../services-list/services-list.module').then(m => m.ServicesListPageModule)
-      },
-      {
-        path: 'help',
-        loadChildren: () => import('../help/help.module').then(m => m.HelpPageModule)
-      },
-      {
-        path: 'notification-settings',
-        loadChildren: () => import('../notification-settings/notification-settings.module').then(m => m.NotificationSettingsPageModule)
-      },
-      {
-        path: 'security-settings',
-        loadChildren: () => import('../security-settings/security-settings.module').then(m => m.SecuritySettingsPageModule)
-      },
-      {
-        path: 'languages',
-        loadChildren: () => import('../languages/languages.module').then(m => m.LanguagesPageModule)
-      },
-      {
-        path: 'invite-friends',
-        loadChildren: () => import('../invite-friends/invite-friends.module').then(m => m.InviteFriendsPageModule)
-      },
-      {
-        path: 'gallery-list',
-        loadChildren: () => import('../gallery-list/gallery-list.module').then(m => m.GalleryListPageModule)
       },
       {
         path: 'payment-modal',
@@ -104,10 +59,6 @@ const routes: Routes = [
       {
         path: 'courses-list',
         loadChildren: () => import('../packages-list/packages-list.module').then(m => m.PackagesListPageModule)
-      },
-      {
-        path: 'review-list',
-        loadChildren: () => import('../review-list/review-list.module').then(m => m.ReviewListPageModule)
       },
       {
         path: 'review/:appointmentId',

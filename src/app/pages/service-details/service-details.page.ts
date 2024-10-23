@@ -8,7 +8,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Servicio, ServicioVariant } from 'src/app/model/manicure-service.interface';
-import { UtilService } from 'src/app/services/util.service';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
 import { AuthService } from 'src/app/services/auth.service';
@@ -20,6 +19,7 @@ import { SuccessPage } from '../success/success.page';
 import { ConfirmAppointmentModalPage } from '../confirmappointmentmodal/confirmappointmentmodal.page';
 import { ConfirmappointmentmodalPageModule } from '../confirmappointmentmodal/confirmappointmentmodal.module';
 import { firstValueFrom } from 'rxjs';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-service-details',
@@ -45,7 +45,6 @@ export class ServiceDetailsPage implements OnInit {
 
   total: number = 0;
 
-  public util                = inject(UtilService);
   private modalController    = inject(ModalController);
   private route              = inject(ActivatedRoute);
   private router             = inject(Router);
@@ -54,6 +53,7 @@ export class ServiceDetailsPage implements OnInit {
   private appointmentService = inject(AppointmentService);
   private servicioService    = inject(ServicioService);
   private toastController    = inject(ToastController);
+  private location    = inject(Location);
 
   constructor() {
 
@@ -107,7 +107,7 @@ export class ServiceDetailsPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
 
 //  getServicio(name: String) {
@@ -144,7 +144,7 @@ export class ServiceDetailsPage implements OnInit {
   }
 
   onPayment() {
-    this.util.navigateToPage('payment-modal');
+    this.router.navigate(['payment-modal']);
   }
 
  async onApply() {
@@ -257,7 +257,7 @@ async presentToast(message: string) {
     modal.onDidDismiss().then((data) => {
       console.log(data);
       if (data && data.data == 'ok' && data.role == 'ok') {
-        this.util.navigateToPage('payment-modal');
+        this.router.navigate(['payment-modal']);
       }
     });
     await modal.present();

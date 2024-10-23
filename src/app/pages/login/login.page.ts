@@ -5,12 +5,12 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
+import { Location } from '@angular/common';
 import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
-import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-login',
@@ -23,9 +23,9 @@ export class LoginPage implements OnInit {
 
   private fb             = inject(FormBuilder);
   private authService    = inject(AuthService);
-  public util            = inject(UtilService);
   private toastController= inject(ToastController);
   private router         = inject(Router);
+  private location         = inject(Location);
 
   constructor() {}
 
@@ -85,11 +85,11 @@ export class LoginPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
 
   onRegister() {
-    this.util.navigateToPage('/register');
+    this.router.navigate(['/register']);
   }
 
   onHome() {

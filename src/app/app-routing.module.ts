@@ -11,11 +11,11 @@ import { AuthguardsGuard } from './guard/authguards.guard';  // Ajusta la ruta s
 import { HomePage } from './pages/home/home.page';
 
 const routes: Routes = [
-//  {
-//    path: 'success-payment',
-//    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
-//  },
-  {
+  //  {
+  //    path: 'success-payment',
+  //    loadChildren: () => import('./pages/success-payment/success-payment.module').then(m => m.SuccessPaymentPageModule)
+  //  },
+    {
     path: 'success',
     loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
@@ -23,11 +23,59 @@ const routes: Routes = [
   //    path: 'cancel-success-modal',
   //    loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
   //  },
-
-  {
-    path: 'confirm-payments',
-    loadChildren: () => import('./pages/confirm-payments/confirm-payments.module').then(m => m.ConfirmPaymentsPageModule)
-  },
+  //  {
+  //    path: 'confirm-payments',
+  //    loadChildren: () => import('./pages/confirm-payments/confirm-payments.module').then(m => m.ConfirmPaymentsPageModule)
+  //  },
+  //  {
+  //    path: 'profile',
+  //    loadChildren: () =>
+  //      import('./pages/profile/profile.module').then((m) => m.ProfilePageModule),
+  //  },
+  //  {
+  //    path: 'salon-info',
+  //    loadChildren: () => import('./pages/salon-info/salon-info.module').then(m => m.SalonInfoPageModule)
+  //  },
+  //  {
+  //    path: 'select-slot',
+  //    loadChildren: () => import('./pages/select-slot/select-slot.module').then(m => m.SelectSlotPageModule)
+  //  },
+  //  {
+  //    path: 'payments',
+  //    loadChildren: () => import('./pages/payments/payments.module').then(m => m.PaymentsPageModule)
+  //  },
+  //  {
+  //    path: 'e-receipt',
+  //    loadChildren: () => import('./pages/e-receipt/e-receipt.module').then(m => m.EReceiptPageModule)
+  //  },
+  //  {
+  //    path: 'help',
+  //    loadChildren: () => import('./pages/help/help.module').then(m => m.HelpPageModule)
+  //  },
+  //  {
+  //    path: 'notification-settings',
+  //    loadChildren: () => import('./pages/notification-settings/notification-settings.module').then(m => m.NotificationSettingsPageModule)
+  //  },
+  //  {
+  //    path: 'security-settings',
+  //    loadChildren: () => import('./pages/security-settings/security-settings.module').then(m => m.SecuritySettingsPageModule)
+  //  },
+  //  {
+  //    path: 'languages',
+  //    loadChildren: () => import('./pages/languages/languages.module').then(m => m.LanguagesPageModule)
+  //  },
+  //  {
+  //    path: 'invite-friends',
+  //    loadChildren: () => import('./pages/invite-friends/invite-friends.module').then(m => m.InviteFriendsPageModule)
+  //  },
+  //  {
+  //    path: 'gallery-list',
+  //    loadChildren: () => import('./pages/gallery-list/gallery-list.module').then(m => m.GalleryListPageModule)
+  //  },
+  //  {
+  //    path: 'review-list',
+  //    loadChildren: () => import('./pages/review-list/review-list.module').then(m => m.ReviewListPageModule)
+  //  },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),

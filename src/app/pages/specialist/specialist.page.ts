@@ -6,11 +6,8 @@
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
 import { Component, inject, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { SuccessPage } from '../success/success.page';
-import { Customer } from 'src/app/model/customer.interface';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ModalController, ToastController } from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -26,7 +23,6 @@ export class SpecialistPage implements OnInit {
   customerEmail: string;
   customerId: string;
 
-  public util = inject(UtilService);
   private toastController = inject(ToastController);
   private formBuilder = inject(FormBuilder);
   private authService = inject(AuthService);

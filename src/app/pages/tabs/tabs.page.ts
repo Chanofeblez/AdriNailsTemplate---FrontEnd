@@ -8,7 +8,6 @@
 import { ChangeDetectorRef, Component, inject, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
-import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-tabs',
@@ -19,7 +18,6 @@ export class TabsPage implements OnInit {
 
   logged: boolean;
 
-  public util        = inject(UtilService);
   public authService = inject(AuthService);
   private router     = inject(Router);
   private cdRef      = inject(ChangeDetectorRef);

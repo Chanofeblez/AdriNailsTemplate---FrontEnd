@@ -5,9 +5,8 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, inject, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
-import { NavigationExtras, Router } from '@angular/router';
+import { Component, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { register } from 'swiper/element';
 import { AuthService } from 'src/app/services/auth.service';
 import { Customer } from 'src/app/model/customer.interface';
@@ -33,7 +32,6 @@ export class HomePage {
   private authService     = inject(AuthService);
   private router          = inject(Router);
   private servicioService = inject(ServicioService);
-  public util             = inject(UtilService);
 
   slideOpts = {
     initialSlide: 0,

@@ -11,7 +11,6 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Customer } from 'src/app/model/customer.interface';
 import { AuthService } from 'src/app/services/auth.service';
-import { UtilService } from 'src/app/services/util.service';
 import { lastValueFrom } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 
@@ -26,7 +25,6 @@ export class RegisterPage implements OnInit {
 
   private fb             = inject(FormBuilder);
   private authService    = inject(AuthService);
-  private util           = inject(UtilService);
   private router         = inject(Router);
   private toastController= inject(ToastController);
 
@@ -95,15 +93,15 @@ async submitForm() {
 
 
   onBack() {
-    this.util.navigateToPage('/login');
+    this.router.navigate(['/login']);
   }
 
   onHome() {
-    this.util.navigateToPage('/');
+    this.router.navigate(['/tabs']);
   }
 
   onNext() {
-    this.util.navigateToPage('account-info');
+    this.router.navigate(['/tabs/account-info']);
   }
 
   async presentSuccessToast() {

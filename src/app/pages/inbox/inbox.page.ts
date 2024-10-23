@@ -10,7 +10,6 @@ import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { AlertController, LoadingController, ModalController } from '@ionic/angular';
 import { Image } from 'src/app/model/image.interface';
 import { ImageService } from 'src/app/services/image.service';
-import { UtilService } from 'src/app/services/util.service';
 import ImageModalPage from '../imagemodal/imagemodal.page';
 
 @Component({
@@ -33,12 +32,13 @@ export class InboxPage implements OnInit {
   imageType: string = '';
   imageTitle: string = 'Default Title';
 
-  public util             = inject(UtilService);
   private imageService    = inject(ImageService);
   private alertController = inject(AlertController);
   private router          = inject(ActivatedRoute);
   private modalController = inject(ModalController);
   private loadingController = inject(LoadingController);
+  private route             = inject(Router);
+
 
   constructor() {
     this.segment = 'manicure';
@@ -136,7 +136,7 @@ export class InboxPage implements OnInit {
         id: index
       }
     };
-    this.util.navigateToPage('chats', param);
+    this.route.navigate(['chats'], param);
   }
 
   async openImageModal(imageUrl: string) {
