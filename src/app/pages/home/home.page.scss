@@ -1,11 +1,3 @@
-/*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
-  App Name : Salon Locks & Lashes This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2023-present initappz.
-*/
-
 /*TITLE*/
 .gallery-title {
   display: block;
@@ -14,9 +6,10 @@
   font-weight: bold;
   margin-bottom: 10px;
   margin-top: 10px;
-  color: #333; /* Ajusta el color según tu diseño */
+  color: #333;
 }
 
+/*SWIPER*/
 .slider-image1 {
   position: relative;
   background-size: cover;
@@ -25,7 +18,7 @@
   overflow: hidden;
   box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
   height: 300px;
-  width: 100%; /* Asegura que la imagen ocupe todo el ancho disponible */
+  width: 100%;
 }
 
 .offer-details1 {
@@ -33,7 +26,6 @@
   bottom: 20px;
   left: 20px;
   right: 20px;
-  /* Añade esto para asegurar que el ancho se ajuste */
   background-color: rgba(0, 0, 0, 0.4);
   padding: 10px;
   border-radius: 10px;
@@ -42,13 +34,6 @@
   box-sizing: border-box;
   margin-top: 10px;
   margin-bottom: 10px;
-}
-
-
-
-.slider-image1:hover .offer-details1 {
-  opacity: 1;
-  transform: translateY(0);
 }
 
 .offer-details1 h2 {
@@ -62,6 +47,7 @@
   color: #FFFFFF;
 }
 
+/*CATEGORIES*/
 .category-links {
   height: 200px;
   display: flex;
@@ -75,21 +61,20 @@
 }
 
 .category-info {
-  background: #ffb3c1; /* Color de fondo claro */
-  border-radius: 20px; /* Bordes redondeados */
-  box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2), -12px -12px 24px rgba(255, 255, 255, 0.8); /* Sombra más oscura para mayor profundidad */
+  background: #ffb3c1;
+  box-shadow: 12px 12px 24px rgba(0, 0, 0, 0.2), -12px -12px 24px rgba(255, 255, 255, 0.8);
   padding: 15px;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .category-info:active {
-  box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 1); /* Sombra interna más marcada */
-  transform: scale(0.97); /* Efecto de presión */
+  box-shadow: inset 5px 5px 10px rgba(209, 217, 230, 0.5), inset -5px -5px 10px rgba(255, 255, 255, 1);
+  transform: scale(0.97);
 }
 
 .circle-content {
-  width: 80px; /* Ajusta según lo que prefieras */
-  height: 80px; /* Ajusta según lo que prefieras */
+  width: 80px;
+  height: 80px;
   background-color: #f7f7f7;
   border-radius: 50%;
   display: flex;
@@ -100,76 +85,21 @@
 }
 
 .circle-content .img {
-  width: 100%; /* Ajusta el tamaño de los íconos */
+  width: 100%;
   height: 100%;
   object-fit: contain;
   border-radius: 50%;
 }
 
 .name {
-  font-size: 1rem; /* Aumenta el tamaño de la fuente */
-  font-weight: bold; /* Haz que el texto sea más grueso */
-  color: var(--ion-color-dark); /* Asegúrate de que el color sea oscuro y contrastante */
-  text-transform: uppercase; /* Opcional: Convierte el texto a mayúsculas para mayor impacto */
-  margin-top: 10px; /* Añade un poco de espacio encima del texto */
-}
-
-.social-media-section {
-  text-align: center;
-  margin-top: 40px; /* Ajusta el espacio según sea necesario */
-}
-
-.social-media-section h2 {
-  font-size: 20px;
+  font-size: 1rem;
   font-weight: bold;
-  margin-bottom: 15px;
-  color: var(--ion-color-primary); /* Usa el color primario o personalízalo */
+  color: var(--ion-color-dark);
+  text-transform: uppercase;
+  margin-top: 10px;
 }
 
-.social-media-links {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin-top: 25px;
-
-}
-
-.social-media-links a {
-  font-size: 2rem; /* Tamaño de los iconos */
-  color: var(--ion-color-primary); /* Puedes ajustar este color para que combine con tu esquema de colores */
-  margin: 0 15px; /* Más espacio entre iconos */
-  padding: 10px;
-  //border-radius: 50%;
-  //background-color: #f0f0f0;
-  //box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra más ligera */
-}
-
-.social-media-links a:hover {
-  color: var(--ion-color-primary); /* Cambia el color al pasar el cursor para un efecto interactivo */
-}
-
-.testimonials {
-  background-color: #f9f9f9;
-  margin-top: 30px;
-  text-align: center;
-  padding: 20px;
-
-  border-radius: 10px;
-  margin-bottom: 20px;
-}
-
-.testimonial {
-  margin-bottom: 15px;
-  font-style: italic;
-  color: var(--ion-color-dark); /* Asegura que tenga buen contraste */
-}
-
-.rating {
-  color: #FFD700; /* Color dorado para las estrellas */
-  margin-top: 5px;
-}
-
+/*SERVICES*/
 .services-section {
   margin-top: 30px;
   margin-bottom: 20px;
@@ -177,18 +107,18 @@
   margin-left: 20px;
 }
 
-.section-title {
+.gallery-description {
   text-align: center;
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 15px;
+  font-size: 14px;
+  color: #777;
+  margin-bottom: 20px;
 }
 
 .services-container {
   width: 100%;
   padding-left: 5px;
   display: flex;
-  justify-content: center; /* Centrar swiper en el contenedor */
+  justify-content: center;
 }
 
 .service-card {
@@ -200,7 +130,7 @@
   align-items: center;
   background-color: #fff;
   border-radius: 15px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra más sutil */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 5px;
   box-sizing: border-box;
   margin-right: 15px;
@@ -219,37 +149,54 @@
   font-weight: bold;
 }
 
-h2, .section-title, .greeting-title {
-  font-family: 'Roboto', sans-serif; /* Asegura una tipografía consistente */
-  font-weight: bold;
-  font-size: 1.4rem;
-  color: var(--ion-color-dark); /* Asegura contraste en todo el texto */
+/*TESTIMONIALS*/
+.testimonials {
+  background-color: #f9f9f9;
+  margin-top: 30px;
   text-align: center;
-}
-
-
-
-.gallery-description {
-  text-align: center;
-  font-size: 14px;
-  color: #777;
+  padding: 20px;
+  border-radius: 10px;
   margin-bottom: 20px;
 }
 
-/* Estilo para elementos que contienen links */
-.link-highlight {
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); /* Sombra suave */
-  transform: scale(1); /* Estado normal */
-  transition: all 0.3s ease-in-out; /* Transición suave */
-  border-radius: 30px;
+.testimonial {
+  margin-bottom: 15px;
+  font-style: italic;
+  color: var(--ion-color-dark);
 }
 
-.link-highlight:active {
-  transform: scale(0.97); /* Hace un pequeño efecto de presión al hacer clic */
-  background-color: rgba(255, 64, 129, 0.2); /* Cambio de color al hacer clic */
+.rating {
+  color: #FFD700;
+  margin-top: 5px;
 }
 
-.link-highlight ion-icon {
-  color: #FF4081; /* Resalta los iconos con color */
+/*SOCIALMEDIA*/
+.social-media-section {
+  text-align: center;
+  margin-top: 40px;
 }
 
+.social-media-section h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: var(--ion-color-primary);
+  text-align: center;
+}
+
+.social-media-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-top: 25px;
+
+}
+
+.social-media-links a {
+  font-size: 2rem;
+  color: var(--ion-color-primary);
+  margin: 0 15px;
+  padding: 10px;
+}

@@ -47,7 +47,7 @@ export class HomePage {
       description: 'A luxurious manicure experience with the best products.'
     },
     {
-      imagePath: 'assets/images/extras/simpleDEN.jpg',
+      imagePath: 'assets/images/avatar/pedicureRuso1.jpg',
       serviceName: 'Pedicure Spa',
       description: 'Relaxing pedicure with foot massage and exfoliation.'
     },

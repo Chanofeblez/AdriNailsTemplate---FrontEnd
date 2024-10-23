@@ -1,16 +1,27 @@
-/*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
-  App Name : Salon Locks & Lashes This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2023-present initappz.
-*/
-ion-content.full-content {
-  height: 100%;
+/*SEGMENT*/
+ion-segment {
+  display: flex;
+  justify-content: space-between; /* Asegura que los botones se distribuyan uniformemente */
+  width: 100%; /* Asegura que el segmento ocupe todo el ancho disponible */
 }
 
-ion-label {
+ion-segment-button {
+  flex-grow: 1;
+  text-align: center;
   font-size: 12px;
+  padding: 8px 0;
+  white-space: nowrap;
+}
+
+ion-segment-button ion-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+
+/*ion-content*/
+.full-content {
+  height: 100%;
 }
 
 .booking-screen {
@@ -19,100 +30,22 @@ ion-label {
   height: 100%;
 }
 
+/*BOOKING*/
+.booking-list {
+  height: auto;
+  padding: 5px;
+}
+
 .slot-screen {
-  flex: 1; /* Ocupa el espacio disponible */
+  flex: 1;
 }
 
-.no-appointments-message {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 200px; /* Ajusta la altura según lo necesites */
-  font-size: 18px;
-  color: #999; /* Color de texto, puedes cambiarlo */
-  text-align: center;
-  padding: 20px;
-}
-
-.date1 {
-  font-size: 11px;
-  font-family: 'bold';
-  color: var(--ion-color-dark);
-  text-align: start;
-
-  margin-right: 2px;
-}
-
-
-
-
-
-ion-content {
-  --background: #fff; /* Asegúrate de que el fondo sea consistente */
-  padding-bottom: 0;
-  margin-bottom: 0;
-}
-
-ion-footer {
-  height: 15%;
-  padding: 10px 0;
-  /* Aumenta el padding si es necesario */
-  display: flex;
-  justify-content: center;
-  /* Centra el botón */
-  align-items: center;
-}
-
-//Seggments
-ion-segment {
-  display: flex;
-  justify-content: space-between; /* Asegura que los botones se distribuyan uniformemente */
-  width: 100%; /* Asegura que el segmento ocupe todo el ancho disponible */
-}
-
-ion-segment-button {
-  flex-grow: 1; /* Los botones crecerán para ocupar el espacio disponible */
-  text-align: center; /* Alinea el texto al centro */
-  font-size: 12px; /* Reduce ligeramente el tamaño del texto */
-  padding: 8px 0; /* Añade algo de padding vertical */
-  white-space: nowrap; /* Evita que el texto se divida en líneas */
-}
-
-ion-segment-button ion-label {
-  overflow: hidden; /* Evita el desbordamiento del texto */
-  text-overflow: ellipsis; /* Muestra "..." si el texto es demasiado largo */
-  max-width: 100px; /* Ajusta el ancho máximo del botón */
-}
-
-//Appointment
-ion-button.botonapp {
-  background-color: #fff; /* Color de fondo rosado */
-  border: #FF4081; /* Rosa fuerte */
-  color: #FF4081; /* Texto en blanco */
-  border-radius: 25px; /* Bordes redondeados */
-  height: 45px;
-  font-size: 20px;
-  font-weight: bold;
-  cursor: pointer;
-}
-
-.botonapp[disabled] {
-  //background-color: #ffffff !important; /* Color gris claro para deshabilitado */
-  //color: #e0e0e0 !important; /* Texto más claro */
- // border: none !important; /* Asegúrate de eliminar el borde cuando esté deshabilitado */
-  cursor: not-allowed;
-  opacity: 0.5;
- // pointer-events: none;
-}
-
-.botonapp:active {
-  background-color: #FF4081; /* Color más claro al hacer clic */
-  border: 2px solid #FF4081; /* Mantiene el borde rosado */
-  color: white; /* Texto blanco al hacer clic */
+ion-label {
+  font-size: 12px;
 }
 
 .slot-name {
-  border: 1px solid #FF69B4; /* Rosa fuerte */
+  border: 1px solid #FF69B4;
   padding: 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -130,36 +63,49 @@ ion-button.botonapp {
 }
 
 .slot-name.selected {
-  background-color: #FF4081; /* Usa el color rosado de tu app */
-  color: #fff; /* Texto en blanco */
-  border: 1px solid #FF4081; /* Borde del mismo color que el fondo */
+  background-color: #FF4081;
+  color: #fff;
+  border: 1px solid #FF4081;
 }
 
-//Upcoming
-.booking-list {
-  height: auto;
-  padding: 5px;
-}
-
-ion-card {
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1); /* Sombra suave */
-  border-radius: 15px; /* Bordes redondeados */
-  margin-bottom: 10px; /* Separación entre las tarjetas */
-  padding: 5px; /* Espacio interno */
-}
-
-ion-label.date1 {
-  font-size: 12px;
-  font-family: 'Arial', sans-serif;
+.botonapp {
+  background-color: #fff;
+  border: #FF4081;
+  color: #FF4081;
+  border-radius: 25px;
+  height: 45px;
+  font-size: 20px;
   font-weight: bold;
-  color: var(--ion-color-dark);
-  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.botonapp[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/*UPCOMING*/
+ion-card {
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  margin-bottom: 10px;
+  padding: 5px;
 }
 
 .top-content {
   display: flex;
   justify-content: space-between;
   margin-bottom: 10px;
+}
+
+.date1 {
+  font-size: 12px;
+  font-family: 'Arial', sans-serif;
+  font-weight: bold;
+  color: var(--ion-color-dark);
+  margin-bottom: 5px;
+  text-align: start;
+  margin-right: 2px;
 }
 
 .salon-info-list {
@@ -193,35 +139,22 @@ ion-label.date1 {
 .bottom-content {
   width: 100%;
   display: flex;
-  justify-content: center; /* Centrar el botón */
-  padding: 5px 0; /* Espaciado superior e inferior */
+  justify-content: center;
+  padding: 5px 0;
 }
 
-.botoncancel {
-  width: 100%; /* El botón ocupará todo el ancho disponible */
-  height: 45px; /* Ajusta la altura del botón */
-  font-size: 16px; /* Aumenta el tamaño del texto */
-  border-radius: 25px; /* Bordes redondeados */
-  background-color: #fff; /* Fondo blanco */
-  color: #ff4081; /* Color del texto acorde a la paleta de la app */
-  border: 1px solid #ff4081; /* Borde rosado */
-  font-weight: bold; /* Texto en negrita */
-  text-transform: uppercase; /* Texto en mayúsculas */
-  cursor: pointer; /* Muestra un puntero al pasar sobre el botón */
-  text-align: center; /* Centra el texto */
+.no-appointments-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 200px;
+  font-size: 18px;
+  color: #999;
+  text-align: center;
+  padding: 20px;
 }
 
-.botoncancel:active {
-  background-color: #ff80ab; /* Cambia de color al hacer clic */
-}
-
-.botoncancel[disabled] {
-  background-color: #cccccc !important; /* Color gris claro para deshabilitado */
-  cursor: not-allowed; /* Cursor deshabilitado */
-  opacity: 0.6;
-}
-
-//Canceled
+/*CANCELED*/
 .end-item1 {
   display: flex;
   justify-content: flex-end;
@@ -229,11 +162,35 @@ ion-label.date1 {
 }
 
 .cancelled1 {
-  background-color: #ff1f14; /* Color rojo claro */
-  color: white; /* Texto blanco */
-  font-size: 10px; /* Aumenta el tamaño del texto */
-  font-weight: bold; /* Negrita para que se destaque */
-  padding: 5px 10px; /* Ajusta el padding */
-  border-radius: 12px; /* Bordes redondeados */
-  text-transform: uppercase; /* Texto en mayúsculas */
+  background-color: #ff1f14;
+  color: white;
+  font-size: 10px;
+  font-weight: bold;
+  padding: 5px 10px;
+  border-radius: 12px;
+  text-transform: uppercase;
+}
+
+.botoncancel {
+  width: 100%;
+  height: 45px;
+  font-size: 16px;
+  border-radius: 25px;
+  background-color: #fff;
+  color: #ff4081;
+  border: 1px solid #ff4081;
+  font-weight: bold;
+  text-transform: uppercase;
+  cursor: pointer;
+  text-align: center;
+}
+
+.botoncancel:active {
+  background-color: #ff80ab;
+}
+
+.botoncancel[disabled] {
+  background-color: #cccccc !important;
+  cursor: not-allowed;
+  opacity: 0.6;
 }

@@ -77,15 +77,19 @@ export class BookingsPage implements OnInit {
     this.minDate = `${year}-${month}-${day}`;
   }
 
-  ngOnInit() {
-    this.getUserByToken();
-  }
+  ngOnInit() { }
 
   // Este método se ejecuta cada vez que se entra en la vista
-  ionViewWillEnter() {
-    this.resetDate();
-    this.cdr.detectChanges(); // Forzar la detección de cambios
-    this.getUserAppointment(this.userId);
+  async ionViewWillEnter() {
+    try {
+      await this.getUserByToken(); // Espera a que se complete la obtención del usuario
+      console.log("Cargar los appointments en ionViewWillEnter", this.userEmail);
+      this.getUserAppointment(this.userEmail); // Ahora se ejecutará solo después de obtener el usuario
+      this.resetDate();
+      this.cdr.detectChanges(); // Forzar la detección de cambios
+    } catch (error) {
+      console.error('Error al cargar el usuario:', error);
+    }
   }
 
   // Método para resetear la fecha seleccionada
@@ -203,26 +207,26 @@ export class BookingsPage implements OnInit {
     }
   }
 
-  getUserByToken() {
-    const token = localStorage.getItem('authToken');
-    if (token) {
-      this.authService.getUserByToken(token).subscribe(
-        (response: any) => {
-          // Ahora response es un objeto Customer completo
-          this.userId = response.id;  // O maneja cualquier campo necesario
-          this.userEmail = response.email;
-
-          // Llama directamente a getUser() después de obtener el userId
-          this.getUserAppointment(this.userId);
-        },
-        (error) => {
-          console.error('Error al obtener el cliente:', error);
-          console.log('Error completo:', error);
-        }
-      );
-    } else {
-      console.log('Token no Found');
-    }
+  getUserByToken(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      const token = localStorage.getItem('authToken');
+      if (token) {
+        this.authService.getUserByToken(token).subscribe(
+          (response: any) => {
+            this.userId = response.id;
+            this.userEmail = response.email;
+            resolve(); // Llamamos a resolve cuando se obtenga la respuesta
+          },
+          (error) => {
+            console.error('Error al obtener el cliente:', error);
+            reject(error); // Llamamos a reject en caso de error
+          }
+        );
+      } else {
+        console.log('Token no found');
+        reject('Token no found');
+      }
+    });
   }
 
   async getUserAppointment(userId: string) {
@@ -232,6 +236,7 @@ export class BookingsPage implements OnInit {
 
     try {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
+      console.log("appointments", appointments);
       if (!appointments || appointments.length === 0) {
         return; // Salir de la función si no hay citas
       }
