@@ -58,10 +58,6 @@ const routes: Routes = [
         loadChildren: () => import('../payments/payments.module').then(m => m.PaymentsPageModule)
       },
       {
-        path: 'confirm-payments',
-        loadChildren: () => import('../confirm-payments/confirm-payments.module').then(m => m.ConfirmPaymentsPageModule)
-      },
-      {
         path: 'e-receipt',
         loadChildren: () => import('../e-receipt/e-receipt.module').then(m => m.EReceiptPageModule)
       },

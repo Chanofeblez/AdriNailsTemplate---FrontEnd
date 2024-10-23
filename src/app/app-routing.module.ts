@@ -19,14 +19,19 @@ const routes: Routes = [
     path: 'success',
     loadChildren: () => import('./pages/success/success.module').then(m => m.SuccessPageModule)
   },
-//  {
-//    path: 'cancel-success-modal',
-//    loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
-//  },
+  //  {
+  //    path: 'cancel-success-modal',
+  //    loadChildren: () => import('./pages/cancel-success-modal/cancel-success-modal.module').then(m => m.CancelSuccessModalPageModule)
+  //  },
+
+  {
+    path: 'confirm-payments',
+    loadChildren: () => import('./pages/confirm-payments/confirm-payments.module').then(m => m.ConfirmPaymentsPageModule)
+  },
   {
     path: 'login',
     loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule),
-   // canActivate: [AuthguardsGuard]  // Proteges la ruta de login
+    // canActivate: [AuthguardsGuard]  // Proteges la ruta de login
   },
   {
     path: 'register',
