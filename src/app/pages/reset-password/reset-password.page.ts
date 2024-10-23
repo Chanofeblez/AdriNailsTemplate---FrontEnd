@@ -5,8 +5,9 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
-import { UtilService } from 'src/app/services/util.service';
+import { Location } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -17,9 +18,11 @@ export class ResetPasswordPage implements OnInit {
   mode: any = 'sms';
   currentDiv: any = '1';
   showPassword: boolean = false;
-  constructor(
-    public util: UtilService
-  ) { }
+
+  public router = inject(Router);
+  public location = inject(Location);
+
+  constructor() { }
 
   ngOnInit() {
   }
@@ -33,7 +36,7 @@ export class ResetPasswordPage implements OnInit {
   }
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
 
   onPin() {
@@ -46,8 +49,8 @@ export class ResetPasswordPage implements OnInit {
 
   onComplete() {
     console.log('complete');
-    this.util.showSimpleAlert('Password Reset');
-    this.util.onBack();
+    //this.router.showSimpleAlert('Password Reset');
+    this.location.back();
   }
 
 }

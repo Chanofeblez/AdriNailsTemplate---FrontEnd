@@ -9,7 +9,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router';
 import { Servicio } from 'src/app/model/manicure-service.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
-import { UtilService } from 'src/app/services/util.service';
 
 @Component({
   selector: 'app-services-list',

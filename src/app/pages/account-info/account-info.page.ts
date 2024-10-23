@@ -7,7 +7,6 @@
 */
 import { Component, inject, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
-import { UtilService } from 'src/app/services/util.service';
 import { SuccessPage } from '../success/success.page';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';

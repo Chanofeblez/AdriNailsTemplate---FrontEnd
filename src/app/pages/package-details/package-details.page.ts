@@ -5,9 +5,9 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { UtilService } from 'src/app/services/util.service';
+import { Location } from '@angular/common';
+import { Component, inject, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-package-details',
@@ -21,10 +21,11 @@ export class PackageDetailsPage implements OnInit {
   pdfPath: string = '';
   videoPath: string = '';
 
-  constructor(
-    public util: UtilService,
-    private route: ActivatedRoute
-  ) {}
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private location = inject(Location);
+
+  constructor() {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((data: any) => {
@@ -41,10 +42,10 @@ export class PackageDetailsPage implements OnInit {
 
 
   onBack() {
-    this.util.onBack();
+    this.location.back();
   }
   onPayment() {
-    this.util.navigateToPage('select-slot');
+    this.router.navigate(['select-slot']);
   }
 
 }
