@@ -8,7 +8,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar color="primary" mode="md">
     <ion-buttons slot="start">
-      <ion-button (click)="onBack()" color="light">
+      <ion-button color="light">
         <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -36,7 +36,7 @@
     <!-- Si tienes algún tipo de servicios relacionados con el curso, puedes mantener esta sección
     <ion-label class="bold-title">Services</ion-label> -->
 
-   <!-- <ion-row>
+    <!-- <ion-row>
       <ion-col size="6" *ngFor="let item of util.categories">
         <ion-label class="service-name">
           <ion-icon name="checkbox" color="primary"></ion-icon> &nbsp;
@@ -45,17 +45,19 @@
       </ion-col>
     </ion-row> -->
 
-    <!-- Mostrar el botón para descargar el PDF -->
-    <ion-button expand="block" fill="outline" [href]="pdfPath" target="_blank">
-      Download PDF
+    <!-- Botón para seleccionar el idioma -->
+    <ion-button expand="block" fill="outline" shape="round" (click)="viewPdf('english')">
+      View PDF (English)
+    </ion-button>
+    <ion-button expand="block" fill="outline" shape="round" (click)="viewPdf('spanish')">
+      View PDF (Spanish)
     </ion-button>
 
     <!-- Mostrar el video del curso -->
     <ion-label class="bold-title">Course Video</ion-label>
-    <video controls width="100%">
-      <source [src]="videoPath" type="video/mp4">
-      Your browser does not support the video tag.
-    </video>
+    <iframe *ngIf="videoUrl" [src]="videoUrl | safe: 'resourceUrl'" width="100%" height="315" frameborder="0"
+      allowfullscreen>
+    </iframe>
 
   </div>
 </ion-content>

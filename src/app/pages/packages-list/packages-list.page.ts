@@ -12,6 +12,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { PaymentService } from 'src/app/services/payment.service';
 import { ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
+import { Course } from 'src/app/model/course.interface';
 
 @Component({
   selector: 'app-packages-list',
@@ -45,6 +46,7 @@ export class PackagesListPage{
       // Obtener todos los cursos
       this.courseService.getCourses().subscribe(data => {
         this.courses = data;
+        console.log("this.courses",this.courses);
       });
 
       // Llamar al método que maneja la obtención del usuario por token y esperar que termine
@@ -196,15 +198,15 @@ export class PackagesListPage{
     this.router.navigate(['select-slot']);
   }
 
-  onCourseSelected(course: any) {
+  onCourseSelected(course: Course) {
     const param: NavigationExtras = {
       queryParams: {
         id: course.id,
         name: course.title,
         image: course.imagePath,
         description: course.description,
-        pdfPath: course.pdfPath,
-        videoPath: course.videoPath
+        pdfPaths: JSON.stringify(course.pdfPaths),
+      videoPaths: JSON.stringify(course.videoPaths)
       }
     };
     this.router.navigate(['/tabs/courses-details'], param);

@@ -17,8 +17,6 @@ import { ServicioService } from 'src/app/services/servicio.service';
 import { Customer } from 'src/app/model/customer.interface';
 import { SuccessPage } from '../success/success.page';
 import { ConfirmAppointmentModalPage } from '../confirmappointmentmodal/confirmappointmentmodal.page';
-import { ConfirmappointmentmodalPageModule } from '../confirmappointmentmodal/confirmappointmentmodal.module';
-import { firstValueFrom } from 'rxjs';
 import { Location } from '@angular/common';
 
 @Component({
@@ -33,7 +31,7 @@ export class ServiceDetailsPage implements OnInit {
   selectedDate: string;
   selectedTime: string;
   imagePath: string;
-  logged: boolean;
+  logged: boolean = false;
 
   servicios: Servicio[]=[];
   mostrarServicio : Servicio | null = null;
@@ -147,21 +145,26 @@ export class ServiceDetailsPage implements OnInit {
     this.router.navigate(['payment-modal']);
   }
 
- async onApply() {
-  try {
-    this.logged = await firstValueFrom(this.authService.isLoggedIn());
-    console.log(this.logged); // Ahora puedes usar el valor booleano de manera síncrona
-  } catch (error) {
-    console.error('Error checking logged status:', error);
-  }
-    if (this.logged ) {
+  async onApply() {
+    try {
+      this.logged = await this.authService.isLoggedIn().toPromise();
+      console.log(this.logged); // Ahora puedes usar el valor booleano de manera síncrona
+      if (!this.logged) {
+        this.presentToast('You must be logged in to create an appointment.');
+        console.log("Al login",this.logged);
+        this.router.navigate(['/login']); // Redirigir al login
+      }
+    } catch (error) {
+      console.error('Error checking logged status:', error);
+    }
+    if (this.logged) {
       console.log("Adentro");
       // El usuario está logueado, puedes proceder a crear el appointment
       await this.presentConfirmModal();
     } else {
       // El usuario no está logueado, mostrar mensaje de error y redirigir al login
-    this.presentToast('You must be logged in to create an appointment.');
-    this.router.navigate(['/login']); // Redirigir al login
+      this.presentToast('You must be logged in to create an appointment.');
+      this.router.navigate(['/login']); // Redirigir al login
     }
   }
 
@@ -228,7 +231,7 @@ export class ServiceDetailsPage implements OnInit {
 async presentToast(message: string) {
   const toast = await this.toastController.create({
     message: message,
-    duration: 2000, // Duración del toast (2 segundos)
+    duration: 3000, // Duración del toast (2 segundos)
     color: 'warning', // Puedes elegir otros colores como "danger", "success", etc.
     position: 'bottom' // Posición del toast
   });

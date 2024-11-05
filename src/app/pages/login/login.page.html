@@ -33,17 +33,24 @@
         <ion-input type="password" formControlName="password" autocomplete="new-password"></ion-input>
       </ion-item>
 
-     <!-- <ion-item lines="none" class="check-item">
-        <ion-label>Remember me</ion-label>
-        <ion-checkbox slot="start" mode="md"></ion-checkbox>
-      </ion-item> -->
+      <!-- <ion-item lines="none" class="check-item">
+                <ion-label>Remember me</ion-label>
+                <ion-checkbox slot="start" mode="md"></ion-checkbox>
+              </ion-item> -->
 
       <ion-button expand="block" shape="round" color="primary" type="submit" [disabled]="!loginForm.valid">
         Sign In
       </ion-button>
-    <ion-button expand="block" fill="clear" shape="round" color="medium" (click)="onReset()">
-        Forgot Password?
-      </ion-button>
+
+      <ion-label class="forgot-password-label">
+        Forgot Password? Please contact us at<br>
+        <a href="mailto:adrinailsdesign&#64;yahoo.com" class="contact-email">
+          adrinailsdesign&#64;yahoo.com
+        </a>
+      </ion-label>
+
+    <!--  <ion-button expand="block" fill="clear" shape="round" color="medium" (click)="onReset()"></ion-button>-->
+
     </form>
 
     <!--<ion-row class="or-content">

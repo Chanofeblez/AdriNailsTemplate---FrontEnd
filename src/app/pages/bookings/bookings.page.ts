@@ -5,16 +5,13 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
-import { ChangeDetectorRef, Component, inject, OnInit, ViewChild } from '@angular/core';
-import { IonDatetime, ModalController, NavController, ToastController } from '@ionic/angular';
+import { ChangeDetectorRef, Component, inject, ViewChild } from '@angular/core';
+import { IonDatetime, ModalController, ToastController } from '@ionic/angular';
 import { CancelModalPage } from '../cancel-modal/cancel-modal.page';
-import { register } from 'swiper/element';
 import { Router } from '@angular/router';
 import { Appointment, AppointmentStatus } from 'src/app/model/appointment.interface';
 import { AppointmentService } from 'src/app/services/appointment.service';
-import * as jwt_decode from 'jwt-decode';
 import { AuthService } from 'src/app/services/auth.service';
-import { LocalTime } from 'src/app/model/localtime.interface';
 import { Customer } from 'src/app/model/customer.interface';
 import { ServicioService } from 'src/app/services/servicio.service';
 import { Location } from '@angular/common';
@@ -24,7 +21,7 @@ import { Location } from '@angular/common';
   templateUrl: './bookings.page.html',
   styleUrls: ['./bookings.page.scss'],
 })
-export class BookingsPage implements OnInit {
+export class BookingsPage {
 
   @ViewChild(IonDatetime, { static: false }) dateTime!: IonDatetime;
 
@@ -39,28 +36,16 @@ export class BookingsPage implements OnInit {
   selectedSlot: string | null = null;
   formattedSlot: { time: string, isAvailable: boolean }[] = [];
   availableSlots: string[] = []; // Horarios disponibles después de filtrar
-
+  isLoading : boolean = true;
 
   upcomingAppointments: Appointment[] = [];
   completedAppointments: Appointment[] = [];
   cancelledAppointments: Appointment[] = [];
 
-  slotList: any[] = [
-    "10:00am",
-    "01:00pm",
-    "03:00pm",
-    "05:00pm"
-  ];
-  slideOptStores = {
-    initialSlide: 0,
-    slidesPerView: 4.1,
-  };
-
   selectedSpecialist: any = '';
 
   public location = inject(Location);
   private modalController = inject(ModalController);
-  private navCtrl = inject(NavController);
   private router = inject(Router);
   private appointmentService = inject(AppointmentService);
   private authService = inject(AuthService);
@@ -88,8 +73,6 @@ export class BookingsPage implements OnInit {
     this.minDate = `${year}-${month}-${day}`;
   }
 
-  ngOnInit() { }
-
   // Este método se ejecuta cada vez que se entra en la vista
   async ionViewWillEnter() {
     try {
@@ -111,25 +94,28 @@ export class BookingsPage implements OnInit {
     this.selectedSlot = null;
   }
 
-  loadAvailableSlots(selectedDate: string) {
+  async loadAvailableSlots(selectedDate: string) {
+    this.isLoading = true;
     this.availableSlots = [];
     this.formattedSlot = [];
-    this.appointmentService.loadAvailableSlots(selectedDate).subscribe((slots: string[]) => {
+
+    try {
+      // Espera a que la respuesta del servicio se resuelva
+      const slots = await this.appointmentService.loadAvailableSlots(selectedDate).toPromise();
       this.availableSlots = slots;
 
-      // Lista de todos los slots
       const allSlots = ['10:00:00', '13:00:00', '15:00:00', '17:00:00'];
-
-      // Compara todos los slots con los disponibles
       allSlots.forEach(slot => {
-        const isAvailable = this.availableSlots.includes(slot); // Verifica si el slot está disponible
-        const formattedSlot = this.convertTo12HourFormat(slot); // Convierte el slot al formato de 12 horas
-
-        // Agrega el slot formateado al arreglo formattedSlots
-        this.formattedSlot.push({ time: formattedSlot, isAvailable: isAvailable });
+        const isAvailable = this.availableSlots.includes(slot);
+        const formattedSlot = this.convertTo12HourFormat(slot);
+        this.formattedSlot.push({ time: formattedSlot, isAvailable });
       });
-      // Ahora tienes el array formattedSlots con los slots en formato de 12 horas y su disponibilidad
-    });
+    } catch (error) {
+      console.error('Error loading slots:', error);
+    } finally {
+      // Asegúrate de que isLoading sea false al terminar, ya sea que haya éxito o error
+      this.isLoading = false;
+    }
   }
 
   convertTo12HourFormat(time: string): string {

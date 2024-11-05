@@ -5,3 +5,22 @@
   terms found in the Website https://initappz.com/license
   Copyright and Good Faith Purchasers © 2023-present initappz.
 */
+
+.forgot-password-label {
+  font-size: 14px;
+  color: #727272; /* Un gris suave para el texto */
+  text-align: center; /* Centrar el texto */
+  line-height: 1.5; /* Espaciado entre las líneas */
+  margin-top: 70px; /* Espacio arriba */
+  margin-bottom: 30px;
+}
+
+.contact-email {
+  color: #e91e63; /* Color rosa para el enlace */
+  text-decoration: none; /* Quitar el subrayado del enlace */
+  font-weight: bold; /* Negrita para el enlace */
+}
+
+.contact-email:hover {
+  text-decoration: underline; /* Subrayar el enlace cuando se pase el cursor por encima */
+}

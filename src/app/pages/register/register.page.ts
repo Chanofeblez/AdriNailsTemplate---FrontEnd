@@ -11,8 +11,6 @@ import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { Customer } from 'src/app/model/customer.interface';
 import { AuthService } from 'src/app/services/auth.service';
-import { lastValueFrom } from 'rxjs';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -40,7 +38,7 @@ export class RegisterPage implements OnInit {
   }
 
   emailValidator(control: AbstractControl): ValidationErrors | null {
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     const valid = emailRegex.test(control.value);
     return valid ? null : { invalidEmail: true };
   }
@@ -56,9 +54,13 @@ async submitForm() {
     const formData: Customer = this.registerForm.value; // Captura los datos del formulario
     console.log('Form Data:', formData);
 
+    // Convierte el email a minúsculas
+    formData.email = formData.email.toLowerCase();
+    console.log('Form Data:', formData);
+
     try {
       console.log('Registration started');
-      const response = await lastValueFrom(this.authService.register(formData)); // Convertimos el observable en promesa
+      const response = await this.authService.register(formData).toPromise();
       console.log('Registration successful', response);
 
       // Loguear automáticamente al usuario después del registro
@@ -68,7 +70,7 @@ async submitForm() {
       };
 
       console.log('Attempting to login after registration...');
-      const loginResponse = await lastValueFrom(this.authService.login(loginCredentials)); // Inicia sesión automáticamente
+      const loginResponse = await this.authService.login(loginCredentials).toPromise(); // Inicia sesión automáticamente
       console.log('Login successful', loginResponse);
 
       // Guardar el token de autenticación

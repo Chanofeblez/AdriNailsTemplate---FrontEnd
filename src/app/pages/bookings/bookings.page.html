@@ -36,23 +36,33 @@
         <ion-datetime [(ngModel)]="selectedDate" presentation="date" style="max-width: 100%;" [min]="minDate"
           (ionChange)="onDateChange($event)">
         </ion-datetime>
-        <ion-label class="title" *ngIf="selectedDate!==null">Select Hours</ion-label>
 
-        <div class="slots-section" *ngIf="selectedDate!==null">
-          <ion-row class="slots">
-            <ion-col size="3" *ngFor="let item of formattedSlot">
-              <div class="slot-name" [ngClass]="{
-                     'selected': isSlotSelected(item.time),
-                     'disabled': !item.isAvailable,
-                     'enabled': item.isAvailable
-                   }" (click)="item.isAvailable ? save(item.time) : null">
-                <ion-label class="name">
-                  {{ item.time }} <!-- Muestra la hora -->
-                </ion-label>
-              </div>
-            </ion-col>
-          </ion-row>
+        <div class="slot-selection" *ngIf="selectedDate !== null">
+          <ion-label class="title">Select Hours</ion-label>
+          <div class="slots-section">
+            <ion-row class="slots">
+              <ng-container *ngIf="isLoading; else slotContent">
+                <ion-col size="12">
+                  <ion-label>Loading slots...</ion-label>
+                </ion-col>
+              </ng-container>
+              <ng-template #slotContent>
+                <ion-col size="3" *ngFor="let item of formattedSlot">
+                  <div class="slot-name" [ngClass]="{
+                                     'selected': isSlotSelected(item.time),
+                                     'disabled': !item.isAvailable,
+                                     'enabled': item.isAvailable
+                                   }" (click)="item.isAvailable ? save(item.time) : null">
+                    <ion-label class="name">
+                      {{ item.time }} <!-- Muestra la hora -->
+                    </ion-label>
+                  </div>
+                </ion-col>
+              </ng-template>
+            </ion-row>
+          </div>
         </div>
+
         <ion-button *ngIf="selectedDate!==null" (click)="onPayment()" expand="block" shape="round" fill="outline"
           [disabled]="!isFormValid()" class="botonapp">
           Continue

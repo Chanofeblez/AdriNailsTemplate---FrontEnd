@@ -1,13 +1,6 @@
-/*
-  Authors : initappz (Rahul Jograna)
-  Website : https://initappz.com/
-  App Name : Salon Locks & Lashes This App Template Source code is licensed as per the
-  terms found in the Website https://initappz.com/license
-  Copyright and Good Faith Purchasers © 2023-present initappz.
-*/
-import { Location } from '@angular/common';
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-package-details',
@@ -18,34 +11,46 @@ export class PackageDetailsPage implements OnInit {
   name: string = '';
   image: string = '';
   description: string = '';
-  pdfPath: string = '';
-  videoPath: string = '';
+  pdfPaths: string[] = [];
+  videoPaths: string[] = [];
+  videoUrl: string = '';
+  pdfUrl: SafeResourceUrl | null = null;
 
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private location = inject(Location);
-
-  constructor() {}
+  constructor(
+    private route: ActivatedRoute,
+    private sanitizer: DomSanitizer
+  ) {}
 
   ngOnInit() {
     this.route.queryParams.subscribe((data: any) => {
-      console.log(data); // Imprime los datos recibidos para asegurarte de que están siendo pasados correctamente.
-
-      // Asigna los valores recibidos desde los parámetros de la ruta
       this.name = data.name;
       this.image = data.image;
       this.description = data.description;
-      this.pdfPath = data.pdfPath;
-      this.videoPath = data.videoPath;
+      this.pdfPaths = JSON.parse(data.pdfPaths || '[]');
+      this.videoPaths = JSON.parse(data.videoPaths || '[]');
+
+      // Transformar la URL del video si es necesario
+      if (this.videoPaths.length > 0) {
+        this.videoUrl = this.videoPaths[0];
+        if (this.videoUrl.includes('watch?v=')) {
+          this.videoUrl = this.videoUrl.replace('watch?v=', 'embed/');
+        }
+      }
     });
   }
 
+  viewPdf(language: 'english' | 'spanish') {
+    let pdfUrl = '';
+    if (language === 'english' && this.pdfPaths[0]) {
+      pdfUrl = this.pdfPaths[0];
+    } else if (language === 'spanish' && this.pdfPaths[1]) {
+      pdfUrl = this.pdfPaths[1];
+    }
 
-  onBack() {
-    this.location.back();
+    if (pdfUrl) {
+      window.open(pdfUrl, '_blank'); // Abre el PDF en una nueva ventana o pestaña
+    } else {
+      console.error('No PDF URL found for the selected language');
+    }
   }
-  onPayment() {
-    this.router.navigate(['select-slot']);
-  }
-
 }

@@ -14,14 +14,20 @@ import { IonicModule } from '@ionic/angular';
 import { PackageDetailsPageRoutingModule } from './package-details-routing.module';
 
 import { PackageDetailsPage } from './package-details.page';
+import { FileOpener } from '@ionic-native/file-opener/ngx';
+import { SafePipe } from 'src/app/pipes/safe.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PackageDetailsPageRoutingModule
+    PackageDetailsPageRoutingModule,
   ],
-  declarations: [PackageDetailsPage]
+  declarations: [
+    PackageDetailsPage,
+    SafePipe
+  ],
+  providers: [FileOpener]
 })
 export class PackageDetailsPageModule { }
