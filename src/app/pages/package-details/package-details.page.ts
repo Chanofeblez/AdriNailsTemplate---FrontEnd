@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { CourseService } from 'src/app/services/course.service';
