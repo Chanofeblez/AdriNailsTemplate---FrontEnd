@@ -45,7 +45,6 @@ export class AuthService {
     return this.http.post(`${this.apiUrl}`, customer).pipe(
       tap((response: any) => {
         if (response && response.token) {
-          console.log("Guardar en el local");
           localStorage.setItem('authToken', response.token);
         }
       }),

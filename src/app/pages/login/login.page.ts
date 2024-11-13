@@ -37,17 +37,11 @@ export class LoginPage implements OnInit {
   }
 
  async onLogin() {
-    console.log('Staring Login');
-    console.log(this.loginForm.value); // Verifica que el email y password sean correctos
-
     if (this.loginForm.valid) {
       this.authService.login(this.loginForm.value).subscribe(
         async (response) => {
-          console.log("Guardar en el local");
           localStorage.setItem('authToken', response.jwt);
           await this.presentSuccessToast();
-
-          console.log('Login successful', response);
 
           // Redirigir al usuario después del inicio de sesión
           this.router.navigate(['/tabs/home']);

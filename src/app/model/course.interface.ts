@@ -3,6 +3,8 @@ export interface Course {
   title: string;
   imagePath: string;
   description: string;
-  pdfPaths: string[]; // Arreglo de strings
-  videoPaths: string[]; // Arreglo de strings
+  price: number; // Asegúrate de que coincida con BigDecimal en el backend
+  pdfPaths: string[]; // Lista de rutas de PDF
+  videoPaths: string[]; // Lista de rutas de videos
+  status: 'ACTIVE' | 'INACTIVE'; // Enum que refleja el CourseStatus del backend
 }

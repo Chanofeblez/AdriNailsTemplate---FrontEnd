@@ -52,16 +52,12 @@ export class RegisterPage implements OnInit {
 async submitForm() {
   if (this.registerForm.valid) {
     const formData: Customer = this.registerForm.value; // Captura los datos del formulario
-    console.log('Form Data:', formData);
 
     // Convierte el email a minúsculas
     formData.email = formData.email.toLowerCase();
-    console.log('Form Data:', formData);
 
     try {
-      console.log('Registration started');
       const response = await this.authService.register(formData).toPromise();
-      console.log('Registration successful', response);
 
       // Loguear automáticamente al usuario después del registro
       const loginCredentials = {
@@ -69,15 +65,12 @@ async submitForm() {
         password: formData.password
       };
 
-      console.log('Attempting to login after registration...');
       const loginResponse = await this.authService.login(loginCredentials).toPromise(); // Inicia sesión automáticamente
-      console.log('Login successful', loginResponse);
 
       // Guardar el token de autenticación
       localStorage.setItem('authToken', loginResponse.jwt);
 
       await this.presentSuccessToast();
-      console.log('Member created and logged in');
       this.registerForm.reset();
 
       // Redirigir al usuario a la página principal o dashboard
@@ -89,7 +82,6 @@ async submitForm() {
   } else {
     console.log('Form is invalid');
   }
-  console.log('Finish SubmitForm');
 }
 
 

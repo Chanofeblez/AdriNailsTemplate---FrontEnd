@@ -86,7 +86,8 @@ export class PackagesListPage{
     }
   }
 
-  async buyCourse(item: any) {
+  async buyCourse(course: Course) {
+    console.log("item",course);
     // Verificar si el usuario no está logueado
     if (!this.isLoggedIn) {
       await this.presentLoginToast(); // Mostrar el toast para que el usuario inicie sesión
@@ -100,9 +101,10 @@ export class PackagesListPage{
     }
 
     // Prepara los datos para el modal de pago
-    const idCourse = item.id;
-    const amount = item.price;
+    const idCourse = course.id;
+    const amount = course.price;
     const customerId = this.userId;
+
 
     // Abre el modal de pago
     const modal = await this.modalController.create({
@@ -124,23 +126,25 @@ export class PackagesListPage{
          // Mostrar un toast de éxito de pago
     this.presentPaymentSuccessToast();
 
+    console.log("item.videoPath", course.videoPaths);
+
         // Solo redirigir si el pago fue exitoso
         const param: NavigationExtras = {
           queryParams: {
-            id: item.id,
-            name: item.title,
-            image: item.imagePath,
-            description: item.description,
-            pdfPath: item.pdfPath,
-            videoPath: item.videoPath
+            id: course.id,
+            name: course.title,
+            image: course.imagePath,
+            description: course.description,
+            pdfPaths: JSON.stringify(course.pdfPaths),
+            videoPaths: JSON.stringify(course.videoPaths)
           }
         };
         // Redirige solo después de un pago exitoso
         this.router.navigate(['/tabs/courses-details'], param);
       } else {
-        console.error('Payment failed', dataReturned.data.error);
+        console.error('Payment failedd', dataReturned.data.error.error);
         // Mostrar un mensaje o alerta indicando que el pago falló
-        this.presentPaymentFailedToast(); // Puedes implementar este método para notificar el error
+        this.presentPaymentFailedToast(dataReturned.data.error.error); // Puedes implementar este método para notificar el error
       }
     });
 
@@ -157,10 +161,10 @@ export class PackagesListPage{
     toast.present();
   }
 
-  async presentPaymentFailedToast() {
+  async presentPaymentFailedToast(message: string) {
     const toast = await this.toastController.create({
-      message: 'Payment failed. Please try again or contact support.',
-      duration: 3000,  // Duración del toast en milisegundos
+      message: message,
+      duration: 3500,  // Duración del toast en milisegundos
       position: 'bottom',  // Posición del toast (puede ser 'top', 'middle', 'bottom')
       color: 'danger',  // Color del toast (puedes usar 'primary', 'secondary', 'tertiary', 'success', 'warning', 'danger', etc.)
     });

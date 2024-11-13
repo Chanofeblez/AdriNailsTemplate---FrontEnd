@@ -19,11 +19,12 @@ export class PaymentService {
   processPayment(sourceId: string, amount: number, customerId: string, locationId: string, idCourse: string): Observable<any> {
     const paymentRequest = {
       sourceId: sourceId,
-      amount: amount,
+      amount: amount*100,
       customerId: customerId,
       locationId: locationId,
       courseId: idCourse  // Asegúrate de que el campo sea 'courseId'
     };
+    console.log("amountService", amount);
 
     return this.http.post<any>(`${this.apiUrl}/charge-course`, paymentRequest);
   }

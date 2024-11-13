@@ -21,7 +21,7 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
   sourceId: string;
   customerId: string;
   title: string;
-  private locationId: string = 'L05J2ZG1FMA4X';
+  private locationId: string = 'LVP1EHWFCX2NX';
 
   private modalController = inject(ModalController);
   private navParams       = inject( NavParams );
@@ -33,6 +33,7 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
     this.idCourse = this.navParams.get('idCourse');
     this.amount = this.navParams.get('amount');
     this.customerId = this.navParams.get('customerId');
+
   }
 
   async ngOnInit() {
@@ -40,7 +41,7 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
       if (!window.Square) {
         throw new Error('Square.js failed to load properly');
       }
-      this.payments = window.Square.payments('sandbox-sq0idb-zUxfDz2eqpyMIMWpmQci0w', this.locationId);
+      this.payments = window.Square.payments('sq0idp-zVPdHkA_l-DgpgQwq7cJmA', this.locationId);
       await this.initializeCard(this.payments);
       console.log('Square PaymentForm initialized successfully. ---');
 
@@ -79,6 +80,7 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
     // Logic to send the token to your server and process the payment
     try {
       const response = await this.paymentService.processPayment(token, this.amount, this.customerId, this.locationId, this.idCourse).toPromise();
+      console.log("response",response);
       this.modalController.dismiss({
         status: 'success',
         payment: response
@@ -93,8 +95,9 @@ export class PaymentModalPage implements OnInit, AfterViewInit {
         }
       });
 
-    } catch (error) {
-      console.error('Payment failed:', error);
+    } catch (error:any) {
+      console.error('Payment failed:', error.error);
+      console.log('this.amount:', this.amount);
       this.modalController.dismiss({
         status: 'failure',
         error: error

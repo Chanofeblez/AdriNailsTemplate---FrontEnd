@@ -1,43 +1,58 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { Subscription } from 'rxjs';
+import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-package-details',
   templateUrl: './package-details.page.html',
   styleUrls: ['./package-details.page.scss'],
 })
-export class PackageDetailsPage implements OnInit {
+export class PackageDetailsPage {
   name: string = '';
   image: string = '';
   description: string = '';
   pdfPaths: string[] = [];
   videoPaths: string[] = [];
-  videoUrl: string = '';
-  pdfUrl: SafeResourceUrl | null = null;
+  videoUrls: SafeResourceUrl[] = [];
+  private routeSubscription: Subscription;
 
   constructor(
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
-  ) {}
+    private sanitizer: DomSanitizer,
+    private courseService: CourseService
+  ) { }
 
-  ngOnInit() {
-    this.route.queryParams.subscribe((data: any) => {
+  ionViewDidEnter() {
+    // Realiza una única suscripción a `queryParams`
+    this.routeSubscription = this.route.queryParams.subscribe((data: any) => {
       this.name = data.name;
       this.image = data.image;
       this.description = data.description;
-      this.pdfPaths = JSON.parse(data.pdfPaths || '[]');
-      this.videoPaths = JSON.parse(data.videoPaths || '[]');
+      this.pdfPaths = data.pdfPaths ? JSON.parse(data.pdfPaths) : [];
+      this.videoPaths = data.videoPaths ? JSON.parse(data.videoPaths) : [];
 
-      // Transformar la URL del video si es necesario
-      if (this.videoPaths.length > 0) {
-        this.videoUrl = this.videoPaths[0];
-        if (this.videoUrl.includes('watch?v=')) {
-          this.videoUrl = this.videoUrl.replace('watch?v=', 'embed/');
-        }
-      }
+        console.log("this.pdfPaths", this.pdfPaths);
+        console.log("item.videoPaths", this.videoPaths);
+
+        // Generar URLs seguras para cada video
+        this.videoUrls = this.videoPaths.map((videoPath) => {
+            if (videoPath.includes('watch?v=')) {
+                videoPath = videoPath.replace('watch?v=', 'embed/');
+                console.log("videoPath", videoPath);
+            }
+            return this.sanitizer.bypassSecurityTrustResourceUrl(videoPath);
+        });
     });
+}
+
+  ionViewWillLeave() {
+    if (this.routeSubscription) {
+      this.routeSubscription.unsubscribe();
+    }
   }
+
 
   viewPdf(language: 'english' | 'spanish') {
     let pdfUrl = '';
