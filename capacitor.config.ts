@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.myApp.AdriNails',
-  appName: 'AdriNails',
+  appName: 'AdriNailsDesign',
   webDir: 'www',
   server: {
     androidScheme: 'https'

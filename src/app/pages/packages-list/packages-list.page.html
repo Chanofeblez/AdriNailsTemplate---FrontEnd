@@ -23,6 +23,12 @@
 
 <ion-content class="ion-padding">
   <ion-label class="greeting-title">My Courses</ion-label>
+
+  <!-- Mostrar mensaje si no está logueado -->
+  <div *ngIf="!isLoggedIn" class="login-required-message">
+    <p>You need to log in to view or purchase courses.</p>
+  </div>
+
   <ion-card mode="ios" class="packages-list" *ngFor="let item of courses; let i = index">
     <ion-row class="row-info">
       <ion-col size="5">

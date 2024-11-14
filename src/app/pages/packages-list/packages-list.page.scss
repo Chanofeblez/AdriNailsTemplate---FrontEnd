@@ -62,3 +62,19 @@ h2, .section-title, .greeting-title {
   text-align: center;
 }
 
+.login-required-message {
+  background-color: #f8d7da; /* Color de fondo de alerta (rojo claro) */
+  color: #721c24; /* Color del texto */
+  border: 1px solid #f5c6cb; /* Borde de alerta */
+  border-radius: 5px;
+  padding: 10px 15px;
+  margin: 10px 0;
+  text-align: center;
+  font-size: 14px;
+}
+
+.login-required-message p {
+  margin: 0;
+  font-weight: 500;
+}
+
