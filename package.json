@@ -32,8 +32,9 @@
     "@capacitor/status-bar": "^5.0.0",
     "@ionic-native/core": "^5.36.0",
     "@ionic-native/file-opener": "^5.36.0",
-    "@ionic/angular": "^8.4.0",
+    "@ionic/angular": "^6.7.5",
     "@square/web-sdk": "^2.0.1",
+    "@vitejs/plugin-basic-ssl": "^1.1.0",
     "cordova-plugin-file-opener2": "^4.0.0",
     "ionicons": "^7.0.0",
     "jwt-decode": "^4.0.0",
@@ -77,7 +78,7 @@
     "semver": "^7.6.3",
     "ts-node": "^8.3.0",
     "typescript": "~5.0.2",
-    "vite": "^5.4.9",
+    "vite": "^5.4.11",
     "webpack-dev-middleware": "^7.4.2"
   },
   "description": "An Ionic project"
