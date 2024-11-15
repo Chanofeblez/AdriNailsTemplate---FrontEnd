@@ -10,7 +10,7 @@ import { NavigationExtras, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CourseService } from 'src/app/services/course.service';
 import { PaymentService } from 'src/app/services/payment.service';
-import { ModalController, NavController, ToastController } from '@ionic/angular';
+import { LoadingController, ModalController, NavController, ToastController } from '@ionic/angular';
 import { PaymentModalPage } from '../payment-modal/payment-modal.page';
 import { Course } from 'src/app/model/course.interface';
 
@@ -27,6 +27,7 @@ export class PackagesListPage{
   userEmail: string;
   userId: string;
   isLoggedIn: boolean = false; // Cambia a true cuando el usuario está logueado
+  isLoading: boolean = false; // Variable para controlar el loading
 
   private courseService = inject(CourseService);
   public router = inject(Router);
@@ -34,19 +35,23 @@ export class PackagesListPage{
   public authService = inject(AuthService);
   public modalController = inject(ModalController);
   private toastController = inject(ToastController);
+  private loadingController = inject(LoadingController);
   private navCtrl = inject(NavController);
 
   constructor() { }
 
   async ionViewDidEnter() {
     try {
+      // Mostrar el loading
+      this.showLoading();
+
       // Verificar si el usuario está logueado
       this.checkLoginStatus();
 
       // Obtener todos los cursos
       this.courseService.getCourses().subscribe(data => {
         this.courses = data;
-        console.log("this.courses",this.courses);
+        this.hideLoading(); // Ocultar el loading cuando los cursos se cargan
       });
 
       // Llamar al método que maneja la obtención del usuario por token y esperar que termine
@@ -67,8 +72,39 @@ export class PackagesListPage{
       }
     } catch (error) {
       console.error('Error en ionViewDidEnter:', error);
+      //this.hideLoading(); // Ocultar el loading en caso de error
     }
   }
+
+  ionViewWillLeave() {
+    // Cierra el loading si aún está activo al salir de la pantalla
+    console.log("CERRAR");
+    this.hideLoading();
+  }
+
+  async showLoading() {
+    if (!this.isLoading) {
+      this.isLoading = true;
+      const loading = await this.loadingController.create({
+        message: 'Loading courses...',
+        spinner: 'circles',
+      });
+      await loading.present();
+    }
+  }
+
+  async hideLoading() {
+    if (this.isLoading) {
+      this.isLoading = false;
+      try {
+        await this.loadingController.dismiss();
+      } catch (error) {
+        console.error("Error al cerrar el loading:", error);
+      }
+
+    }
+  }
+
 
   async getUserByToken(): Promise<void> {
     const token = localStorage.getItem('authToken');
