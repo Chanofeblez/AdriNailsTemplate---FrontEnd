@@ -33,9 +33,9 @@
     <div class="booking-list" *ngIf="segment =='book'">
       <div class="slot-screen">
         <ion-label class="title">Select Date</ion-label>
-        <ion-datetime presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)">
+        <ion-datetime #datePicker presentation="date" style="max-width: 100%;" [min]="minDate"
+          (ionChange)="onDateChange($event)">
         </ion-datetime>
-
 
         <div class="slot-selection" *ngIf="selectedDate !== null">
           <ion-label class="title">Select Hours</ion-label>
@@ -85,6 +85,13 @@
               <ion-label class="title">{{item.serviceName}}</ion-label>
               <ion-label class="service-title">Cost: ${{item.totalCost}}</ion-label>
               <ion-label class="service-extras">Services Extras: {{item.serviceVariantIds.length}}</ion-label>
+              <ion-label class="appointment-status" [ngClass]="{
+                  'status-confirmed': item.status === 'CONFIRMED',
+                  'status-pending': item.status === 'PENDING',
+                  'status-completed': item.status === 'COMPLETED',
+                  'status-canceled': item.status === 'CANCELED'
+                }">        {{ item.status }}
+              </ion-label>
             </div>
           </ion-col>
         </ion-row>

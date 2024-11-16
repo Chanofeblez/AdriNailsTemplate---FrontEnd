@@ -23,7 +23,7 @@ import { Location } from '@angular/common';
 })
 export class BookingsPage {
 
-  @ViewChild(IonDatetime, { static: false }) dateTime!: IonDatetime;
+  @ViewChild('datePicker', { static: false }) datePicker: IonDatetime;
 
   segment: any = 'book';
   minDate: string;
@@ -75,46 +75,66 @@ export class BookingsPage {
 
   // Este método se ejecuta cada vez que se entra en la vista
   async ionViewWillEnter() {
+    this.segment = 'book';
+    this.resetDate(); // Limpia las fechas y slots seleccionados
+    this.resetIonDatetime(); // Resetea el ion-datetime al estado inicial
+
     try {
-      await this.getUserByToken(); // Espera a que se complete la obtención del usuario
-      console.log("Cargar los appointments en ionViewWillEnter", this.userEmail);
-      this.getUserAppointment(this.userEmail); // Ahora se ejecutará solo después de obtener el usuario
-      this.resetDate();
-      this.cdr.detectChanges(); // Forzar la detección de cambios
+      await this.getUserByToken();
+      this.getUserAppointment(this.userEmail); // Carga las citas del usuario
+      this.cdr.detectChanges(); // Asegura que la vista esté actualizada
     } catch (error) {
       console.error('Error al cargar el usuario:', error);
     }
   }
 
+
   // Método para resetear la fecha seleccionada
   resetDate() {
     this.cdr.detectChanges();
-    this.previusselectedDate = null;
-    this.selectedDate = null; // Reinicia el valor de la fecha seleccionada
-    this.selectedSlot = null;
+    this.previusselectedDate = null; // Resetea la fecha seleccionada previamente
+    this.selectedDate = null; // Limpia la fecha seleccionada
+    this.selectedSlot = null; // Limpia el slot seleccionado
+    this.formattedSlot = []; // Limpia los slots formateados
+  }
+
+  // Método para reiniciar ion-datetime
+  resetIonDatetime() {
+    if (this.datePicker) {
+      this.datePicker.value = ''; // Limpia el valor del datetime
+      this.datePicker.reset(); // Resetea el estado del componente
+      this.cdr.detectChanges(); // Fuerza la detección de cambios en la vista
+    }
   }
 
   onDateChange(event: any) {
+    // Verifica si el evento tiene un valor válido antes de continuar
+    if (!event || !event.detail || !event.detail.value) {
+      return; // Salir del método si el evento no tiene datos
+    }
+
     const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
 
-    // Evita procesar si la fecha seleccionada es la misma
     if (this.previusselectedDate === newSelectedDate) {
+      // Si la misma fecha es seleccionada, resetea el componente
       this.previusselectedDate = null;
       this.selectedDate = null;
-      this.selectedSlot = null; // También deselecciona el slot si la fecha se deselecciona
-      this.resetIonDatetime();
+      this.selectedSlot = null; // Deselecciona el slot seleccionado
       this.formattedSlot = []; // Limpia los slots visualmente
+      this.resetIonDatetime(); // Reinicia el ion-datetime
       return;
     }
 
-    // Actualiza la fecha seleccionada y carga los horarios
+    // Si es una nueva fecha, actualiza los valores
     this.previusselectedDate = newSelectedDate;
     this.selectedDate = newSelectedDate;
     this.selectedSlot = null; // Reinicia el slot seleccionado
 
-    // Cargar los horarios disponibles para la fecha seleccionada
+    // Carga los horarios disponibles para la nueva fecha seleccionada
     this.loadAvailableSlots(this.previusselectedDate);
   }
+
+
 
   async loadAvailableSlots(selectedDate: string) {
     this.isLoading = true;
@@ -195,13 +215,6 @@ export class BookingsPage {
     return date.split('T')[0]; // Extrae solo la parte de la fecha "YYYY-MM-DD"
   }
 
-  // Método para reiniciar ion-datetime
-  resetIonDatetime() {
-    if (this.dateTime) {
-      this.dateTime.reset(); // Reinicia el ion-datetime
-    }
-  }
-
   getUserByToken(): Promise<void> {
     return new Promise((resolve, reject) => {
       const token = localStorage.getItem('authToken');
@@ -231,13 +244,11 @@ export class BookingsPage {
 
     try {
       const appointments = await this.appointmentService.getUserAppointments(userId).toPromise();
-      console.log("appointments", appointments);
       if (!appointments || appointments.length === 0) {
         return; // Salir de la función si no hay citas
       }
 
       const now = new Date(); // Obtener la fecha y hora actual
-      console.log('Appointments:', appointments);
 
       for (const appointment of appointments) {
         const appointmentDateTime = new Date(`${appointment.appointmentDate}T${appointment.appointmentTime}`);
@@ -274,8 +285,6 @@ export class BookingsPage {
       this.completedAppointments.sort(sortByDate);
       this.cancelledAppointments.sort(sortByDate);
 
-      console.log('LISTAUP:', this.upcomingAppointments);
-      console.log('LISTASCOMP:', this.completedAppointments);
     } catch (error) {
       console.error('Error fetching appointments:', error);
     }
