@@ -148,7 +148,6 @@ export class ServiceDetailsPage implements OnInit {
   async onApply() {
     try {
       this.logged = await this.authService.isLoggedIn().toPromise();
-      console.log(this.logged); // Ahora puedes usar el valor booleano de manera síncrona
       if (!this.logged) {
         this.presentToast('You must be logged in to create an appointment.');
         console.log("Al login",this.logged);
@@ -158,7 +157,6 @@ export class ServiceDetailsPage implements OnInit {
       console.error('Error checking logged status:', error);
     }
     if (this.logged) {
-      console.log("Adentro");
       // El usuario está logueado, puedes proceder a crear el appointment
       await this.presentConfirmModal();
     } else {
@@ -179,7 +177,6 @@ export class ServiceDetailsPage implements OnInit {
       status: AppointmentStatus.PENDING,  // Estado por defecto
       imagePath: this.imagePath
     };
-    console.log(appointmentRequestDTO);
 
     // Abre el modal de confirmación y pasa el appointmentRequestDTO
     const modal = await this.modalController.create({
@@ -201,11 +198,9 @@ export class ServiceDetailsPage implements OnInit {
 
 
   createAppointment(appointmentRequestDTO: Appointment) {
-    console.log("appointmentRequestDTO", appointmentRequestDTO);
     // Llamar al servicio para crear el appointment
     this.appointmentService.createAppointment(appointmentRequestDTO).subscribe(
       async (response: Appointment) => {
-        console.log("Create Appointment", response);
 
         // Llamar al modal de éxito
         const modal = await this.modalController.create({

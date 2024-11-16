@@ -33,9 +33,9 @@
     <div class="booking-list" *ngIf="segment =='book'">
       <div class="slot-screen">
         <ion-label class="title">Select Date</ion-label>
-        <ion-datetime [(ngModel)]="selectedDate" presentation="date" style="max-width: 100%;" [min]="minDate"
-          (ionChange)="onDateChange($event)">
+        <ion-datetime presentation="date" style="max-width: 100%;" [min]="minDate" (ionChange)="onDateChange($event)">
         </ion-datetime>
+
 
         <div class="slot-selection" *ngIf="selectedDate !== null">
           <ion-label class="title">Select Hours</ion-label>
@@ -91,7 +91,8 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="medium" (click)="item.id ? presentModal(item.id, item.customerEmail) : null" class="botoncancel">
+              <ion-button expand="block" fill="outline" shape="round" size="medium"
+                (click)="item.id ? presentModal(item.id, item.customerEmail) : null" class="botoncancel">
                 Cancel Booking
               </ion-button>
             </ion-col>
@@ -129,7 +130,8 @@
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="review(item.id)"  [disabled]="item.review != null">
+              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="review(item.id)"
+                [disabled]="item.review != null">
                 <ion-icon name="chatbox-ellipses-outline"></ion-icon> Leave a Review
               </ion-button>
             </ion-col>
@@ -144,7 +146,8 @@
     <div class="booking-list" *ngIf="segment =='cancelled'">
       <ion-card mode="ios" class="cart-content" *ngFor="let item of cancelledAppointments;let i = index;">
         <div class="top-content">
-          <ion-label class="date1">Date: {{item.appointmentDate}} Time: {{convertTo12HourFormat(item.appointmentTime)}}</ion-label>
+          <ion-label class="date1">Date: {{item.appointmentDate}} Time:
+            {{convertTo12HourFormat(item.appointmentTime)}}</ion-label>
           <div class="end-item1">
             <ion-label class="cancelled1">Cancelled</ion-label>
           </div>
@@ -156,15 +159,17 @@
           <ion-col size="8">
             <div class="name-content">
               <ion-label class="title">{{item.serviceName}}</ion-label>
-            <ion-label class="service-title">Cost: ${{item.totalCost}}</ion-label>
-            <ion-label class="service-extras">Services Extras: {{item.serviceVariantIds.length}}</ion-label>
+              <ion-label class="service-title">Cost: ${{item.totalCost}}</ion-label>
+              <ion-label class="service-extras">Services Extras: {{item.serviceVariantIds.length}}</ion-label>
             </div>
           </ion-col>
         </ion-row>
         <div class="bottom-content">
           <ion-row>
             <ion-col size="12">
-              <ion-button expand="block" fill="outline" shape="round" size="small" (click)="item.id ? cambiarStatus(item.id, item.appointmentDate, item.appointmentTime) : null" class="botoncancel">
+              <ion-button expand="block" fill="outline" shape="round" size="small"
+                (click)="item.id ? cambiarStatus(item.id, item.appointmentDate, item.appointmentTime) : null"
+                class="botoncancel">
                 Restore Booking
               </ion-button>
             </ion-col>

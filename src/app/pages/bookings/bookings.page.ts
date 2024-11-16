@@ -94,6 +94,28 @@ export class BookingsPage {
     this.selectedSlot = null;
   }
 
+  onDateChange(event: any) {
+    const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
+
+    // Evita procesar si la fecha seleccionada es la misma
+    if (this.previusselectedDate === newSelectedDate) {
+      this.previusselectedDate = null;
+      this.selectedDate = null;
+      this.selectedSlot = null; // También deselecciona el slot si la fecha se deselecciona
+      this.resetIonDatetime();
+      this.formattedSlot = []; // Limpia los slots visualmente
+      return;
+    }
+
+    // Actualiza la fecha seleccionada y carga los horarios
+    this.previusselectedDate = newSelectedDate;
+    this.selectedDate = newSelectedDate;
+    this.selectedSlot = null; // Reinicia el slot seleccionado
+
+    // Cargar los horarios disponibles para la fecha seleccionada
+    this.loadAvailableSlots(this.previusselectedDate);
+  }
+
   async loadAvailableSlots(selectedDate: string) {
     this.isLoading = true;
     this.availableSlots = [];
@@ -166,30 +188,6 @@ export class BookingsPage {
       this.selectedSlot = null; // Deselecciona el slot
     } else {
       this.selectedSlot = formattedSlot; // Selecciona el slot como cadena en formato HH:mm:ss
-    }
-  }
-
-  onDateChange(event: any) {
-    const newSelectedDate = this.formatDate(event.detail.value); // Formatea la nueva fecha seleccionada
-    // Si la nueva fecha es la misma que la ya seleccionada, deselecciona la fecha
-    if (this.previusselectedDate === newSelectedDate) {
-      this.previusselectedDate = null;
-      this.selectedDate = null;
-      this.selectedSlot = null; // También deselecciona el slot si la fecha se deselecciona
-      console.log('Fecha deseleccionada');
-
-      // Reinicia el ion-datetime directamente
-      this.resetIonDatetime();
-
-      // Limpia los slots visualmente también
-      this.formattedSlot = []; // Asegúrate de que esta variable controla la visualización de los slots
-    } else {
-      this.previusselectedDate = newSelectedDate; // Si es una fecha diferente, selecciona la nueva fecha
-      this.selectedDate = newSelectedDate;
-      this.selectedSlot = null; // Reinicia el slot seleccionado
-
-      // Cargar los horarios disponibles para la fecha seleccionada
-      this.loadAvailableSlots(this.previusselectedDate);
     }
   }
 
