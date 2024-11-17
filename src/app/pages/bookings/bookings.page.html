@@ -21,9 +21,9 @@
       <ion-segment-button value="completed">
         <ion-label>Completed</ion-label>
       </ion-segment-button>
-      <ion-segment-button value="cancelled">
+    <!--  <ion-segment-button value="cancelled">
         <ion-label>Cancelled</ion-label>
-      </ion-segment-button>
+      </ion-segment-button> -->
     </ion-segment>
   </ion-toolbar>
 </ion-header>
@@ -150,7 +150,7 @@
       </div>
     </div>
 
-    <div class="booking-list" *ngIf="segment =='cancelled'">
+  <!-- <div class="booking-list" *ngIf="segment =='cancelled'">
       <ion-card mode="ios" class="cart-content" *ngFor="let item of cancelledAppointments;let i = index;">
         <div class="top-content">
           <ion-label class="date1">Date: {{item.appointmentDate}} Time:
@@ -186,6 +186,7 @@
       <div *ngIf="cancelledAppointments.length === 0" class="no-appointments-message">
         No cancelled appointments to display.
       </div>
-    </div>
+    </div> -->
+
   </div>
 </ion-content>
